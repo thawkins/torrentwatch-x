@@ -7,7 +7,8 @@ Dependencies
 Installation Instructions
 *************************
 - Copy all files to a directory where you webserver can read them.
-- Edit $docroot/php/config.php and set the "$basedir" variable to this directory.
+- copy $docroot/php/config.php.dist to docroot/php/config.php.dist and open it.
+  Then set the "$basedir" variable to this directory.
 - Configure your webserver so it points to the directory you used for torrentwatch-x.
 - Create a directory '/etc/torrentwatch' and make sure the webserver can write there.
 - Make sure the webserver can write to the following files and directories:
