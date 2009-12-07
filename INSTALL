@@ -3,6 +3,7 @@ Dependencies
 
 - A webserver with php support
 - php-curl
+- Transmission
 
 Installation Instructions
 *************************
