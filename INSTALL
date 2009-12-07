@@ -15,4 +15,3 @@ Installation Instructions
 	- $docroot/rss_cache/
 - Create a cron-entry for the user running the webserver for periodically checking for updates:
 	*/30 * * * * /var/www/mezzanine/rss_dl.php -D >/dev/null
-	
