@@ -1,0 +1,12 @@
+torrentwatch cvs -> torrentwatch-x 0.1
+	-- ported the original torrentwatch to linux. Only transmission and save to folder support for now.
+	   I will make another port for nzb support later.
+	   Support for other torrent clients will be added later
+	-- Ported all Transmission connections to php-curl
+	-- Added support for authentication with transmission
+	-- Better IE support
+	-- Renamed (the php file) index.cgi to torrentwatch.php
+
+0.2
+	-- Changed feed itmes to only display the name as a link to the rss feed itself.
+	-- Changed some CSS settings and layout stuff.
