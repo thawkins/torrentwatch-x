@@ -1,0 +1,18 @@
+Dependencies
+************
+
+- A webserver with php support
+- php-curl
+
+Installation Instructions
+*************************
+- Copy all files to a directory where you webserver can read them.
+- Edit $docroot/php/config.php and set the "$basedir" variable to this directory.
+- Configure your webserver so it points to the directory you used for torrentwatch-x.
+- Create a directory '/etc/torrentwatch' and make sure the webserver can write there.
+- Make sure the webserver can write to the following files and directories:
+	- $docroot/rss_dl.history
+	- $docroot/rss_cache/
+- Create a cron-entry for the user running the webserver for periodically checking for updates:
+	*/30 * * * * /var/www/mezzanine/rss_dl.php -D >/dev/null
+	
