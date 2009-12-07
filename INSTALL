@@ -3,7 +3,7 @@ Dependencies
 
 - A webserver with php support
 - php-curl
-- Transmission
+- Transmission (When not just saving the torrent to a folder)
 
 Installation Instructions
 *************************
