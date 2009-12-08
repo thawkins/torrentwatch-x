@@ -3,3 +3,4 @@
 - rtorrent support
 - vuze support
 - Add list of TV Shows to choose from.
+- Remove torrents which are done. (paused and met ratio requirements)
