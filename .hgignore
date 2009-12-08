@@ -1,3 +1,6 @@
 syntax: glob
 rss_cache
 php/config.php
+transmission
+robots.txt
+javascript/torrentwatch.js

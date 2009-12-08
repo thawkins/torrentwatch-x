@@ -4,6 +4,9 @@
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="Stylesheet" type="text/css" href="css/reset.css" />
   <link rel="Stylesheet" type="text/css" href="css/torrentwatch.css" />
+  <!--[if IE]>
+    <link rel="Stylesheet" type="text/css" href="css/ie.css"></link>
+  <![endif]-->
   <!--
   <script type="text/javascript" src="javascript/all.min.js"></script>
   -->
@@ -43,9 +46,9 @@
 <div class="dialog_window" id="clear_cache"> 
   <h2 class="dialog heading">Which Cache</h2>
   <a class="toggleDialog button" href="#">Close</a>
-  <a class="button" href="torrentwatch.php/clearCache?type=feeds">Feeds</a>
-  <a class="button" href="torrentwatch.php/clearCache?type=torrents">Torrents</a>
-  <a class="button"href="torrentwatch.php/clearCache?type=all">All</a>
+  <a class="button" href="torrentwatch.php?clearCache=1&type=feeds">Feeds</a>
+  <a class="button" href="torrentwatch.php?clearCache=1&type=torrents">Torrents</a>
+  <a class="button"href="torrentwatch.php?clearCache=1&type=all">All</a>
 </div> 
 <div class="dialog_window" id="show_legend"> 
     <ul id='torrentlist' class='torrentlist'>
