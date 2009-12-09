@@ -3,6 +3,7 @@
 - Add list of TV Shows to choose from.
 - Show download status in the torrentwatch-x gui.
 - Manage downloads via torrentwatch-x gui.
+- Execute script on finished download.
 
 - Torrent client support:
 	- utorrent support

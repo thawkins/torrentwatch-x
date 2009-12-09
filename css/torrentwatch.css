@@ -90,6 +90,10 @@ ul.mainoptions li {
 	vertical-align: middle;
 	}
 
+ul.mainoptions li#legend {
+	float: right;
+	}
+
 ul.mainoptions li#webui {
 	float: right;
 	}
@@ -133,9 +137,6 @@ ul.mainoptions li.divider {
         width: 0;
         border-right: 1px dotted black;
         opacity: 0.2;
-        /*margin: 14px 4px 0;
-        height: 49px;*/
-	/*background: transparent url('../images/menu_divider.png') no-repeat top right;*/
 	height: 2.3em;
 	margin: 1.3em 0 0 0;
 	}
@@ -358,6 +359,10 @@ input[type=submit] {
 	height: 28px;
 	}
 
+div.legend input {
+	clear: left;
+	}
+
 /********************************
  *
  * W I Z A R D   D I A L O G S
@@ -370,10 +375,6 @@ div.welcome {
 	}
 
 div.welcome input {
-	clear: left;
-	}
-
-div.legend input {
 	clear: left;
 	}
 

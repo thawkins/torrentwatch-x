@@ -63,7 +63,7 @@ $(function() {
         case 'Transmission':
             $("#config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port, #config_downloaddir, #config_watchdir, #config_savetorrent, #config_deepdir, div.favorite_seedratio, div.favorite_savein").css("display", "block");
             $("ul.favorite").css("height", 245);
-            target += '/transmission/';
+            target += ':9091/transmission/web/';
             break;
         }
         $("#webui a").text($(this).val())[0].href = target;
