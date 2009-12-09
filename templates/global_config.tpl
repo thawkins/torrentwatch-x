@@ -11,7 +11,7 @@
         <option value="Large">Large</option>
       </select>
     </div>
-    <label class="category">Client Settings</label>
+    <label class="category">Torrent Client Settings</label>
     <div id="config_torrentclient">
       <label class="item select" title="Which torrent client to use">Client:</label>
       <select name="client" id="client">
