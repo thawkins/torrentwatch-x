@@ -193,6 +193,7 @@ function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL
     _debug("Started: $tor_name in $dest\n",0);
     if(isset($fav))
       updateFavoriteEpisode($fav, $tor_name);
+      _debug("Updated Favorites");
     if($config_values['Settings']['Save Torrents'])
       file_put_contents("$dest/$tor_name.torrent", $tor);
   } else {
