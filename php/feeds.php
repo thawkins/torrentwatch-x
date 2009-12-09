@@ -24,9 +24,11 @@ function episode_filter($item, $filter) {
 
   list($itemS, $itemE) = explode('x', $item['episode']);
 
-  if(preg_match('/S\d*E\d*/i', $filter)) {
+  if(preg_match('/^S\d*/i', $filter)) {
 	$filter = preg_replace('/S/i', '', $filter);
-        $filter = preg_replace('/E/i', 'x', $filter);
+  	if(preg_match('/^\d*E\d*/i', $filter)) {
+        	$filter = preg_replace('/E/i', 'x', $filter);
+	}
   }
   // Split the filter(ex. 3x4-4x15 into 3,3 4,15).  @ to suppress error when no seccond item
   list($start, $stop) = explode('-',  $filter, 2);
