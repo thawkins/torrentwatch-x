@@ -18,8 +18,8 @@
     <input type="text" class="text" name="savein" value="<?php echo $item['Save In']; ?>">
   </div>
   <div class="favorite_episodes">
-    <label class="item" title="Regexp Episode filter in form of 2x[1-8]">Episodes:</label>
-    <input type="text" class="text" name="episodes" value="<?php echo $item['Episodes'] ?>">
+    <label class="item" title="Episode filter. ex.: 1x1-3x24 for Season 1 to 3 episode 24. To just set a starting point use: 2x10. You may use s01e12 instead of 1x12." >Episodes:</label>
+    <input type="text" class="text" name="episodes" title="Episode filter. ex.: 1x1-3x24 for Season 1 to 3 episode 24. To just set a starting point use: 2x10. You may use s01e12 instead of 1x12." value="<?php echo $item['Episodes'] ?>">
   </div>
   <div class="favorite_feed">
     <label class="item" title="Feed to match against">Feed:</label>

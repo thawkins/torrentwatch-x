@@ -6,7 +6,7 @@
         <form action="torrentwatch.php?updateFeed=1" class="feedform">
           <a class="submitForm button" id="Delete" href="#">Delete</a>
           <input type="hidden" name="idx" value="<?php echo $key; ?>">
-          <br><label class="item"><a href=<?php echo $feed['Link']; ?>target="_blank"><?php echo $feed['Name']; ?></a></label>
+          <br><label class="item"><a href=<?php echo $feed['Link']; ?> target="_blank"><?php echo $feed['Name']; ?></a></label>
         </form>
       </div>
     <?php endforeach; ?>

@@ -10,3 +10,5 @@ torrentwatch cvs -> torrentwatch-x 0.1
 0.2
 	-- Changed feed itmes to only display the name as a link to the rss feed itself.
 	-- Changed some CSS settings and layout stuff.
+	-- Changed filter behaviour. You can now set a starting point as well. 1x12 as well as s01e12 syntax is allowed.
+	   Hover over the "Episodes" input field in the favorites screen for more info.

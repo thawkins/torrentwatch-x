@@ -20,12 +20,20 @@
 }
 
 function episode_filter($item, $filter) {
+  $filter = preg_replace('/\s/', '', $filter);
+
   list($itemS, $itemE) = explode('x', $item['episode']);
 
-  // Split the filter(ex. 3x4-15 into 3,3 4,15).  @ to suppress error when no seccond item
-  list($season, $episode) = explode('x',  $filter, 2);
-  @list($seasonLow,$seasonHigh) = explode('-', $season, 2);
-  @list($episodeLow,$episodeHigh) = explode('-', $episode, 2);
+  if(preg_match('/S\d*E\d*/i', $filter)) {
+	$filter = preg_replace('/S/i', '', $filter);
+        $filter = preg_replace('/E/i', 'x', $filter);
+  }
+  // Split the filter(ex. 3x4-4x15 into 3,3 4,15).  @ to suppress error when no seccond item
+  list($start, $stop) = explode('-',  $filter, 2);
+  @list($startSeason,$startEpisode) = explode('x', $start, 2);
+  if(!($stop)) { $stop = "9999x9999"; }
+  @list($stopSeason,$stopEpisode) = explode('x', $stop, 2);
+
 
   if(!($item['episode'])) {
     return False;
@@ -36,26 +44,35 @@ function episode_filter($item, $filter) {
     return True; // no filter, accept all
   }
 
-  // the following reg accepts the 10-14 or just 10
-  $validateReg = '([0-9]+)(?:-([0-9]+))?';
-  if(preg_match("/^{$validateReg}x{$validateReg}$/", $filter) === 0) {
-    _debug('bad episode filter: '.$filter);
-    return True; // bad filter, just accept all
+  // the following reg accepts the 1x1-2x27, 1-2x27, 1-3 or just 1
+  $validateReg = '([0-9]+)(?:x([0-9]+))?';
+  if(preg_match("/\dx\d-\dx\d/", $filter)) { 
+   if(preg_match("/^{$validateReg}-{$validateReg}/", $filter) === 0) {
+     _debug('bad episode filter: '.$filter);
+     return True; // bad filter, just accept all
+   } else if(preg_match("/^{$validateReg}/", $filter) === 0) {
+     _debug('bad episode filter: '.$filter);
+     return True; // bad filter, just accept all
+   } 
   }
 
-  if(!isset($seasonHigh))
-    $seasonHigh = $seasonLow;
-  if(!isset($episodeHigh))
-    $episodeHigh = $episodeLow;
+  if(!($stopSeason))
+    $stopSeason = $startSeason;
+  if(!($startEpisode))
+    $startEpisode = 1;
+  if(!($stopEpisode))
+    $stopEpisode = $startEpisode-1;
 
-  // Episode filter mis-match
-  if(!($episodeLow <= $itemE && $itemE <= $episodeHigh)) {
-    return False;
-  }
+  $startEpisodeLen=strlen($startEpisode);
+  if($startEpisodeLen == 1) { $startEpisode = "0$startEpisode" ;}; 
+  $stopEpisodeLen=strlen($stopEpisode);
+  if($stopEpisodeLen == 1) { $stopEpisode = "0$stopEpisode" ;}; 
+
   // Season filter mis-match
-  if(!($seasonLow <= $itemS && $itemS <= $seasonHigh)) {
+  if(!("$itemS$itemE" >= "$startSeason$startEpisode" && "$itemS$itemE" <= "$stopSeason$stopEpisode")) {
     return False;
   }
+
   return True;
 }
 
@@ -91,7 +108,7 @@ function check_for_torrent(&$item, $key, $opts) {
    
   if($hit && episode_filter($guess, $item['Episodes'])) {
     $matched = 'match';
-    if(check_cache($rs['title'])) {
+    if(check_cache($rs['title']) || $fav) {
       if(_isset($config_values['Settings'], 'Only Newer') == 1) {
         if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)) {
           if($item['Season'] > $regs[1]) {
@@ -102,7 +119,7 @@ function check_for_torrent(&$item, $key, $opts) {
 	    _debug($item['Episode'] .' >= '.$regs[2], 2);
             $matched = "old";
             return FALSE;
-          }
+	  }
         }
       }
       _debug('Match found for '.$rs['title']."\n");
