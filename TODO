@@ -4,6 +4,7 @@
 - Show download status in the torrentwatch-x gui.
 - Manage downloads via torrentwatch-x gui.
 - Execute script on finished download.
+- Delete old episodes from transmission which are replaces by REPACK or PROPER episodes.
 
 - Torrent client support:
 	- utorrent support
