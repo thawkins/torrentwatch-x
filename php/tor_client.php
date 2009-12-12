@@ -102,7 +102,8 @@ function folder_add_torrent($tor, $dest, $title) {
   return 0;
 }
 
-function transmission_add_torrent($tor, $dest, $seedRatio = -1) {
+function transmission_add_torrent($tor, $dest, $title, $seedRatio = -1) {
+  global $config_values;
   // transmission dies with bad folder if it doesn't end in a /
   if(substr($dest, strlen($dest)-1, 1) != '/')
     $dest .= '/';
@@ -131,6 +132,10 @@ function transmission_add_torrent($tor, $dest, $seedRatio = -1) {
 
 
   if(isset($response['result']) AND ($response['result'] == 'success' or $response['result'] == 'duplicate torrent')) {
+    $cache = $config_values['Settings']['Cache Dir'] . "rss_dl_" . filename_encode($title);
+    $handle = fopen("$cache", "w");
+    fwrite($handle, $torId);
+    fclose($handle);
     return 0;
   } else {
     if(!isset($response['result']))
@@ -179,7 +184,7 @@ function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL
   }
   switch($config_values['Settings']['Client']) {
     case 'Transmission':
-      $return = transmission_add_torrent($tor, $dest, _isset($fav, 'seedRatio', -1));
+      $return = transmission_add_torrent($tor, $dest, $title, _isset($fav, 'seedRatio', -1));
       break;
     case 'folder':
       $return = folder_add_torrent($tor, $dest, $tor_name);

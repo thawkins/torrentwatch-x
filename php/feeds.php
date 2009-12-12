@@ -110,7 +110,7 @@ function check_for_torrent(&$item, $key, $opts) {
    
   if($hit && episode_filter($guess, $item['Episodes'])) {
     $matched = 'match';
-    if(check_cache($rs['title']) || $fav) {
+    if(check_cache($rs['title'])) {
       if(_isset($config_values['Settings'], 'Only Newer') == 1) {
         if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)) {
           if($item['Season'] > $regs[1]) {
@@ -183,6 +183,14 @@ function parse_one_atom($feed) {
   return;
 }
 
+function get_torId($cache_file) {
+  $handle = fopen($cache_file, "r");
+  if(filesize($cache_file)) {
+    $torId = fread($handle, filesize($cache_file));
+    return $torId;
+  }
+}
+
 function rss_perform_matching($rs, $idx) {
   global $config_values, $matched;
   if(count($rs['items']) == 0)
@@ -199,10 +207,20 @@ function rss_perform_matching($rs, $idx) {
     if(isset($config_values['Favorites']))
       array_walk($config_values['Favorites'], 'check_for_torrent', 
                  array('Obj' =>$item, 'URL' => $rs['URL']));
-    _Debug("$matched: $item[title]\n", 1);
-    if($matched != "match" && $matched != 'cachehit' &&
-       file_exists($config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title'])))
-      $matched = 'downloaded';
+    _debug("$matched: $item[title]\n", 1);
+    $cache_file = $config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title']);
+    if($matched != "match" && $matched != 'cachehit' && file_exists($cache_file)) {
+	$torId = get_torId($cache_file);
+        $request = array('arguments' => array('fields' => array('leftUntilDone'), 'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
+	$response = transmission_rpc($request);
+	if(empty($response['arguments']['torrents']['0']['leftUntilDone'])) {
+          $matched = 'old_download';
+	} else if($response['arguments']['torrents']['0']['leftUntilDone'] > 0) {
+          $matched = 'downloading';
+	} else if($response['arguments']['torrents']['0']['leftUntilDone'] == 0){
+          $matched = 'downloaded';
+	}
+    }
     if(isset($config_values['Global']['HTMLOutput'])) {
       show_torrent_html($item, $rs['URL'], $alt);
     }
