@@ -43,7 +43,7 @@ function episode_filter($item, $filter) {
 
  // Perform episode filter
   if(empty($filter)) {
-    return True; // no filter, accept all
+    return true; // no filter, accept all	
   }
 
   // the following reg accepts the 1x1-2x27, 1-2x27, 1-3 or just 1
@@ -114,11 +114,11 @@ function check_for_torrent(&$item, $key, $opts) {
       if(_isset($config_values['Settings'], 'Only Newer') == 1) {
         if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)) {
           if($item['Season'] > $regs[1]) {
-	    _debug($item['Season'] .' > '.$regs[1], 2);
+	    _debug($item['Season'] .' > '.$regs[1] . "; ", 1);
             $matched = "old";
             return FALSE;
-          } else if($item['Season'] == $regs[1] && $item['Episode'] >= $regs[2]) {
-	    _debug($item['Episode'] .' >= '.$regs[2], 2);
+          } else if($item['Season'] == $regs[1] && $item['Episode'] >= $regs[2] && (!(preg_match('/proper|repack/i', $rs['title'])))) {
+	    _debug($item['Episode'] .' >= '.$regs[2] . "; ", 1);
             $matched = "old";
             return FALSE;
 	  }
@@ -209,17 +209,20 @@ function rss_perform_matching($rs, $idx) {
                  array('Obj' =>$item, 'URL' => $rs['URL']));
     _debug("$matched: $item[title]\n", 1);
     $cache_file = $config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title']);
-    if($matched != "match" && $matched != 'cachehit' && file_exists($cache_file)) {
+    //if($matched != "match" && $matched != 'cachehit' && file_exists($cache_file)) {
+    if(file_exists($cache_file)) {
 	$torId = get_torId($cache_file);
         $request = array('arguments' => array('fields' => array('leftUntilDone'), 'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
 	$response = transmission_rpc($request);
-	if(empty($response['arguments']['torrents']['0']['leftUntilDone'])) {
-          $matched = 'old_download';
-	} else if($response['arguments']['torrents']['0']['leftUntilDone'] > 0) {
+	if($response['arguments']['torrents']['0']['leftUntilDone'] > 0) {
           $matched = 'downloading';
-	} else if($response['arguments']['torrents']['0']['leftUntilDone'] == 0){
+	} else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched != "match" && $matched != 'cachehit') {
           $matched = 'downloaded';
-	}
+        } else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched = 'cachehit') {
+          $matched = 'cachehit';
+	} else if(empty($response['arguments']['torrents']['0']['leftUntilDone'])) {
+          $matched = 'old_download';
+        }
     }
     if(isset($config_values['Global']['HTMLOutput'])) {
       show_torrent_html($item, $rs['URL'], $alt);
