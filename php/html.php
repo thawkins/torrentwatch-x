@@ -11,10 +11,16 @@ function finish_rss_list_html() {
   $html_out .=  "</div>\n";
 }
 
-function show_torrent_html($item, $feed, $alt) {
+function show_torrent_html($item, $feed, $alt, $MBDone, $totalSize, $percentage) {
   global $html_out, $matched, $test_run;
   // add word-breaking flags after each period
-  $title = preg_replace('/\./', '.&shy;', $item['title']);
+  if(($percentage || $percentage == '0') && ($percentage != 100)) {
+    $title = preg_replace('/\./', '.&shy;', $item['title'] . 
+    "<div id=trInfo>DL: " . round($MBDone,1) . " MB of " . round($totalSize,1) . " MB (" . 
+    round((int)$percentage) . "%)</div>");
+  } else {
+    $title = preg_replace('/\./', '.&shy;', $item['title']);
+  }
   // prepare items for use in a url
   $utitle = rawurlencode($item['title']);
   // Copy feed cookies to item
