@@ -300,7 +300,7 @@ span.torrent_name {
 	margin-right: 10px;
 	}
 
-span.torrent_name div#trInfo {
+span.torrent_name div.trInfo {
 	color: green;
 	font-size: 10;
 	margin-top: 2px;

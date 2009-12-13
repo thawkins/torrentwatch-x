@@ -27,6 +27,14 @@
         });
       });
     </script>
+    <script>
+     $(document).ready(function() {
+     	  $(".trInfo").load("response.php");
+       var refreshId = setInterval(function() {
+          $("#trInfo").load('response.php?randval='+ Math.random());
+       }, 9000);
+     });
+</script>
 </head>
 <body>
 <ul class="mainoptions" id="mainoptions">
@@ -43,6 +51,7 @@
 <ul id="filterbar_container">
   <li id="filter_all" class="selected"><a href="#">All</a></li>
   <li id="filter_matching"><a href="#">Matching</a></li>
+  <li id="filter_downloading"><a href="#">Downloading</a></li>
   <li id="filter_downloaded"><a href="#">Downloaded</a></li>
   <li id="filter_bytext"><input type="text" id="filter_text_input"></li>
 </ul>

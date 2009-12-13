@@ -31,6 +31,9 @@ $(function() {
             case 'filter_matching':
                 tor.filter(".match_nomatch").addClass('hidden');
                 break;
+            case 'filter_downloading':
+                tor.not('.match_downloading').addClass('hidden');
+                break;
             case 'filter_downloaded':
                 tor.not('.match_cachehit, .match_match, .match_downloaded').addClass('hidden');
                 break;

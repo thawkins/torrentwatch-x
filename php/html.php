@@ -11,13 +11,14 @@ function finish_rss_list_html() {
   $html_out .=  "</div>\n";
 }
 
-function show_torrent_html($item, $feed, $alt, $MBDone, $totalSize, $percentage) {
+function show_torrent_html($item, $feed, $alt, $sizeDone, $totalSize, $percentage) {
   global $html_out, $matched, $test_run;
   // add word-breaking flags after each period
   if($percentage || $percentage == '0') {
     $title = preg_replace('/\./', '.&shy;', $item['title'] . 
-    "<div id=trInfo>DL: " . round($MBDone,1) . " MB of " . round($totalSize,1) . " MB (" . 
+    "<div class=trInfo>DL: $sizeDone of $totalSize (" . 
     round((int)$percentage) . "%)</div>");
+  _debug("BLA: " . $title . " --- " . $sizeDone . "\n",1);
   } else {
     $title = preg_replace('/\./', '.&shy;', $item['title']);
   }
