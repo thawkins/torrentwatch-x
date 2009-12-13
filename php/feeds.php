@@ -36,7 +36,6 @@ function episode_filter($item, $filter) {
   if(!($stop)) { $stop = "9999x9999"; }
   @list($stopSeason,$stopEpisode) = explode('x', $stop, 2);
 
-
   if(!($item['episode'])) {
     return False;
   }
@@ -200,15 +199,21 @@ function process_tor_data($client, $torId) {
   }
 
   if($client == "Transmission") {
-    $request = array('arguments' => array('fields' => array('leftUntilDone'), 'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
+    $request = array('arguments' => array('fields' => array('leftUntilDone', 'totalSize'),
+	'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
     $response = transmission_rpc($request);
-    if($response['arguments']['torrents']['0']['leftUntilDone'] > 0)  {
+    $totalSize = $response['arguments']['torrents']['0']['totalSize'];
+    $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
+    $percent = (($totalSize-$leftUntilDone)/$totalSize)*100;
+
+    _debug("BLA" . $percent, 1);
+    if($leftUntilDone > 0)  {
       $matched = 'downloading';
-    } else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched != "match" && $matched != 'cachehit') {
+    } else if($leftUntilDone == '0' && $matched != "match" && $matched != 'cachehit') {
       $matched = 'downloaded';
-    } else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched = 'cachehit') {
+    } else if($leftUntilDone == '0' && $matched = 'cachehit') {
       $matched = 'cachehit';
-    } else if(empty($response['arguments']['torrents']['0']['leftUntilDone'])) {
+    } else if($leftUntilDone) {
       $matched = 'old_download';
     }
   }
