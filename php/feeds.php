@@ -1,4 +1,19 @@
 <?php
+ function human_readable_size($size) {
+	if($size < 1024) {
+          $size = $size . " bytes";
+        } else if($size >= 1024 && $size < 1048576) {
+          $size = round($size/1024, 1) . " KB";
+        } else if($size >= 1048576 && $size < 1073741824) {
+          $size = round($size/1024/1024, 1) . " MB";
+        } else if($size >= 1073741824 && $size < 1099511627776) {
+          $size = round($size/1024/1024/1024, 1) . " GB";
+        } else if($size >= 1099511627776) {
+          $size = round($size/1024/1024/1024/1024, 1). " TB";
+        }
+return $size;
+}
+
  function get_torrent_link($rs) {
   if(isset($rs['id'])) { // Atom
     if(stristr($rs['id'], 'torrent')) // torrent link in id
@@ -246,15 +261,15 @@ function rss_perform_matching($rs, $idx) {
 	$torId = get_torId($cache_file);
 	$result = process_tor_data($client, $torId);
 	$matched = $result['matched'];
-        $MBDone = $result['bytesDone']/1024/1024;
-        $totalSize = $result['totalSize']/1024/1024;
+        $sizeDone = human_readable_size($result['bytesDone']);
+        $totalSize = human_readable_size($result['totalSize']);
 	$percentage = $result['percentage'];
 	if(!($percentage) && $matched == 'downloading') { $percentage = 0; }
 	if($matched == "match" || $matched == 'cachehit') { $percentage = 100; }
-    _debug("BLA " . $item['title'] . " $matched: " . $percentage . "%\n", 1);
+    //_debug("BLA " . $item['title'] . " $matched: " . $sizeDone . "\n", 1);
     }
     if(isset($config_values['Global']['HTMLOutput'])) {
-      show_torrent_html($item, $rs['URL'], $alt, $MBDone, $totalSize, $percentage);
+      show_torrent_html($item, $rs['URL'], $alt, $sizeDone, $totalSize, $percentage);
     }
     
     if($alt=='alt') {
