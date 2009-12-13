@@ -204,19 +204,21 @@ function process_tor_data($client, $torId) {
     $response = transmission_rpc($request);
     $totalSize = $response['arguments']['torrents']['0']['totalSize'];
     $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
-    $percent = (($totalSize-$leftUntilDone)/$totalSize)*100;
 
-    _debug("BLA" . $percent, 1);
     if($leftUntilDone > 0)  {
       $matched = 'downloading';
+      $percent = (($totalSize-$leftUntilDone)/$totalSize)*100; 
     } else if($leftUntilDone == '0' && $matched != "match" && $matched != 'cachehit') {
       $matched = 'downloaded';
+      $percent = 100;
     } else if($leftUntilDone == '0' && $matched = 'cachehit') {
       $matched = 'cachehit';
+      $percent = 100;
     } else if($leftUntilDone) {
       $matched = 'old_download';
     }
   }
+    _debug("BLA" . $percent, 1);
 
   return($matched);
 }
