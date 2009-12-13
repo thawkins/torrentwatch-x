@@ -217,7 +217,7 @@ function process_tor_data($client, $torId) {
     }
   }
 
-  return array('matched' => $matched, 'precentage' => $percentage, 'bytesDone' =>  $totalSize-$leftUntilDone, 'totalSize' => $totalSize);
+  return array('matched' => $matched, 'percentage' => $percentage, 'bytesDone' =>  $totalSize-$leftUntilDone, 'totalSize' => $totalSize);
 }
 
 function rss_perform_matching($rs, $idx) {
@@ -243,7 +243,6 @@ function rss_perform_matching($rs, $idx) {
     $client = $config_values['Settings']['Client'];
     $cache_file = $config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title']);
     if(file_exists($cache_file)) {
-    _debug("BLA: " . $percentage . "; ", 1);
 	$torId = get_torId($cache_file);
 	$result = process_tor_data($client, $torId);
 	$matched = $result['matched'];
@@ -252,6 +251,7 @@ function rss_perform_matching($rs, $idx) {
 	$percentage = $result['percentage'];
 	if(!($percentage) && $matched == 'downloading') { $percentage = 0; }
 	if($matched == "match" || $matched == 'cachehit') { $percentage = 100; }
+    _debug("BLA " . $item['title'] . " $matched: " . $percentage . "%\n", 1);
     }
     if(isset($config_values['Global']['HTMLOutput'])) {
       show_torrent_html($item, $rs['URL'], $alt, $MBDone, $totalSize, $percentage);
