@@ -247,7 +247,9 @@ ul.torrentlist li.torrent {
 	border-bottom: 1px solid #ccc;
 	padding: 0.2em 0.5em 0.3em 30px;
 	font-size: 0.9em;
-	height: 2.3em;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	
 	}
 
 li.torrent.hidden_bytext {
@@ -297,6 +299,12 @@ ul.torrentlist li.torrent.alt {
 span.torrent_name {
 	margin-right: 10px;
 	}
+
+span.torrent_name div#trInfo {
+	color: green;
+	font-size: 10;
+	margin-top: 2px;
+}
 
 span.torrent_pubDate {
 	float: right;

@@ -207,24 +207,25 @@ function process_tor_data($client, $torId) {
 
     if($leftUntilDone > 0)  {
       $matched = 'downloading';
-      $percent = (($totalSize-$leftUntilDone)/$totalSize)*100; 
+      $percentage = (($totalSize-$leftUntilDone)/$totalSize)*100; 
     } else if($leftUntilDone == '0' && $matched != "match" && $matched != 'cachehit') {
       $matched = 'downloaded';
-      $percent = 100;
+      $percentage = 100;
     } else if($leftUntilDone == '0' && $matched = 'cachehit') {
       $matched = 'cachehit';
-      $percent = 100;
+      $percentage = 100;
     } else if($leftUntilDone) {
       $matched = 'old_download';
     }
   }
-    _debug("BLA" . $percent, 1);
 
-  return($matched);
+  return array('matched' => $matched, 'precentage' => $percentage, 'bytesDone' =>  $totalSize-$leftUntilDone, 'totalSize' => $totalSize);
 }
 
 function rss_perform_matching($rs, $idx) {
   global $config_values, $matched;
+
+
   if(count($rs['items']) == 0)
     return;
   $percPerFeed = 80/count($config_values['Feeds']);
@@ -235,6 +236,7 @@ function rss_perform_matching($rs, $idx) {
   $alt = 'alt';
   // echo(print_r($rs));
   foreach($rs['items'] as $item) {
+    $percentage = '';
     $matched = "nomatch";
     if(isset($config_values['Favorites']))
       array_walk($config_values['Favorites'], 'check_for_torrent', 
@@ -244,10 +246,16 @@ function rss_perform_matching($rs, $idx) {
     $cache_file = $config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title']);
     if(file_exists($cache_file)) {
 	$torId = get_torId($cache_file);
-	$matched = process_tor_data($client, $torId);
+	$result = process_tor_data($client, $torId);
+	$matched = $result['matched'];
+        $MBDone = $result['bytesDone']/1024/1024;
+        $totalSize = $result['totalSize']/1024/1024;
+	$percentage = $result['percentage'];
+	if(!($percentage)) { $percentage = '0'; }
+    _debug("BLA: " . $percentage . "; ", 1);
     }
     if(isset($config_values['Global']['HTMLOutput'])) {
-      show_torrent_html($item, $rs['URL'], $alt);
+      show_torrent_html($item, $rs['URL'], $alt, $MBDone, $totalSize, $percentage);
     }
     
     if($alt=='alt') {
