@@ -14,7 +14,7 @@ function finish_rss_list_html() {
 function show_torrent_html($item, $feed, $alt, $MBDone, $totalSize, $percentage) {
   global $html_out, $matched, $test_run;
   // add word-breaking flags after each period
-  if(($percentage || $percentage == '0') && ($percentage != 100)) {
+  if($percentage || $percentage == '0') {
     $title = preg_replace('/\./', '.&shy;', $item['title'] . 
     "<div id=trInfo>DL: " . round($MBDone,1) . " MB of " . round($totalSize,1) . " MB (" . 
     round((int)$percentage) . "%)</div>");
