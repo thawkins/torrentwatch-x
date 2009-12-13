@@ -13,6 +13,6 @@ torrentwatch cvs -> torrentwatch-x 0.1
 	-- Changed filter behavior. You can now set a starting point as well. 1x12 as well as s01e12 syntax is allowed.
 	   Hover over the "Episodes" input field in the favorites screen for more info.
 
-0.3
+0.2.1
 	-- Added leds for Active downloads and old Downloads (see legend)
 	-- Fix that makes torrenwatch-x download PROPER and REPACK torrents regardless if the specific episode was downloaded before.
