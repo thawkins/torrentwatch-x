@@ -191,6 +191,31 @@ function get_torId($cache_file) {
   }
 }
 
+function process_tor_data($client, $torId) {
+  global $matched;
+  if($client == "folder") {
+    if($matched != "match" && $matched != 'cachehit') {
+      $matched = 'downloaded';
+    }
+  }
+
+  if($client == "Transmission") {
+    $request = array('arguments' => array('fields' => array('leftUntilDone'), 'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
+    $response = transmission_rpc($request);
+    if($response['arguments']['torrents']['0']['leftUntilDone'] > 0)  {
+      $matched = 'downloading';
+    } else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched != "match" && $matched != 'cachehit') {
+      $matched = 'downloaded';
+    } else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched = 'cachehit') {
+      $matched = 'cachehit';
+    } else if(empty($response['arguments']['torrents']['0']['leftUntilDone'])) {
+      $matched = 'old_download';
+    }
+  }
+
+  return($matched);
+}
+
 function rss_perform_matching($rs, $idx) {
   global $config_values, $matched;
   if(count($rs['items']) == 0)
@@ -208,21 +233,11 @@ function rss_perform_matching($rs, $idx) {
       array_walk($config_values['Favorites'], 'check_for_torrent', 
                  array('Obj' =>$item, 'URL' => $rs['URL']));
     _debug("$matched: $item[title]\n", 1);
+    $client = $config_values['Settings']['Client'];
     $cache_file = $config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title']);
-    //if($matched != "match" && $matched != 'cachehit' && file_exists($cache_file)) {
     if(file_exists($cache_file)) {
 	$torId = get_torId($cache_file);
-        $request = array('arguments' => array('fields' => array('leftUntilDone'), 'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
-	$response = transmission_rpc($request);
-	if($response['arguments']['torrents']['0']['leftUntilDone'] > 0) {
-          $matched = 'downloading';
-	} else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched != "match" && $matched != 'cachehit') {
-          $matched = 'downloaded';
-        } else if($response['arguments']['torrents']['0']['leftUntilDone'] == '0' && $matched = 'cachehit') {
-          $matched = 'cachehit';
-	} else if(empty($response['arguments']['torrents']['0']['leftUntilDone'])) {
-          $matched = 'old_download';
-        }
+	$matched = process_tor_data($client, $torId);
     }
     if(isset($config_values['Global']['HTMLOutput'])) {
       show_torrent_html($item, $rs['URL'], $alt);
