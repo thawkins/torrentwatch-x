@@ -9,10 +9,6 @@ function platform_initialize() {
   global $platform;
 }
 
-function platform_getConfigFile() {
-  return "/etc/torrentwatch/demo/torrentwatch.config";
-}
-
 function platform_getGunzip() {
   // not really a valid reponce, but browserEmulator willtry the gzinflate function first
   if(function_exists('gzinflate'))

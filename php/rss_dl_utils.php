@@ -17,7 +17,7 @@ $time = 0;
 
 
 // Checks array is a key is set, return value or default
-function _isset($array, $key, $default = 'Not Specified') {
+function _isset($array, $key, $default = '') {
   return isset($array[$key]) ? $array[$key] : $default;
 }
 

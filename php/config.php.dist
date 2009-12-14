@@ -1,4 +1,9 @@
 <?php
+
+function platform_getConfigFile() {
+  return "/etc/torrentwatch/torrentwatch.config";
+}
+
 function setup_default_config() {
   global $config_values;
   function _default($a, $b) {

@@ -16,3 +16,8 @@ torrentwatch cvs -> torrentwatch-x 0.1
 0.2.1
 	-- Added leds for Active downloads and old Downloads (see legend)
 	-- Fix that makes torrenwatch-x download PROPER and REPACK torrents regardless if the specific episode was downloaded before.
+
+0.3
+	-- Moved the configfile location option to config.php
+	-- Live download stats within the torrentlist. (Thanks macTijn en Habbie for the javascript help!)
+	-- Removed refresh button. not very usefull anyway.

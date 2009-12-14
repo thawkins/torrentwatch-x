@@ -35,6 +35,10 @@ function parse_options() {
 			$config_values['Settings']['FirstRun'] = FALSE;
 			write_config_file();
 			break;
+		case 'getId':
+			$response = torInfo($_REQUEST['torId']);
+			echo $response['torInfo'];
+			exit;
 		case 'updateFavorite':
 			update_favorite();
 			break;
@@ -101,6 +105,34 @@ function parse_options() {
 		$html_out = "";
 	}
 	return;
+}
+
+function torInfo($torId) {
+    	$request = array('arguments' => array('fields' => array('leftUntilDone',
+      'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
+	$response = transmission_rpc($request);
+	$totalSize = $response['arguments']['torrents']['0']['totalSize'];
+	$leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
+        $Uploaded =  $response['arguments']['torrents']['0']['uploadedEver'];
+        $Downloaded =  $response['arguments']['torrents']['0']['downloadedEver'];
+	if(!($Downloaded) && !($Uploaded)) {
+	  $Ratio = 0;
+	} else {
+	  $Ratio = $round($Uploaded/$Downloaded,2);
+	}
+	$sizeDone = human_readable_size($totalSize-$leftUntilDone);
+    	if($totalSize && $leftUntilDone) { 
+          $percentage = round((int)(($totalSize-$leftUntilDone)/$totalSize)*100,1);
+	}
+    	$totalSize = human_readable_size($totalSize);
+    	if($percentage <= 100) { $dlStatus = "downloading"; }
+    	if(!($leftUntilDone)) {
+      	  return array( 'dlStatus' => 'old_download' );
+    	} else {
+          return array( 'torInfo' => "DL: $sizeDone of $totalSize ($percentage%)
+				      &nbsp;-&nbsp;Ratio: $Ratio",
+			'dlStatus' => $dlStatus );
+    	}
 }
 
 function display_global_config() {

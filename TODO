@@ -1,3 +1,4 @@
+- FIX platfrom.php config location.
 - Fix javascript issues with IE
 - Remove torrents which are done. (paused and met ratio requirements)
 - Add list of TV Shows to choose from.

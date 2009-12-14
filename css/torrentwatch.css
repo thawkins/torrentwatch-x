@@ -106,10 +106,6 @@ ul.mainoptions li a {
 	display: block;
 	}
 
-ul.mainoptions li#refresh a {
-	background: url(../images/nuvola_refresh.png) no-repeat center 0;
-	}
-
 ul.mainoptions li#favoritesMenu a {
 	background: url(../images/nuvola_bookmark.png) no-repeat center 0;
 	}
@@ -243,6 +239,7 @@ ul.torrentlist li.header {
 	text-align: center;
 	}
 
+ul.torrentlist li.legend,
 ul.torrentlist li.torrent {
 	border-bottom: 1px solid #ccc;
 	padding: 0.2em 0.5em 0.3em 30px;
@@ -256,42 +253,52 @@ li.torrent.hidden_bytext {
 	display: none;
 	}
 
+ul.torrentlist li.legend.match_nomatch,
 ul.torrentlist li.torrent.match_nomatch {
 	background: transparent url('../images/nuvola_ledred.png') no-repeat 0.2em center;
 	}
 
+ul.torrentlist li.legend.match_match,
 ul.torrentlist li.torrent.match_match {
 	background: transparent url('../images/nuvola_ledorange.png') no-repeat 0.2em center;
 	}
 
+ul.torrentlist li.legend.match_downloaded,
 ul.torrentlist li.torrent.match_downloaded {
         background: transparent url('../images/nuvola_ledlightgreen.png') no-repeat 0.2em center;
         }
 
+ul.torrentlist li.legend.match_downloading,
 ul.torrentlist li.torrent.match_downloading {
         background: transparent url('../images/green_blink.gif') no-repeat 0.2em center;
         }
 
+ul.torrentlist li.legend.match_old_download,
 ul.torrentlist li.torrent.match_old_download {
         background: transparent url('../images/grey_led.png') no-repeat 0.2em center;
         }
 
+ul.torrentlist li.legend.match_cachehit,
 ul.torrentlist li.torrent.match_cachehit {
 	background: transparent url('../images/nuvola_ledgreen.png') no-repeat 0.2em center;
 	}
 
+ul.torrentlist li.legend.match_duplicate ,
 ul.torrentlist li.torrent.match_duplicate {
 	background: transparent url('../images/nuvola_ledyellow.png') no-repeat 0.2em center;
 	}
 
+ul.torrentlist li.legend.match_old ,
 ul.torrentlist li.torrent.match_old {
 	background: transparent url('../images/nuvola_ledlightblue.png') no-repeat 0.2em center;
 	}
 
+ul.torrentlist li.legend.match_test ,
 ul.torrentlist li.torrent.match_test {
 	background: transparent url('../images/nuvola_ledpurple.png') no-repeat 0.2em center;
 	}
 
+ul.torrentlist li.legend.alt ,
 ul.torrentlist li.torrent.alt {
 	background-color: #EDF3FE;
 	}
@@ -300,10 +307,10 @@ span.torrent_name {
 	margin-right: 10px;
 	}
 
-span.torrent_name div.trInfo {
+span.torrent_name div.torInfo {
 	color: green;
 	font-size: 10;
-	margin-top: 2px;
+	margin-top: 5px;
 }
 
 span.torrent_pubDate {
