@@ -120,15 +120,15 @@ function torInfo($torId) {
 	} else {
 	  $Ratio = round($Uploaded/$Downloaded,2);
 	}
-    	if($totalSize && $leftUntilDone) { 
+    	if($totalSize) { 
           $percentage = round((int)(($totalSize-$leftUntilDone)/$totalSize)*100,1);
 	}
-    	if($percentage <= 100) { $dlStatus = "downloading"; }
+    	if($percentage < 100) { $dlStatus = "downloading"; }
     	if(!($totalSize)) {
       	  return array( 'dlStatus' => 'old_download' );
     	} else {
-    	  $totalSize = human_readable_size($totalSize);
 	  $sizeDone = human_readable_size($totalSize-$leftUntilDone);
+    	  $totalSize = human_readable_size($totalSize);
           return array( 'torInfo' => "DL: $sizeDone of $totalSize ($percentage%)
 				      &nbsp;-&nbsp;Ratio: $Ratio",
 			'dlStatus' => $dlStatus );
