@@ -27,13 +27,9 @@ function transmission_sessionId() {
   $header = curl_exec($sid);
   curl_close($sid);
   
-  _debug("http://$tr_host:$tr_port/$tr_uri",0);
-  _debug($header,0);
-
   preg_match("/X-Transmission-Session-Id:\s(\w+)/",$header,$ID);
-  $SessionId = $ID[1];
 
-  return $SessionId;
+  return $ID[1];
 }
 
 function transmission_rpc($request) {
@@ -119,7 +115,6 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio = -1) {
   $torId = $response['arguments']['torrent-added']['id'];
 
   if($seedRatio != "" && $seedRatio >= 0 && ($torId)) {
-    exec('touch /tmp/mekker');
     $request = array('method' => 'torrent-set',
 		     'arguments' => array('ids' => $torId,
 	 	     'seedRatioLimit' => $seedRatio,

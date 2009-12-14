@@ -11,14 +11,13 @@ function finish_rss_list_html() {
   $html_out .=  "</div>\n";
 }
 
-function show_torrent_html($item, $feed, $alt, $sizeDone, $totalSize, $percentage) {
+function show_torrent_html($item, $feed, $alt, $torId, $matched) {
   global $html_out, $matched, $test_run;
   // add word-breaking flags after each period
-  if($percentage || $percentage == '0') {
-    $title = preg_replace('/\./', '.&shy;', $item['title'] . 
-    "<div class=trInfo>DL: $sizeDone of $totalSize (" . 
-    round((int)$percentage) . "%)</div>");
-  _debug("BLA: " . $title . " --- " . $sizeDone . "\n",1);
+  if($matched == "cachehit" || $matched == "downloaded") {
+    $torInfo = torInfo($torId); 
+    if($torInfo['dlStatus']) { $matched = $torInfo['dlStatus']; }
+    $title = preg_replace('/\./', '.&shy;', $item['title']) . "<div id=$torId class=torInfo>" .$torInfo['torInfo'] . "</div>";
   } else {
     $title = preg_replace('/\./', '.&shy;', $item['title']);
   }

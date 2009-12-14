@@ -194,10 +194,10 @@ $(function() {
         this.contextMenu("CM1", {
             bindings: {
                 'addToFavorites': function(t) {
-                    $.get($(t).find("a.context_link:first").get(0).href, '', $.loadDynamicData, 'html')
+                    $.get($(t).find("a.context_link.fav:first").get(0).href, '', $.loadDynamicData, 'html')
                 },
                 'startDownloading': function(t) {
-                    $.get($(t).find("a.context_link:last")[0].href);
+                    $.get($(t).find("a.context_link.start:first")[0].href);
                 }
             }
         });
