@@ -1,10 +1,7 @@
-- FIX platfrom.php config location.
 - Fix javascript issues with IE
 - Remove torrents which are done. (paused and met ratio requirements)
 - Add list of TV Shows to choose from.
-- Show download status in the torrentwatch-x gui.
 - Manage downloads via torrentwatch-x gui.
-- Execute script on finished download.
 - Delete old episodes from transmission which are replaces by REPACK or PROPER episodes.
 
 - Torrent client support:
