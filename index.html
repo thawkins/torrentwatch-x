@@ -7,7 +7,7 @@
   <link rel="Stylesheet" type="text/css" href="css/reset.css" />
   <link rel="Stylesheet" type="text/css" href="css/torrentwatch.css" />
   <link rel="stylesheet" type="text/css" href="css/greybox.css" media="all" />
-  <link media="only screen and (max-device-width: 480px)" href="css/iphone.css" type= "text/css" rel="stylesheet" /> 
+  <!-- <link media="only screen and (max-device-width: 480px)" href="css/iphone.css" type= "text/css" rel="stylesheet" /> -->
   <!--[if IE]>
     <link rel="Stylesheet" type="text/css" href="css/ie.css"></link>
   <![endif]-->
@@ -27,15 +27,17 @@
         });
       });
     </script>
-    <script>
+    <!--<script>
      $(document).ready(function() { 
 		setInterval(function() {
 		$('.torInfo').each(function(i){
+		    var torInfo = 1;
 		    $($('.torInfo')[i]).load('/torrentwatch.php', $.param({'getId': 1, 'torId': this.id}))
+		    torInfo = null;
 		})
-		},10000);
+		},1000);
      });
-    </script>
+    </script>-->
 </head>
 <body>
 <ul class="mainoptions" id="mainoptions">

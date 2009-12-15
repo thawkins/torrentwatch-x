@@ -71,12 +71,6 @@ $(function() {
         }
         $("#webui a").text($(this).val())[0].href = target;
     })});
-    // Ajax progress bar
-    $("#progressbar").ajaxStart(function() {
-      $(this).show();
-    }).ajaxStop(function() {
-      $(this).hide();
-    });
     // Perform the first load of the dynamic information
     $.get('torrentwatch.php', '', $.loadDynamicData, 'html');
 
@@ -97,6 +91,23 @@ $(function() {
     $("#clear_cache a:not(.toggleDialog)").click(function() {
       $.get(this.href, '', $.loadDynamicData, 'html');
       return false;
+    });
+     $(document).ready(function() { 
+                setInterval(function() {
+                $('.torInfo').each(function(i){
+                    window.torInfo = 1;
+                    $($('.torInfo')[i]).load('/torrentwatch.php', $.param({'getId': 1, 'torId': this.id}))
+                    window.torInfo = null;
+                })
+                },1000);
+     });
+    // Ajax progress bar
+    $("#progressbar").ajaxStart(function() {
+    if(!(window.torInfo==1)) {
+      $(this).show();
+    }
+    }).ajaxStop(function() {
+      $(this).hide();
     });
 });
 
@@ -194,10 +205,10 @@ $(function() {
         this.contextMenu("CM1", {
             bindings: {
                 'addToFavorites': function(t) {
-                    $.get($(t).find("a.context_link.fav:first").get(0).href, '', $.loadDynamicData, 'html')
+                    $.get($(t).find("a.context_link_fav:first").get(0).href, '', $.loadDynamicData, 'html')
                 },
                 'startDownloading': function(t) {
-                    $.get($(t).find("a.context_link.start:first")[0].href);
+                    $.get($(t).find("a.context_link_start:first")[0].href);
                 }
             }
         });
