@@ -1,25 +1,24 @@
 <?php
- function human_readable_size($size) {
-	if($size < 1024) {
-          $size = $size . " bytes";
-        } else if($size >= 1024 && $size < 1048576) {
-          $size = round($size/1024, 1) . " KB";
-        } else if($size >= 1048576 && $size < 1073741824) {
-          $size = round($size/1024/1024, 1) . " MB";
-        } else if($size >= 1073741824 && $size < 1099511627776) {
-          $size = round($size/1024/1024/1024, 1) . " GB";
-        } else if($size >= 1099511627776) {
-          $size = round($size/1024/1024/1024/1024, 1). " TB";
-        }
-return $size;
+ function human_readable($n) {
+ $scales = Array('bytes', 'KB', 'MB', 'GB', 'TB');
+ $scale = $scales[0];
+ for ($i=1; $i < count($scales); $i++)
+ {
+   if ($n / 1024 < 2) break;
+   $n = $n / 1024;
+   $scale =  $scales[$i];
+ }
+ return round($n,2) . " $scale";
 }
 
  function get_torrent_link($rs) {
   if(isset($rs['id'])) { // Atom
     if(stristr($rs['id'], 'torrent')) // torrent link in id
       $link = $rs['id'];
+/*
     else // torrent hidden in summary
       $link = guess_atom_torrent($rs['summary']);
+*/
   } else if(isset($rs['enclosure'])) { // RSS Enclosure
     $link = $rs['enclosure']['url'];
   } else {  // Standard RSS
@@ -163,8 +162,9 @@ function parse_one_rss($feed) {
   global $config_values;
   $rss = new lastRSS;
   $rss->stripHTML = True;
+  $rss->CDATA = content; 
   $rss->cache_time = 15*60;
-  $rss->date_format = 'M j h:ia';
+  $rss->date_format = 'M j, H:i';
 
   if(isset($config_values['Settings']['Cache Dir']))
     $rss->cache_dir = $config_values['Settings']['Cache Dir'];
@@ -180,7 +180,8 @@ function parse_one_rss($feed) {
   }
   return;
 }
-    
+
+/*    
 function parse_one_atom($feed) {
   global $config_values;
   if(isset($config_values['Settings']['Cache Dir']))
@@ -196,6 +197,7 @@ function parse_one_atom($feed) {
   }
   return;
 }
+*/
 
 function get_torId($cache_file) {
   $handle = fopen($cache_file, "r");
@@ -250,6 +252,8 @@ function rss_perform_matching($rs, $idx) {
     close_feed_html();
   unset($item);
 }
+
+/*
 function atom_perform_matching($atom, $idx) {
   global $config_values, $matched;
   $atom  = array_change_key_case_ext($atom, ARRAY_KEY_LOWERCASE);
@@ -276,6 +280,7 @@ function atom_perform_matching($atom, $idx) {
     unset($item);
   }
 }
+*/
 
 function feeds_perform_matching($feeds) {
   global $config_values;
@@ -289,9 +294,11 @@ function feeds_perform_matching($feeds) {
       case 'RSS':
         rss_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key);
         break;
+/*
       case 'Atom':
         atom_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key);
         break;
+*/
       default:
         _debug("Unknown Feed. Feed: ".$feed['Link']."Type: ".$feed['Type']."\n",-1);
         break;
@@ -312,9 +319,11 @@ function load_feeds($feeds) {
       case 'RSS':
         parse_one_rss($feed);
         break;
+/*
       case 'Atom':
         parse_one_atom($feed);
         break;
+*/
       default:
         _debug("Unknown Feed. Feed: ".$feed['Link']."Type: ".$feed['Type']."\n",-1);
         break;

@@ -127,10 +127,10 @@ function torInfo($torId) {
     	if(!($totalSize)) {
       	  return array( 'dlStatus' => 'old_download' );
     	} else {
-	  $sizeDone = human_readable_size($totalSize-$leftUntilDone);
-    	  $totalSize = human_readable_size($totalSize);
+	  $sizeDone = human_readable($totalSize-$leftUntilDone);
+    	  $totalSize = human_readable($totalSize);
           return array( 'torInfo' => "DL: $sizeDone of $totalSize ($percentage%)
-				      &nbsp;-&nbsp;Ratio: $Ratio",
+			&nbsp;-&nbsp;&nbsp;Ratio: $Ratio",
 			'dlStatus' => $dlStatus );
     	}
 }
