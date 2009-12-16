@@ -196,7 +196,7 @@ class BrowserEmulator {
     }
     if ($path=="") $path = "/";
     $socket = false;
-    $socket = fsockopen($server, $this->port);
+    @$socket = fsockopen($server, $this->port, $errno, $errstr, 3);
     if ($socket) {
         $this->headerLines["Host"] = $parts['host'];
        
@@ -212,6 +212,7 @@ class BrowserEmulator {
        
         if ($this->debug) echo $request;
         fputs ($socket, $request);
+	stream_set_timeout($socket, 15);
         if (count($this->postData)>0) {
           $PostStringArray = Array();
           foreach ($this->postData AS $key=>$value) {

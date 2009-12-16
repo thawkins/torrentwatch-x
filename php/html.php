@@ -11,13 +11,13 @@ function finish_rss_list_html() {
   $html_out .=  "</div>\n";
 }
 
-function show_torrent_html($item, $feed, $alt, $torId, $matched) {
-  global $html_out, $matched, $test_run;
+function show_torrent_html($item, $feed, $alt, $torHash, $matched, $id) {
+  global $html_out, $matched, $test_run, $config_values;
   // add word-breaking flags after each period
-  if($matched == "cachehit" || $matched == "downloaded") {
-    $torInfo = torInfo($torId); 
+  if(($matched == "cachehit" || $matched == "downloaded") && $config_values['Settings']['Client'] != 'folder') {
+    $torInfo = torInfo($torHash); 
     if($torInfo['dlStatus']) { $matched = $torInfo['dlStatus']; }
-    $title = preg_replace('/\./', '.&shy;', $item['title']) . "<div id=$torId class=torInfo>" .$torInfo['torInfo'] . "</div>";
+    $title = preg_replace('/\./', '.&shy;', $item['title']) . "<div id=$torHash class=torInfo>" .$torInfo['torInfo'] . "</div>";
   } else {
     $title = preg_replace('/\./', '.&shy;', $item['title']);
   }
