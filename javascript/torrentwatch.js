@@ -141,19 +141,28 @@ $(function() {
      $(document).ready(function() {
                 setInterval(function() {
 		window.torInfo = 1;
-		$('#torlist').each(function(i) {
 		  $.getJSON('/torrentwatch.php', {'getClientData': 1}, function(json) {
 		    $.each(json.arguments.torrents, function(i, item){
 			var Ratio = Math.roundWithPrecision(item.uploadedEver/item.downloadedEver,2);
 			var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
 			if(!(Ratio > 0)) var Ratio = 0;
 			if(!(Percentage > 0)) var Percentage = 0;
-		    	var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
+		    	var clientData = "Dl:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
-			$('#' + item.hashString).after('<div class=torInfo id=' + item.hashString + '>' + clientData + '</div>').remove(); 
+			$('#' + item.hashString).after('<div class=torInfo id=' + item.hashString + '>' + clientData + '</div>').remove()
+			$('#li_' + item.hashString).addClass('bla'); 
+			if(Percentage == 100) $('#li_' + item.hashString).removeClass('match_cachehit').addClass('match_cachehit');
 		    })
+	 	    $('.torrent.match_downloading').each(function(i) {
+		      if($('.bla').length == 0) { 
+			$('.match_downloading').removeClass('match_downloading').addClass('match_old_download');
+			$('.torInfo').each(function(t) {
+			  $($('.torInfo')[t]).remove();
+			})
+		      }
+		    })
+		    $('.torrent').removeClass('bla');
 		  })
-		})
                 window.torInfo = null;
 		},3000)
     });
@@ -266,7 +275,9 @@ $(function() {
                 },
                 'startDownloading': function(t) {
 		    $.get($(t).find("a.context_link_start:first")[0].href);
-		    setTimeout("location.reload(true)",1500);
+		    /*setTimeout(function() {
+			location.reload(true)
+		    },1700);*/
         	},
             }
         });

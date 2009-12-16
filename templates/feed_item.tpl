@@ -1,4 +1,4 @@
-<li class='torrent <?php echo "match_$matched $alt"; ?>' title='<?php echo _isset($item, 'description'); ?>'>
+<li id='li_<?php echo $torHash; ?>' class='torrent <?php echo "match_$matched $alt"; ?>' title='<?php echo _isset($item, 'description'); ?>'>
 <a class='context_link_fav' 
    href='<?php echo "torrentwatch.php?matchTitle=1&rss=$feed&title=$utitle"; ?>'>
 </a>
