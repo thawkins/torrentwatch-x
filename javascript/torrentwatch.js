@@ -92,18 +92,75 @@ $(function() {
       $.get(this.href, '', $.loadDynamicData, 'html');
       return false;
     });
-     $(document).ready(function() { 
+
+      Math.formatBytes = function(bytes) {
+          var size;
+          var unit;
+
+          // Terabytes (TB).
+          if ( bytes >= 1099511627776 ) {
+              size = bytes / 1099511627776;
+                      unit = ' TB';
+
+          // Gigabytes (GB).
+         } else if ( bytes >= 1073741824 ) {
+             size = bytes / 1073741824;
+                     unit = ' GB';
+
+         // Megabytes (MB).
+         } else if ( bytes >= 1048576 ) {
+             size = bytes / 1048576;
+                     unit = ' MB';
+
+         // Kilobytes (KB).
+         } else if ( bytes >= 1024 ) {
+             size = bytes / 1024;
+                     unit = ' KB';
+
+         // The file is less than one KB
+         } else {
+             size = bytes;
+                     unit = ' bytes';
+         }
+
+              // Single-digit numbers have greater precision
+              var precision = 2;
+             size = Math.roundWithPrecision(size, precision);
+
+             // Add the decimal if this is an integer
+             if ((size % 1) == 0 && unit != ' bytes') {
+                     size = size + '.0';
+             }
+
+         return size + unit;
+     };
+     Math.roundWithPrecision = function(floatnum, precision) {
+         return Math.round ( floatnum * Math.pow ( 10, precision ) ) / Math.pow ( 10, precision );
+     };
+
+     $(document).ready(function() {
                 setInterval(function() {
-                $('.torInfo').each(function(i){
-                    window.torInfo = 1;
-                    $($('.torInfo')[i]).load('/torrentwatch.php', $.param({'getId': 1, 'torId': this.id}))
-                    window.torInfo = null;
-                })
-                },1000);
-     });
+		window.torInfo = 1;
+		$('#torlist').each(function(i) {
+		  $.getJSON('/torrentwatch.php', {'getClientData': 1}, function(json) {
+		    $.each(json.arguments.torrents, function(i, item){
+			var Ratio = Math.roundWithPrecision(item.uploadedEver/item.downloadedEver,2);
+			var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
+			if(!(Ratio > 0)) var Ratio = 0;
+			if(!(Percentage > 0)) var Percentage = 0;
+		    	var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
+			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
+			$('#' + item.hashString).after('<div class=torInfo id=' + item.hashString + '>' + clientData + '</div>').remove(); 
+		    })
+		  })
+		})
+                window.torInfo = null;
+		},3000)
+    });
+
     // Ajax progress bar
     $("#progressbar").ajaxStart(function() {
-    if(!(window.torInfo==1)) {
+    if(!(window.torInfo)) {
       $(this).show();
     }
     }).ajaxStop(function() {
@@ -208,8 +265,9 @@ $(function() {
                     $.get($(t).find("a.context_link_fav:first").get(0).href, '', $.loadDynamicData, 'html')
                 },
                 'startDownloading': function(t) {
-                    $.get($(t).find("a.context_link_start:first")[0].href);
-                }
+		    $.get($(t).find("a.context_link_start:first")[0].href);
+		    setTimeout("location.reload(true)",1500);
+        	},
             }
         });
         return this;

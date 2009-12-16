@@ -35,9 +35,13 @@ function parse_options() {
 			$config_values['Settings']['FirstRun'] = FALSE;
 			write_config_file();
 			break;
-		case 'getId':
-			$response = torInfo($_REQUEST['torId']);
-			echo $response['torInfo'];
+		case 'getClientData':
+			$response = getClientData();
+			echo $response;
+			exit;
+		case 'getHash':
+			$response = torInfo($_REQUEST['getHash']);
+			echo json_encode($response);
 			exit;
 		case 'updateFavorite':
 			update_favorite();
@@ -79,7 +83,8 @@ function parse_options() {
 			// Loaded via ajax
 			$r = client_add_torrent(trim(urldecode($_GET['link'])), $config_values['Settings']['Download Dir'], $_GET['title']);
                         if($r) add_cache($_GET['title']);
-			display_history();
+			//display_history();
+			echo $r;
 			close_html();
 			exit(0);
 			break;
@@ -107,32 +112,55 @@ function parse_options() {
 	return;
 }
 
-function torInfo($torId) {
-    	$request = array('arguments' => array('fields' => array('leftUntilDone',
-      'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => (int)$torId), 'method' => 'torrent-get', 'tag' => 3);
-	$response = transmission_rpc($request);
-	$totalSize = $response['arguments']['torrents']['0']['totalSize'];
-	$leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
-        $Uploaded =  $response['arguments']['torrents']['0']['uploadedEver'];
-        $Downloaded =  $response['arguments']['torrents']['0']['downloadedEver'];
-	if(!($Downloaded) && !($Uploaded)) {
-	  $Ratio = 0;
-	} else {
-	  $Ratio = round($Uploaded/$Downloaded,2);
+function torInfo($torHash) {
+	global $config_values;
+
+	switch($config_values['Settings']['Client']) {
+		case 'Transmission':
+			$request = array('arguments' => array('fields' => array('name', 'leftUntilDone', 'hashString',
+		      		'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => $torHash), 'method' => 'torrent-get', 'tag' => 3);
+			$response = transmission_rpc($request);
+                        $totalSize = $response['arguments']['torrents']['0']['totalSize'];
+                        $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
+                        $Uploaded =  $resronse['arguments']['torrents']['0']['uploadedEver'];
+                        $Downloaded =  $response['arguments']['torrents']['0']['downloadedEver'];
+                        if(!($Downloaded) && !($Uploaded)) {
+                          $Ratio = 0;
+                        } else {
+                          $Ratio = round($Uploaded/$Downloaded,2);
+                        }
+                        if($totalSize) { 
+                          $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
+                        }
+                        if($percentage < 100) { $dlStatus = "downloading"; }
+                        if(!($totalSize)) {
+                          return array( 'dlStatus' => 'old_download' );
+                        } else {
+                          $sizeDone = human_readable($totalSize-$leftUntilDone);
+                          $totalSize = human_readable($totalSize);
+                          return array( 'torInfo' => "DL: $sizeDone of $totalSize ($percentage%)
+                                &nbsp;-&nbsp;&nbsp;Ratio: $Ratio",
+                                'dlStatus' => $dlStatus );
+                        }
+			exit;
+		case 'default':
+			exit;
 	}
-    	if($totalSize) { 
-          $percentage = round((int)(($totalSize-$leftUntilDone)/$totalSize)*100,1);
+}
+
+function getClientData() {
+	global $config_values;
+
+	switch($config_values['Settings']['Client']) {	
+		case 'Transmission':
+			$request = array('arguments' => array('fields' => array('torrentFile', 'hashString', 'leftUntilDone',
+		      'totalSize', 'uploadedEver', 'downloadedEver')), 'method' => 'torrent-get', 'tag' => 3);
+			$response = transmission_rpc($request);
+			return json_encode($response);
+		break;
+		case 'default':
+			exit;
 	}
-    	if($percentage < 100) { $dlStatus = "downloading"; }
-    	if(!($totalSize)) {
-      	  return array( 'dlStatus' => 'old_download' );
-    	} else {
-	  $sizeDone = human_readable($totalSize-$leftUntilDone);
-    	  $totalSize = human_readable($totalSize);
-          return array( 'torInfo' => "DL: $sizeDone of $totalSize ($percentage%)
-			&nbsp;-&nbsp;&nbsp;Ratio: $Ratio",
-			'dlStatus' => $dlStatus );
-    	}
 }
 
 function display_global_config() {

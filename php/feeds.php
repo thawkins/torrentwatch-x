@@ -199,11 +199,11 @@ function parse_one_atom($feed) {
 }
 */
 
-function get_torId($cache_file) {
+function get_torHash($cache_file) {
   $handle = fopen($cache_file, "r");
   if(filesize($cache_file)) {
-    $torId = fread($handle, filesize($cache_file));
-    return $torId;
+    $torHash = fread($handle, filesize($cache_file));
+    return $torHash;
   }
 }
 
@@ -219,10 +219,11 @@ function rss_perform_matching($rs, $idx) {
     show_feed_html($rs, $idx);
   }
   $alt = 'alt';
-  // echo(print_r($rs));
+  if(!($fnr)) { $fnr = 1; } else { $fnr++; };
+  if(strlen($fnr) <= 1) $fnr = 0 . $fnr;
   foreach($rs['items'] as $item) {
     $percentage = '';
-    $torId = '';
+    $torHash = '';
     $matched = "nomatch";
     if(isset($config_values['Favorites'])) {
       array_walk($config_values['Favorites'], 'check_for_torrent', 
@@ -232,14 +233,17 @@ function rss_perform_matching($rs, $idx) {
     $client = $config_values['Settings']['Client'];
     $cache_file = $config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title']);
     if(file_exists($cache_file)) {
-      $torId = get_torId($cache_file);
+      $torHash = get_torHash($cache_file);
       if($matched != "match" && $matched != 'cachehit' && file_exists($cache_file)) {
 	$matched = 'downloaded';
         _debug("matched: " . $item . "\n", 1);
       }
     }
     if(isset($config_values['Global']['HTMLOutput'])) {
-      show_torrent_html($item, $rs['URL'], $alt, $torId, $matched);
+      if(!($rsnr)) { $rsnr = 1; } else { $rsnr++; };
+      if(strlen($rsnr) <= 1) $rsnr = 0 . $rsnr;
+      $id = $fnr . $rsnr;
+      show_torrent_html($item, $rs['URL'], $alt, $torHash, $matched, $id);
     }
     
     if($alt=='alt') {

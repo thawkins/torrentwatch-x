@@ -112,11 +112,11 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio = -1) {
   _debug(json_encode($response),0);
   _debug("\r\n",0);
 
-  $torId = $response['arguments']['torrent-added']['id'];
+  $torHash = $response['arguments']['torrent-added']['hashString'];
 
-  if($seedRatio != "" && $seedRatio >= 0 && ($torId)) {
+  if($seedRatio != "" && $seedRatio >= 0 && ($torHash)) {
     $request = array('method' => 'torrent-set',
-		     'arguments' => array('ids' => $torId,
+		     'arguments' => array('hashString' => $torHash,
 	 	     'seedRatioLimit' => $seedRatio,
 		     'seedRatioMode' => 1)
 		    );
@@ -128,9 +128,11 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio = -1) {
 
   if(isset($response['result']) AND ($response['result'] == 'success' or $response['result'] == 'duplicate torrent')) {
     $cache = $config_values['Settings']['Cache Dir'] . "rss_dl_" . filename_encode($title);
-    $handle = fopen("$cache", "w");
-    fwrite($handle, $torId);
-    fclose($handle);
+    if($torHash) {
+      $handle = fopen("$cache", "w");
+      fwrite($handle, $torHash);
+      fclose($handle);
+    }
     return 0;
   } else {
     if(!isset($response['result']))
