@@ -147,11 +147,11 @@ $(function() {
 			var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
 			if(!(Ratio > 0)) var Ratio = 0;
 			if(!(Percentage > 0)) var Percentage = 0;
-		    	var clientData = "Dl:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
+		    	var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
-			$('#tor_' + item.hashString).after('<div class=torInfo id=tor_' + item.hashString + '>' + clientData + '</div>').remove()
-			$('#' + item.hashString).addClass('active'); 
-			if(Percentage == 100) $('#tor_' + item.hashString).removeClass('match_cachehit').addClass('match_cachehit');
+			$('.tor_' + item.hashString).html(clientData);
+			$('.' + item.hashString).addClass('active'); 
+			if(Percentage == 100) $('.tor_' + item.hashString).removeClass('match_cachehit').addClass('match_cachehit');
 		    })
                     $('.torrent.match_downloading').each(function(i) {
                       if(this.className.match(/active/) != 'active') { 
@@ -162,7 +162,7 @@ $(function() {
 		  })
 		  $('.torrent').removeClass('active');
                   window.torInfo = null;
-		},3000)
+		},10000)
     });
 
     // Ajax progress bar
