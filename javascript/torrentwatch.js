@@ -147,11 +147,11 @@ $(function() {
 			var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
 			if(!(Ratio > 0)) var Ratio = 0;
 			if(!(Percentage > 0)) var Percentage = 0;
-		    	var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
+		    	var clientData = "Dl:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
 			$('.tor_' + item.hashString).html(clientData);
 			$('.' + item.hashString).addClass('active'); 
-			if(Percentage == 100) $('.tor_' + item.hashString).removeClass('match_cachehit').addClass('match_cachehit');
+			if(item.leftUntilDone = 0 ) $('.tor_' + item.hashString).removeClass('match_downloading').addClass('match_cachehit');
 		    })
                     $('.torrent.match_downloading').each(function(i) {
                       if(this.className.match(/active/) != 'active') { 
@@ -273,9 +273,9 @@ $(function() {
                 },
                 'startDownloading': function(t) {
 		    $.get($(t).find("a.context_link_start:first")[0].href);
-		    /*setTimeout(function() {
+		    setTimeout(function() {
 			location.reload(true)
-		    },1700);*/
+		    },1700);
         	},
             }
         });
