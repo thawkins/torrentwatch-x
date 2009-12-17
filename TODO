@@ -1,0 +1,10 @@
+- Fix javascript issues with IE
+- Remove torrents which are done. (paused and met ratio requirements)
+- Add list of TV Shows to choose from.
+- Manage downloads via torrentwatch-x gui.
+- Delete old episodes from transmission which are replaces by REPACK or PROPER episodes.
+
+- Torrent client support:
+	- utorrent support
+	- rtorrent support
+	- vuze support

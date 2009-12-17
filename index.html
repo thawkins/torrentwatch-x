@@ -1,0 +1,185 @@
+<html>
+<head>
+  <title>TorrentWatch-X</title>
+  <meta name="viewport" content="width=device-width,user-scalable=no" />
+
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="Stylesheet" type="text/css" href="css/reset.css" />
+  <link rel="Stylesheet" type="text/css" href="css/torrentwatch.css" />
+  <link rel="stylesheet" type="text/css" href="css/greybox.css" media="all" />
+  <!--
+  <link media="only screen and (max-device-width: 480px)" href="css/iphone.css" type= "text/css" rel="stylesheet" />
+  -->
+  <!--[if IE]>
+    <link rel="Stylesheet" type="text/css" href="css/ie.css"></link>
+  <![endif]-->
+  <script type="text/javascript" src="javascript/jquery-1.3.1.js"></script>
+  <script type="text/javascript" src="javascript/jquery.contextmenu.r2.js"></script>
+  <script type="text/javascript" src="javascript/jquery.cookie.js"></script>
+  <script type="text/javascript" src="javascript/jquery.tinysort.js"></script>
+  <script type="text/javascript" src="../javascript/greybox.js"></script>
+  <script type="text/javascript" src="javascript/torrentwatch.js"></script>
+    <script type="text/javascript">
+      var GB_ANIMATION = true;
+      $(document).ready(function(){
+        $("a.greybox").click(function(){
+          var t = this.title || $(this).text() || this.href;
+          GB_show(t,this.href,600,960);
+          return false;
+        });
+      });
+    </script>
+</head>
+<body>
+<ul class="mainoptions" id="mainoptions">
+  <li id="config"><a class="toggleDialog" href="#configuration">Configure</a></li>
+  <li id="favoritesMenu"><a class="toggleDialog" href="#favorites">Favorites</a></li>
+  <li class="divider">&nbsp;</li>
+  <li id="view"><a class="toggleDialog" href="#history">View History</a></li>
+  <li id="empty"><a class="toggleDialog" href="#clear_cache">Empty Cache</a></li>
+  <li id='webui'><a href='#' class="greybox">Client UI</a></li>
+  <li id="legend"><a class='toggleDialog' href='#show_legend'>Legend</a></li>
+</ul>
+<ul id="filterbar_container">
+  <li id="filter_all" class="selected"><a href="#">All</a></li>
+  <li id="filter_matching"><a href="#">Matching</a></li>
+  <li id="filter_downloading"><a href="#">Downloading</a></li>
+  <li id="filter_downloaded"><a href="#">Downloaded</a></li>
+  <li id="filter_bytext"><input type="text" id="filter_text_input"></li>
+</ul>
+<div class="progressbar dialog_window" id="progressbar">
+ <span>Loading . . .</span>
+</div>
+<div class="context_menu" id="CM1">
+  <ul>
+    <li id="addToFavorites">Add to Favorites</li>
+    <li id="startDownloading">Start Downloading</li>
+    <!--<li id="pauseDownload">Pause Download</li>
+    <li id="mvDownload">Move Data</li>
+    <li id="rmTorrent">Trash Torrent</li>
+    <li id="rmDownload">Trash Download</li>-->
+  </ul>
+</div>
+<div class="dialog_window" id="clear_cache"> 
+  <h2 class="dialog heading">Which Cache</h2>
+  <a class="toggleDialog button" href="#">Close</a>
+  <a class="button" href="torrentwatch.php?clearCache=1&type=feeds">Feeds</a>
+  <a class="button" href="torrentwatch.php?clearCache=1&type=torrents">Torrents</a>
+  <a class="button"href="torrentwatch.php?clearCache=1&type=all">All</a>
+</div> 
+<div class="dialog_window" id="show_legend"> 
+    <ul id='torrentlist' class='torrentlist'>
+      <li class='legend match_nomatch'>
+        <span class='torrent_name'><b>No Match</b> <br> <i>Will not be downloaded</i></span>
+      <li class='legend match_duplicate'>
+        <span class='torrent_name'><b>Duplicate Episode</b><br><i> Same episode downloaded previously.  Will not be downloaded.</i></span>
+      <li class='legend match_old'>
+        <span class='torrent_name'><b>Old Episode</b><br><i> Episode is Older than the most recently downloaded episode.</i></span>
+      <li class='legend match_downloading'>
+        <span class='torrent_name'><b>Cache Hit - Downloading</b><br><i> This item is downloading.</i></span>
+      <li class='legend match_cachehit'>
+        <span class='torrent_name'><b>Cache Hit - Downloaded</b><br><i> This item is downloaded.</i></span>
+      <li class='legend match_downloaded'>
+        <span class='torrent_name'><b>Cache Hit - Manualy Downloaded</b><br><i> This item was manualy downloaded.</i></span>
+      <li class='legend match_old_download'>
+        <span class='torrent_name'><b>Cache Hit - Old Download</b><br><i> This item was downloaded but is no longer in the torrent client.</i></span>
+      <li class='legend match_test'>
+        <span class='torrent_name'><b>Test Hit</b><br><i> This item is ready to download.  Press Refresh to start all test hits.</i></span>
+      <li class='legend match_match'>
+        <span class='torrent_name'><b>New Hit</b><br><i> This item has just been started.</i></span>
+    </ul>
+    <a class="toggleDialog button" href="#">Close</a>
+</div> 
+<form id="welcome_form" action="torrentwatch.php">
+  <input type="hidden" name="firstRun" value="1">
+  <input type="hidden" name="button" value="Add">
+  <div id="welcome1" class="dialog_window welcome">
+    <h2 class="dialog_heading">Welcome to TorrentWatch-X</h2>
+      <br>
+      <label class="item">TorrentWatch-X is a browser based program designed to bring TV shows from the internet to your living room.</label>
+      <label class="item">TorrentWatch-X accesses feeds from the internet to tell it about newly avaiable shows.</label>
+      <label class="item">You will need to answer a few simple questions to get started.</label>
+    <a class="toggleDialog button" href="#welcome2">Next</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+
+  <div id="welcome2" class="dialog_window welcome">
+    <h2 class="dialog_heading">Choose a Client</h2>
+    <label class="category">Only one real option for now :)</label>
+    <br>
+    <div class="form_radio">
+      <input type="radio" name="client" value="Transmission">
+      <label class="item">Transmission</label>
+    </div>
+    <div class="form_radio">
+      <input type="radio" name="client" value="folder">
+      <label class="item">Save torrent in folder</label>
+    </div>
+
+    <a class="toggleDialog button" href="#welcome3">Next</a>
+    <a class="toggleDialog button" href="#welcome1">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+
+  <div id="welcome3" class="dialog_window welcome">
+    <h2 class="dialog_heading">Choose a Feed</h2>
+      <br>
+      <label class="item">TorrentWatch-X requires a feed from the internet that will point it to the TV Episodes.<br>&nbsp;&nbsp; Choose a feed from the list or add your own feed from the net.</label>
+    <br><br>
+    <div class="form_radio">
+      <input type="radio" name="link" value="http://ezrss.it/feed/"><label class="item">ezRSS</label>
+      <label class="item">The EzTV feed from ezRSS.it</label>
+    </div>
+    <div class="form_radio">
+      <input type="radio" name="link" value="http://rss.bt-chat.com/?group=3&cat=9"><label class="item">BTChat.com - TV Shows</label>
+      <label class="item">TVShows from bt-chat.com</label>
+    </div>
+    <div class="form_radio">
+      <input type="radio" name="link" value="http://rss.thepiratebay.org/205"><label class="item">Piratebay - TV Shows</label>
+      <label class="item">TVShows from piratebay.com</label>
+    </div>
+    <a class="toggleDialog button" href="#welcome4">Next</a>
+    <a class="toggleDialog button" href="#welcome2">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+  <div id="welcome4" class="dialog_window welcome">
+    <h2 class="dialog_heading">Favorites Settings</h2>
+    <br>
+    <label class="item">Torrent Watch has a few different settings that effect which matches will be downloaded, and<br>&nbsp;&nbsp; which will be passed over.</label>
+    <label class="category">
+      <input type="checkbox" name="onlynewer" value="1" selected="selected">
+      Newer Episodes Only
+    </label>
+    <label class="item">Only download newer episodes.  So if previously S3E10 has been downloaded for a particular<br>&nbsp;&nbsp; favorite, when S2E03 shows up in the feed it will be skipped</label>
+    <label class="category">
+      <input type="checkbox" name="verifyepisodes" value="1" selected="selected">
+      Verify Episodes
+    </label>
+      <label class="item">Only download each episode once.  So if previously S01E13 had been downloaded, a second copy<br>&nbsp;&nbsp; of S01E13 showing up in a feed will not be downloaded.  Items tagged Proper or Repack are an<br>&nbsp;&nbsp; exception to this setting.</label>
+    <label class="category">
+      <input type="checkbox" name="savetorrents" value=1>
+      Save torrent files
+    </label>
+    <label class="item">Save the related .torrent file in the download directory</label>
+    <br>
+
+    <a class="toggleDialog button" href="#welcome5">Next</a>
+    <a class="toggleDialog button" href="#welcome3">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+
+  <div id="welcome5" class="dialog_window welcome">
+    <h2 class="dialog_heading">Initial Configuration is Complete!</h2>
+    <br>
+    <label class="item">To get started click Apply below and you will be presented with the episodes in your chosen feed.</label>
+    <label class="item">Right click on any show on the list and add it to your favorites.<br>Once a show is in your favorites it will automatically download every week</label>
+    <br>
+    <label class="category">Note</label>
+    <label class="item">Please make sure that you've created "/etc/torrentwatch/" and made it writeable for the webserver.</label>
+
+    <a class="submitForm button" id="Apply" href="#">Apply</a>
+    <a class="toggleDialog button" href="#welcome4">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+</form>
+</body></html>
