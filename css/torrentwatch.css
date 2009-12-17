@@ -262,12 +262,12 @@ ul.torrentlist li.legend.match_match,
 ul.torrentlist li.torrent.match_match {
 	background: transparent url('../images/nuvola_ledorange.png') no-repeat 0.2em center;
 	}
-
+/*
 ul.torrentlist li.legend.match_downloaded,
 ul.torrentlist li.torrent.match_downloaded {
         background: transparent url('../images/nuvola_ledlightgreen.png') no-repeat 0.2em center;
         }
-
+*/
 ul.torrentlist li.legend.match_downloading,
 ul.torrentlist li.torrent.match_downloading {
         background: transparent url('../images/green_blink.gif') no-repeat 0.2em center;
@@ -279,7 +279,8 @@ ul.torrentlist li.torrent.match_old_download {
         }
 
 ul.torrentlist li.legend.match_cachehit,
-ul.torrentlist li.torrent.match_cachehit {
+ul.torrentlist li.torrent.match_cachehit,
+ul.torrentlist li.torrent.match_downloaded {
 	background: transparent url('../images/nuvola_ledgreen.png') no-repeat 0.2em center;
 	}
 

@@ -151,7 +151,7 @@ $(function() {
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
 			$('.tor_' + item.hashString).html(clientData);
 			$('.' + item.hashString).addClass('active'); 
-			if(item.leftUntilDone == 0 ) $('.' + item.hashString).removeClass('match_downloading').addClass('match_cachehit');
+                        if(item.leftUntilDone == 0) $('.' + item.hashString + '.match_downloading').removeClass('match_downloading').addClass('match_cachehit');
 		    })
                     $('.torrent.match_downloading').each(function(i) {
                       if(this.className.match(/active/) != 'active') { 
@@ -274,7 +274,7 @@ $(function() {
                 'startDownloading': function(t) {
 		    $.get($(t).find("a.context_link_start:first")[0].href);
 		    setTimeout(function() {
-			location.reload(true)
+			location.reload()
 		    },1700);
         	},
             }
