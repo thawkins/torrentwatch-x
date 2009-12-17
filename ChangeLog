@@ -26,5 +26,9 @@ torrentwatch cvs -> torrentwatch-x 0.1
 	-- Added support for CDATA sections within xml rss-feeds.
 	-- Moved the configfile location option to config.php
 	-- Live download stats within the torrentlist.
+	   Updates every 5 minutes.
 	  (Thanks macTijn and Habbie for the javascript help)
 	-- Removed refresh button. not very usefull anyway.
+	-- Auto refresh every 5 minutes.
+
+0.4
