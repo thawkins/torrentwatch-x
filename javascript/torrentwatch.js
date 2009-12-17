@@ -298,4 +298,6 @@ $(function() {
       return this.removeClass('alt').filter(":visible:even").addClass('alt');
     };
 })(jQuery);
-
+setTimeout(function() {
+    location.reload()
+},300000);

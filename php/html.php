@@ -14,7 +14,7 @@ function finish_rss_list_html() {
 function show_torrent_html($item, $feed, $alt, $torHash, $matched, $id) {
   global $html_out, $matched, $test_run, $config_values;
   // add word-breaking flags after each period
-  if(($matched == "cachehit" || $matched == "downloaded") && $config_values['Settings']['Client'] != 'folder') {
+  if(($matched == "cachehit" || $matched == "downloaded" || $matched == "match") && $config_values['Settings']['Client'] != 'folder') {
     $torInfo = torInfo($torHash); 
     if($torInfo['dlStatus']) { $matched = $torInfo['dlStatus']; }
     $title = preg_replace('/\./', '.&shy;', $item['title']) . '<div id="tor_' . $id . '" "class="torInfo tor_' . $torHash . '" >' . $torInfo['torInfo'] . "</div>";
