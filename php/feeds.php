@@ -219,8 +219,6 @@ function rss_perform_matching($rs, $idx) {
     show_feed_html($rs, $idx);
   }
   $alt = 'alt';
-  if(!($fnr)) { $fnr = 1; } else { $fnr++; };
-  if(strlen($fnr) <= 1) $fnr = 0 . $fnr;
   foreach($rs['items'] as $item) {
     $percentage = '';
     $torHash = '';
@@ -240,9 +238,9 @@ function rss_perform_matching($rs, $idx) {
       }
     }
     if(isset($config_values['Global']['HTMLOutput'])) {
-      if(!($rsnr)) { $rsnr = 1; } else { $rsnr++; };
+      if(!($rsnr)) { $rsnr = 1; } else { $rsnr ++; };
       if(strlen($rsnr) <= 1) $rsnr = 0 . $rsnr;
-      $id = $fnr . $rsnr;
+      $id = $idx . $rsnr;
       show_torrent_html($item, $rs['URL'], $alt, $torHash, $matched, $id);
     }
     

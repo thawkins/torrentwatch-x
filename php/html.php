@@ -17,7 +17,7 @@ function show_torrent_html($item, $feed, $alt, $torHash, $matched, $id) {
   if(($matched == "cachehit" || $matched == "downloaded") && $config_values['Settings']['Client'] != 'folder') {
     $torInfo = torInfo($torHash); 
     if($torInfo['dlStatus']) { $matched = $torInfo['dlStatus']; }
-    $title = preg_replace('/\./', '.&shy;', $item['title']) . '<div id="tor_' . $torHash . '" class="torInfo" >' . $torInfo['torInfo'] . "</div>";
+    $title = preg_replace('/\./', '.&shy;', $item['title']) . '<div id="tor_' . $id . '" "class="torInfo tor_' . $torHash . '" >' . $torInfo['torInfo'] . "</div>";
   } else {
     $title = preg_replace('/\./', '.&shy;', $item['title']);
   }
