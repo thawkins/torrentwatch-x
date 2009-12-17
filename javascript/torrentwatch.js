@@ -150,7 +150,7 @@ $(function() {
 		    	var clientData = "Dl:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
 			$('#tor_' + item.hashString).after('<div class=torInfo id=tor_' + item.hashString + '>' + clientData + '</div>').remove()
-			$('#' + item.hashString).addClass('bla'); 
+			$('#' + item.hashString).addClass('active'); 
 			if(Percentage == 100) $('#tor_' + item.hashString).removeClass('match_cachehit').addClass('match_cachehit');
 		    })
                     $('.torrent.match_downloading').each(function(i) {
