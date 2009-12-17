@@ -151,7 +151,7 @@ $(function() {
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
 			$('.tor_' + item.hashString).html(clientData);
 			$('.' + item.hashString).addClass('active'); 
-			if(item.leftUntilDone = 0 ) $('.tor_' + item.hashString).removeClass('match_downloading').addClass('match_cachehit');
+			if(item.leftUntilDone == 0 ) $('.' + item.hashString).removeClass('match_downloading').addClass('match_cachehit');
 		    })
                     $('.torrent.match_downloading').each(function(i) {
                       if(this.className.match(/active/) != 'active') { 
@@ -162,7 +162,7 @@ $(function() {
 		  })
 		  $('.torrent').removeClass('active');
                   window.torInfo = null;
-		},10000)
+		},3000)
     });
 
     // Ajax progress bar
