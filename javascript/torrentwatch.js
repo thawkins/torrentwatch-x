@@ -153,9 +153,9 @@ $(function() {
 			$('.' + item.hashString).addClass('active'); 
                         if(item.leftUntilDone == 0) $('.' + item.hashString + '.match_downloading').removeClass('match_downloading').addClass('match_cachehit');
 		    })
-                    $('.torrent.matchdownloading, .torrent.match_downloaded, .torrent.match_cachehit').each(function(i) {
+                    $('.torrent.match_downloading, .torrent.match_downloaded, .torrent.match_cachehit').each(function(i) {
                       if(this.className.match(/active/) != 'active') { 
-                        $('#' + this.id).removeClass('match_downloading').addClass('match_old_download');
+                        $('#' + this.id).removeClass('match_downloading match_downloaded match_cachehit').addClass('match_old_download');
                         $('#tor_' + this.id).remove();
                       }
                     })
