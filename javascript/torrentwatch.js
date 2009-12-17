@@ -147,7 +147,7 @@ $(function() {
 			var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
 			if(!(Ratio > 0)) var Ratio = 0;
 			if(!(Percentage > 0)) var Percentage = 0;
-		    	var clientData = "Dl:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
+		    	var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
 			$('.tor_' + item.hashString).html(clientData);
 			$('.' + item.hashString).addClass('active'); 
