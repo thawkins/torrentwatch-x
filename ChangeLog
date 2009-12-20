@@ -32,3 +32,6 @@ torrentwatch cvs -> torrentwatch-x 0.1
 	-- Auto refresh every 5 minutes.
 
 0.4
+	-- More intuitive interface, no more context menu.
+	-- Fixed some IE issues.
+	-- More transmission support.
