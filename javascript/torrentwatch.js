@@ -25,34 +25,48 @@ $(function() {
             return;
         $(this).addClass('selected').siblings().removeClass("selected");
         var filter = this.id;
-        $("div#torrentlist_container").slideUp(400, function() {
-            var tor = $("li.torrent").removeClass('hidden');
+        $("div#torrentlist_container").show(function() {
+            var tor = $("li.torrent").fadeIn("slow");
             switch (filter) {
             case 'filter_all':
-	 	$('.feed').removeClass('hidden');
-	 	$('.transmission').addClass('hidden');
+	 	if($('.transmission').is(":visible")) {
+			$('.transmission').fadeOut("normal", function() {
+				$('.feed').fadeIn("normal");
+			})
+		}
 		break;
             case 'filter_matching':
-	 	$('.feed').removeClass('hidden');
-	 	$('.transmission').addClass('hidden');
-                tor.filter(".match_nomatch").addClass('hidden');
+	 	if($('.transmission').is(":visible")) {
+			$('.transmission').fadeOut("normal", function() {
+				$('.feed').fadeIn("normal");
+			})
+		}
+                tor.filter(".match_nomatch").hide();
                 break;
             case 'filter_downloading':
-	 	$('.feed').removeClass('hidden');
-	 	$('.transmission').addClass('hidden');
-                tor.not('.match_downloading').addClass('hidden');
+	 	if($('.transmission').is(":visible")) {
+			$('.transmission').fadeOut("normal", function() {
+				$('.feed').fadeIn("normal");
+			})
+		}
+                tor.not('.match_downloading').hide();
                 break;
             case 'filter_downloaded':
-	 	$('.feed').removeClass('hidden');
-	 	$('.transmission').addClass('hidden');
-                tor.not('.match_cachehit, .match_match, .match_downloaded').addClass('hidden');
+	 	if($('.transmission').is(":visible")) {
+			$('.transmission').fadeOut("normal", function() {
+				$('.feed').fadeIn("normal");
+			})
+		}
+                tor.not('.match_cachehit, .match_match, .match_downloaded').hide();
                 break;
 	    case 'filter_transmission':
-	 	$('.feed').addClass('hidden');
-	 	$('.transmission').removeClass('hidden');
+		if($('.feed').is(":visible")) { 
+			$('.feed').hide() 
+			$('.transmission').fadeIn("normal");
+		}
 		break;
             }
-            tor.markAlt().closest("#torrentlist_container").slideDown(400);
+            tor.markAlt().closest("#torrentlist_container").fadeIn("normal");
         });
     });
     // Filter Bar -- By Text
@@ -213,11 +227,15 @@ $(function() {
                     $(current_dialog).show();
                 } else {
                     container.slideDown(400, function() {
+	    	    $('#torrentlist_container').height($(window).height() - $('#torrentlist_container').attr('offsetTop'));
                     });
                 }
             }, 50);
         }, 100);
     };
+    $(window).resize(function() {
+	    $('#torrentlist_container').height($(window).height() - $('#torrentlist_container').attr('offsetTop'));
+    })
     $.submitForm = function(button) {
         var form;
         if($(button).is('form')) { // User pressed enter
@@ -233,10 +251,10 @@ $(function() {
             var target = this.hash === '#' ? '#'+$(this).closest('.dialog_window').id : this.hash;
             current_dialog = last === target ? '' : this.hash;
             if (last) {
-                $(last).fadeOut();
+                $(last).fadeOut("slow");
             }
             if (current_dialog && this.hash != '#') {
-                $(current_dialog).fadeIn();
+                $(current_dialog).fadeIn("slow");
             }
         });
         return this;

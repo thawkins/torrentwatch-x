@@ -122,8 +122,8 @@ function torInfo($torHash) {
 			$response = transmission_rpc($request);
                         $totalSize = $response['arguments']['torrents']['0']['totalSize'];
                         $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
-                        $Uploaded =  $resronse['arguments']['torrents']['0']['uploadedEver'];
-                        $Downloaded =  $response['arguments']['torrents']['0']['downloadedEver'];
+                        $Uploaded = $response['arguments']['torrents']['0']['uploadedEver'];
+                        $Downloaded = $response['arguments']['torrents']['0']['downloadedEver'];
                         if(!($Downloaded) && !($Uploaded)) {
                           $Ratio = 0;
                         } else {
@@ -293,7 +293,12 @@ $html_out = "";
 $debug_output = "Torrentwatch Debug:";
 $verbosity = 0;
 
+display_history();
 parse_options();
+display_global_config();
+display_favorites();
+display_clearCache();
+display_legend();
 
 echo $html_out;
 $html_out = "";
@@ -304,13 +309,6 @@ if(isset($config_values['Feeds'])) {
 	load_feeds($config_values['Feeds']);
 	feeds_perform_matching($config_values['Feeds']);
 }
-
-// Comes later incase we just added a torrent	
-display_global_config();
-display_favorites();
-display_history();
-display_clearCache();
-display_legend();
 
 close_html();
 unlink_temp_files();
