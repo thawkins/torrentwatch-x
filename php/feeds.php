@@ -4,7 +4,7 @@
  $scale = $scales[0];
  for ($i=1; $i < count($scales); $i++)
  {
-   if ($n / 1024 < 2) break;
+   if ($n / 1024 < 1) break;
    $n = $n / 1024;
    $scale =  $scales[$i];
  }
