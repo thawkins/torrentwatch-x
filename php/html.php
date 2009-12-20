@@ -6,21 +6,47 @@ function setup_rss_list_html() {
   global $html_out;
   $html_out =  "<div id='torrentlist_container'>\n";
 }
+
+function show_transmission_div() {
+  global $html_out;
+  $html_out .= '<div id="transmission_list" class="transmission hidden">';
+  $html_out .= '<ul id="transmission_list" class="torrentlist">';
+  $html_out .= '<li class="header">Transmission</li>';
+}
+
+function show_transmission_list_html() {
+  global $html_out;
+  $result = json_decode(getClientData(), TRUE);
+  $i = 0;
+  foreach($result['arguments']['torrents'] as $torrent) {
+    $html_out .= '<li id="' . $torrent['id'] . '" class="torrent match_transmission ' . $torrent['hashString'] . '">
+		  <table width="100%" cellspacing="0"><tr><td class="buttons left match_transmission">
+			<p><img height=10 src="images/tor_start.png"></p>
+			<p><img height=10 src="images/tor_move.png"></p>
+		      </td><td class="buttons right match_transmission">
+		        <p><img height=10 src="images/tor_stop.png"></p>
+			<p><img height=10 src="images/tor_trash.png"></p>
+		      </td><td class="torrent_name">
+		  <span class="torrent_name">' . $torrent['name'] . '</span>
+                  <div id="tor_' . $torrent['id'] . '" class="torInfo tor_' . $torrent['hashString'] . '"></div>
+		  </td></tr></table></li>';
+    $i++;
+  }
+}
+
 function finish_rss_list_html() {
   global $html_out;
-  $html_out .=  "</div>\n";
+  $html_out .=  "</ul></div>\n";
 }
 
 function show_torrent_html($item, $feed, $alt, $torHash, $matched, $id) {
   global $html_out, $matched, $test_run, $config_values;
-  // add word-breaking flags after each period
   if(($matched == "cachehit" || $matched == "downloaded" || $matched == "match") && $config_values['Settings']['Client'] != 'folder') {
     $torInfo = torInfo($torHash); 
     if($torInfo['dlStatus']) { $matched = $torInfo['dlStatus']; }
-    $title = preg_replace('/\./', '.&shy;', $item['title']) . '<div id="tor_' . $id . '" "class="torInfo tor_' . $torHash . '" >' . $torInfo['torInfo'] . "</div>";
-  } else {
-    $title = preg_replace('/\./', '.&shy;', $item['title']);
   }
+  // add word-breaking flags after each period
+  $title = preg_replace('/\./', '.&shy;', $item['title']);
   // prepare items for use in a url
   $utitle = rawurlencode($item['title']);
   // Copy feed cookies to item
