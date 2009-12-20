@@ -28,15 +28,29 @@ $(function() {
         $("div#torrentlist_container").slideUp(400, function() {
             var tor = $("li.torrent").removeClass('hidden');
             switch (filter) {
+            case 'filter_all':
+	 	$('.feed').removeClass('hidden');
+	 	$('.transmission').addClass('hidden');
+		break;
             case 'filter_matching':
+	 	$('.feed').removeClass('hidden');
+	 	$('.transmission').addClass('hidden');
                 tor.filter(".match_nomatch").addClass('hidden');
                 break;
             case 'filter_downloading':
+	 	$('.feed').removeClass('hidden');
+	 	$('.transmission').addClass('hidden');
                 tor.not('.match_downloading').addClass('hidden');
                 break;
             case 'filter_downloaded':
+	 	$('.feed').removeClass('hidden');
+	 	$('.transmission').addClass('hidden');
                 tor.not('.match_cachehit, .match_match, .match_downloaded').addClass('hidden');
                 break;
+	    case 'filter_transmission':
+	 	$('.feed').addClass('hidden');
+	 	$('.transmission').removeClass('hidden');
+		break;
             }
             tor.markAlt().closest("#torrentlist_container").slideDown(400);
         });
@@ -155,14 +169,20 @@ $(function() {
 		    })
                     $('.torrent.match_downloading, .torrent.match_downloaded, .torrent.match_cachehit').each(function(i) {
                       if(this.className.match(/active/) != 'active') { 
-                        $('#' + this.id).removeClass('match_downloading match_downloaded match_cachehit').addClass('match_old_download');
-                        $('#tor_' + this.id).remove();
+			$('p.' + this.id).remove();
+                        $('td.buttons.' + this.id).removeClass('match_downloading match_downloaded match_cachehit').addClass('match_old_download');
+                        $('div.#tor_' + this.id).remove();
                       }
                     })
+		    $('.torrent.match_transmission, .match_tr_downloading, .match_tr_paused, .match_tr_error').each(function(i) {
+			if(this.className.match(/active/) != 'active') {
+			  $('#' + this.id).remove();
+			}
+		    })
 		  })
 		  $('.torrent').removeClass('active');
                   window.torInfo = null;
-		},10000)
+		},3000)
     });
 
     // Ajax progress bar
@@ -184,7 +204,7 @@ $(function() {
             var dynamic = $("<div id='dynamicdata' class='dyndata'/>");
             // Use innerHTML because some browsers choke with $(html) when html is many KB
             dynamic[0].innerHTML = html;
-            dynamic.find("ul.favorite > li").initFavorites().end().find("li.torrent").myContextMenu().end()
+            dynamic.find("ul.favorite > li").initFavorites().end()
                     .find("form").initForm().end().initConfigDialog().appendTo("body");
             setTimeout(function() {
                 var container = $("#torrentlist_container");
@@ -255,32 +275,6 @@ $(function() {
         });
         return this;
     };
-    $.contextMenu.defaults({
-        menuStyle: {
-            textAlign: "left",
-            width: "160px"
-        },
-        itemStyle: {
-            fontSize: "1.0em",
-            paddingLeft: "15px"
-        }
-    });
-    $.fn.myContextMenu = function() {
-        this.contextMenu("CM1", {
-            bindings: {
-                'addToFavorites': function(t) {
-                    $.get($(t).find("a.context_link_fav:first").get(0).href, '', $.loadDynamicData, 'html')
-                },
-                'startDownloading': function(t) {
-		    $.get($(t).find("a.context_link_start:first")[0].href);
-		    setTimeout(function() {
-			location.reload()
-		    },1700);
-        	},
-            }
-        });
-        return this;
-    };
     $.fn.initConfigDialog = function() {
         setTimeout(function() {
             $('select#client').change();
@@ -297,7 +291,20 @@ $(function() {
     $.fn.markAlt = function() {
       return this.removeClass('alt').filter(":visible:even").addClass('alt');
     };
+
+    $.addFavorite = function(url) {
+	$.get(url, '', $.loadDynamicData, 'html');
+    }
+    
+    $.dlTorrent = function(url) {
+	$.get(url);
+	setTimeout(function() {
+	    location.reload()
+	},1700);
+     }
 })(jQuery);
+/*
 setTimeout(function() {
     location.reload()
 },300000);
+*/

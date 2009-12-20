@@ -117,7 +117,7 @@ function torInfo($torHash) {
 
 	switch($config_values['Settings']['Client']) {
 		case 'Transmission':
-			$request = array('arguments' => array('fields' => array('name', 'leftUntilDone', 'hashString',
+			$request = array('arguments' => array('fields' => array('leftUntilDone', 'hashString',
 		      		'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => $torHash), 'method' => 'torrent-get', 'tag' => 3);
 			$response = transmission_rpc($request);
                         $totalSize = $response['arguments']['torrents']['0']['totalSize'];
@@ -153,7 +153,7 @@ function getClientData() {
 
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
-			$request = array('arguments' => array('fields' => array('torrentFile', 'hashString', 'leftUntilDone',
+			$request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'torrentFile', 'hashString', 'leftUntilDone',
 		      'totalSize', 'uploadedEver', 'downloadedEver')), 'method' => 'torrent-get', 'tag' => 3);
 			$response = transmission_rpc($request);
 			return json_encode($response);
@@ -253,6 +253,24 @@ function display_history() {
   ob_end_clean();
 }
 
+function display_legend() {
+	global $html_out;
+
+	ob_start();
+	require('templates/legend.tpl');
+	$html_out .= ob_get_contents();
+	ob_end_clean();
+}
+
+function display_clearCache() {
+	global $html_out;
+
+	ob_start();
+	require('templates/clear_cache.tpl');
+	$html_out .= ob_get_contents();
+	ob_end_clean();
+}
+
 function close_html() {
 	global $html_out, $debug_output, $main_timer;
 	echo $html_out;
@@ -277,8 +295,6 @@ $verbosity = 0;
 
 parse_options();
 
-display_global_config();
-display_favorites();
 echo $html_out;
 $html_out = "";
 ob_flush();flush();
@@ -290,7 +306,11 @@ if(isset($config_values['Feeds'])) {
 }
 
 // Comes later incase we just added a torrent	
+display_global_config();
+display_favorites();
 display_history();
+display_clearCache();
+display_legend();
 
 close_html();
 unlink_temp_files();

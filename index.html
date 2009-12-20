@@ -14,7 +14,6 @@
     <link rel="Stylesheet" type="text/css" href="css/ie.css"></link>
   <![endif]-->
   <script type="text/javascript" src="javascript/jquery-1.3.1.js"></script>
-  <script type="text/javascript" src="javascript/jquery.contextmenu.r2.js"></script>
   <script type="text/javascript" src="javascript/jquery.cookie.js"></script>
   <script type="text/javascript" src="javascript/jquery.tinysort.js"></script>
   <script type="text/javascript" src="../javascript/greybox.js"></script>
@@ -45,53 +44,12 @@
   <li id="filter_matching"><a href="#">Matching</a></li>
   <li id="filter_downloading"><a href="#">Downloading</a></li>
   <li id="filter_downloaded"><a href="#">Downloaded</a></li>
+  <li id="filter_transmission"><a href="#">Transmission</a></li>
   <li id="filter_bytext"><input type="text" id="filter_text_input"></li>
 </ul>
 <div class="progressbar dialog_window" id="progressbar">
  <span>Loading . . .</span>
 </div>
-<div class="context_menu" id="CM1">
-  <ul>
-    <li id="addToFavorites">Add to Favorites</li>
-    <li id="startDownloading">Start Downloading</li>
-    <!--<li id="pauseDownload">Pause Download</li>
-    <li id="mvDownload">Move Data</li>
-    <li id="rmTorrent">Trash Torrent</li>
-    <li id="rmDownload">Trash Download</li>-->
-  </ul>
-</div>
-<div class="dialog_window" id="clear_cache"> 
-  <h2 class="dialog heading">Which Cache</h2>
-  <a class="toggleDialog button" href="#">Close</a>
-  <a class="button" href="torrentwatch.php?clearCache=1&type=feeds">Feeds</a>
-  <a class="button" href="torrentwatch.php?clearCache=1&type=torrents">Torrents</a>
-  <a class="button"href="torrentwatch.php?clearCache=1&type=all">All</a>
-</div> 
-<div class="dialog_window" id="show_legend"> 
-    <ul id='torrentlist' class='torrentlist'>
-      <li class='legend match_nomatch'>
-        <span class='torrent_name'><b>No Match</b> <br> <i>Will not be downloaded</i></span>
-      <li class='legend match_duplicate'>
-        <span class='torrent_name'><b>Duplicate Episode</b><br><i> Same episode downloaded previously.  Will not be downloaded.</i></span>
-      <li class='legend match_old'>
-        <span class='torrent_name'><b>Old Episode</b><br><i> Episode is Older than the most recently downloaded episode.</i></span>
-      <li class='legend match_downloading'>
-        <span class='torrent_name'><b>Cache Hit - Downloading</b><br><i> This item is downloading.</i></span>
-      <li class='legend match_cachehit'>
-        <span class='torrent_name'><b>Cache Hit - Downloaded</b><br><i> This item is downloaded.</i></span>
-<!--
-      <li class='legend match_downloaded'>
-        <span class='torrent_name'><b>Cache Hit - Manualy Downloaded</b><br><i> This item was manualy downloaded.</i></span>
--->
-      <li class='legend match_old_download'>
-        <span class='torrent_name'><b>Cache Hit - Old Download</b><br><i> This item was downloaded but is no longer in the torrent client.</i></span>
-      <li class='legend match_test'>
-        <span class='torrent_name'><b>Test Hit</b><br><i> This item is ready to download.  Press Refresh to start all test hits.</i></span>
-      <li class='legend match_match'>
-        <span class='torrent_name'><b>New Hit</b><br><i> This item has just been started.</i></span>
-    </ul>
-    <a class="toggleDialog button" href="#">Close</a>
-</div> 
 <form id="welcome_form" action="torrentwatch.php">
   <input type="hidden" name="firstRun" value="1">
   <input type="hidden" name="button" value="Add">

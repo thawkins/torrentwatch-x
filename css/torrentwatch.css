@@ -215,8 +215,21 @@ input#filter_text_input.blur {
 	border-color: #CCC;
 	}
 
+/*------------
+ *
+ * L E G E N D
+ *
+ *------------*/
 
-/*--------------------------
+ul.show_legend {
+	border: 1px solid grey;
+}
+
+ul.show_legend li {
+	padding: 5px 5px 5px 5px;
+}
+
+/*-------------------------
  *
  * T O R R E N T   L I S T
  *
@@ -239,88 +252,95 @@ ul.torrentlist li.header {
 	text-align: center;
 	}
 
-ul.torrentlist li.legend,
 ul.torrentlist li.torrent {
 	border-bottom: 1px solid #ccc;
-	padding: 0.2em 0.5em 0.3em 30px;
 	font-size: 0.9em;
-	padding-top: 5px;
-	padding-bottom: 10px;
-	
 	}
 
 li.torrent.hidden_bytext {
 	display: none;
 	}
 
-ul.torrentlist li.legend.match_nomatch,
-ul.torrentlist li.torrent.match_nomatch {
-	background: transparent url('../images/nuvola_ledred.png') no-repeat 0.2em center;
-	}
-
-ul.torrentlist li.legend.match_match,
-ul.torrentlist li.torrent.match_match {
-	background: transparent url('../images/nuvola_ledorange.png') no-repeat 0.2em center;
-	}
-/*
-ul.torrentlist li.legend.match_downloaded,
-ul.torrentlist li.torrent.match_downloaded {
-        background: transparent url('../images/nuvola_ledlightgreen.png') no-repeat 0.2em center;
-        }
-*/
-ul.torrentlist li.legend.match_downloading,
-ul.torrentlist li.torrent.match_downloading {
-        background: transparent url('../images/green_blink.gif') no-repeat 0.2em center;
-        }
-
-ul.torrentlist li.legend.match_old_download,
-ul.torrentlist li.torrent.match_old_download {
-        background: transparent url('../images/grey_led.png') no-repeat 0.2em center;
-        }
-
-ul.torrentlist li.legend.match_cachehit,
-ul.torrentlist li.torrent.match_cachehit,
-ul.torrentlist li.torrent.match_downloaded {
-	background: transparent url('../images/nuvola_ledgreen.png') no-repeat 0.2em center;
-	}
-
-ul.torrentlist li.legend.match_duplicate ,
-ul.torrentlist li.torrent.match_duplicate {
-	background: transparent url('../images/nuvola_ledyellow.png') no-repeat 0.2em center;
-	}
-
-ul.torrentlist li.legend.match_old ,
-ul.torrentlist li.torrent.match_old {
-	background: transparent url('../images/nuvola_ledlightblue.png') no-repeat 0.2em center;
-	}
-
-ul.torrentlist li.legend.match_test ,
-ul.torrentlist li.torrent.match_test {
-	background: transparent url('../images/nuvola_ledpurple.png') no-repeat 0.2em center;
-	}
-
-ul.torrentlist li.legend.alt ,
 ul.torrentlist li.torrent.alt {
 	background-color: #EDF3FE;
 	}
 
-span.torrent_name {
-	margin-right: 10px;
-	}
+ul.torrentlist p {
+	padding: 2px;
+}
 
-span.torrent_name div.torInfo {
+ul.torrentlist td.buttons {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	vertical-align: middle;
+	width: 15px;
+}
+
+div#show_legend li.legend.match_nomatch,
+ul.torrentlist td.buttons.match_nomatch {
+	background-color: #fbbfbf;
+}
+
+div#show_legend li.legend.match_old_download,
+ul.torrentlist td.buttons.match_old_download {
+	background-color: lightgrey;
+}
+
+div#show_legend li.legend.match_duplicate,
+ul.torrentlist td.buttons.match_duplicate {
+	background-color: #FFFFCC;
+}
+
+div#show_legend li.legend.match_match,
+ul.torrentlist td.buttons.match_match {
+	background-color: #FFCC66;
+}
+
+div#show_legend li.legend.match_old,
+ul.torrentlist td.buttons.match_old {
+	background-color: #CCCCFF;
+}
+
+div#show_legend li.legend.match_test,
+ul.torrentlist td.buttons.match_test {
+	background-color: #FFCCFF;
+}
+
+div#show_legend li.legend.match_cachehit,
+ul.torrentlist td.buttons.match_cachehit,
+ul.torrentlist td.buttons.match_downloaded,
+ul.torrentlist td.buttons.match_downloading,
+ul.torrentlist td.buttons.match_transmission {
+	background-color: #CCFFCC;
+}
+
+ul.torrentlist td.buttons.left {
+	padding-left: 4px;
+}
+
+ul.torrentlist td.buttons.right {
+	padding-right: 5px;
+}
+
+ul.torrentlist td.torrent_name {
+	padding: 5px 5px 5px 5px;
+}
+
+ul.torrentlist div.torInfo {
 	color: green;
 	font-size: 10;
 	margin-top: 5px;
 }
 
+
+span.torrent_name {
+	margin-right: 10px;
+	}
+
 span.torrent_pubDate {
 	float: right;
 	}	
-
-a.context_link {
-	display: none;
-	}
 
 /*--------------------------
  *
@@ -342,7 +362,7 @@ div.dialog_window {
 	-moz-opacity: .95;
 	opacity: .95;
 	border: 2px solid #B5B5B5;
-	top: 100px;
+	top: 10px;
 	width: 450px;
 	margin-left: -205px;
 	padding: 5px;
@@ -506,7 +526,8 @@ div.dialog_window#favorites {
 	width: 590px;
 	margin-left: -287;
 	height: 250;
-	}
+}
+
 div.favorite {
 	height: 248px;
 	width: 180;
@@ -571,6 +592,7 @@ form.favinfo input[type=text] {
 	right: 45px;
 	width: 240px;
 	}
+
 /******************************
  *
  * H I S T O R Y   D I A L O G
@@ -610,44 +632,6 @@ div#history a#clearhistory {
 
 div#history a.toggleDialog {
 	right: 6.5em;
-	}
-
-/**************************
- *
- * C O N T E X T   M E N U
- *
- *************************/
-div.context_menu {
-	display: none;
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	border: 1px solid rgb(119, 119, 119);
-	background-color: #B0C4DE;
-	z-index: 500;
-	width: 190px;
-	}
-
-div.context_menu ul {
-	border: medium none;
-	margin: 0;
-	padding: 5px 0pt;
-	list-style-type: none;
-	list-style-image: none;
-	list-style-position: outside;
-	font-size: 14px;
-}
-
-div.context_menu ul li a {
-	display: block;
-	padding: 0 10px 2px 20px;
-	color: #000000;
-	text-decoration: none;
-	}
-
-div.context_menu ul li a:hover {
-	background-color: #B0C4DE;
-	color: #FFFFFF;
 	}
 
 /*-----------------
