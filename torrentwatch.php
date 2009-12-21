@@ -128,10 +128,10 @@ function torInfo($torHash) {
                         $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
                         $Uploaded = $response['arguments']['torrents']['0']['uploadedEver'];
                         $Downloaded = $response['arguments']['torrents']['0']['downloadedEver'];
-                        if(!($Downloaded) && !($Uploaded)) {
+                        if(!($Downloaded) || !($Uploaded)) {
                           $Ratio = 0;
                         } else {
-                          $Ratio = round($Uploaded/$Downloaded,2);
+                          $Ratio = $Uploaded/$Downloaded;
                         }
                         if($totalSize) { 
                           $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
