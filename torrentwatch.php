@@ -36,7 +36,11 @@ function parse_options() {
 			write_config_file();
 			break;
 		case 'getClientData':
-			$response = getClientData();
+			if($_REQUEST['recent']) {
+				$response = getClientData(1);
+			} else {
+				$response = getClientData(0);
+			}
 			echo $response;
 			exit;
 		case 'getHash':
@@ -117,7 +121,7 @@ function torInfo($torHash) {
 
 	switch($config_values['Settings']['Client']) {
 		case 'Transmission':
-			$request = array('arguments' => array('fields' => array('leftUntilDone', 'hashString',
+			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
 		      		'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => $torHash), 'method' => 'torrent-get', 'tag' => 3);
 			$response = transmission_rpc($request);
                         $totalSize = $response['arguments']['torrents']['0']['totalSize'];
@@ -140,7 +144,8 @@ function torInfo($torHash) {
                           $totalSize = human_readable($totalSize);
                           return array( 'torInfo' => "DL: $sizeDone of $totalSize ($percentage%)
                                 &nbsp;-&nbsp;&nbsp;Ratio: $Ratio",
-                                'dlStatus' => $dlStatus );
+                                'dlStatus' => $dlStatus,
+				'id' => $response['arguments']['torrents']['0']['id'] );
                         }
 			exit;
 		case 'default':
@@ -148,13 +153,18 @@ function torInfo($torHash) {
 	}
 }
 
-function getClientData() {
+function getClientData($recent) {
 	global $config_values;
 
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
-			$request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'torrentFile', 'hashString', 'leftUntilDone',
-		      'totalSize', 'uploadedEver', 'downloadedEver')), 'method' => 'torrent-get', 'tag' => 3);
+			if($recent) {
+			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
+		          'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => 'recently-active'), 'method' => 'torrent-get', 'tag' => 3);
+			} else {
+			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
+		          'totalSize', 'uploadedEver', 'downloadedEver')), 'method' => 'torrent-get', 'tag' => 3);
+			}
 			$response = transmission_rpc($request);
 			return json_encode($response);
 		break;

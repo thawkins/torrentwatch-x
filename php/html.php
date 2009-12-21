@@ -16,10 +16,11 @@ function show_transmission_div() {
 
 function show_transmission_list_html() {
   global $html_out;
-  $result = json_decode(getClientData(), TRUE);
+  $result = json_decode(getClientData(0), TRUE);
   $i = 0;
   foreach($result['arguments']['torrents'] as $torrent) {
-    $html_out .= '<li id="' . $torrent['id'] . '" class="torrent match_transmission ' . $torrent['hashString'] . '">
+    $torInfo = torInfo($torrent['hashString']); 
+    $html_out .= '<li id="tr_id_' . $torrent['id'] . '" class="torrent match_transmission ' . $torrent['hashString'] . '">
 		  <table width="100%" cellspacing="0"><tr><td class="buttons left match_transmission">
 			<p><img height=10 src="images/tor_start.png"></p>
 			<p><img height=10 src="images/tor_move.png"></p>
@@ -28,7 +29,7 @@ function show_transmission_list_html() {
 			<p><img height=10 src="images/tor_trash.png"></p>
 		      </td><td class="torrent_name">
 		  <span class="torrent_name">' . $torrent['name'] . '</span>
-                  <div id="tor_' . $torrent['id'] . '" class="torInfo tor_' . $torrent['hashString'] . '"></div>
+                  <div id="tor_' . $torrent['id'] . '" class="torInfo tor_' . $torrent['hashString'] . '">' . $torInfo['torInfo'] . '</div>
 		  </td></tr></table></li>';
     $i++;
   }

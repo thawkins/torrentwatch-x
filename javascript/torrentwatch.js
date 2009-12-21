@@ -169,7 +169,7 @@ $(function() {
      $(document).ready(function() {
                 setInterval(function() {
 		window.torInfo = 1;
-		  $.getJSON('/torrentwatch.php', {'getClientData': 1}, function(json) {
+		  $.getJSON('/torrentwatch.php', {'getClientData': 1, 'recent': 1}, function(json) {
 		    $.each(json.arguments.torrents, function(i, item){
 			var Ratio = Math.roundWithPrecision(item.uploadedEver/item.downloadedEver,2);
 			var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
@@ -178,19 +178,14 @@ $(function() {
 		    	var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
 			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
 			$('.tor_' + item.hashString).html(clientData);
-			$('.' + item.hashString).addClass('active'); 
                         if(item.leftUntilDone == 0) $('.' + item.hashString + '.match_downloading').removeClass('match_downloading').addClass('match_cachehit');
 		    })
-                    $('.torrent.match_downloading, .torrent.match_downloaded, .torrent.match_cachehit').each(function(i) {
-                      if(this.className.match(/active/) != 'active') { 
-			$('p.' + this.id).remove();
-                        $('td.buttons.' + this.id).removeClass('match_downloading match_downloaded match_cachehit').addClass('match_old_download');
-                        $('div.#tor_' + this.id).remove();
-                      }
-                    })
-		    $('.torrent.match_transmission, .match_tr_downloading, .match_tr_paused, .match_tr_error').each(function(i) {
-			if(this.className.match(/active/) != 'active') {
-			  $('#' + this.id).remove();
+		    $.each(json.arguments.removed, function(i, item){
+			if($('#tr_id_' + item).length != 0) {
+				$('div#tr_id_' + item).remove();
+				$('div.torInfo.tr_id_' + item).remove();
+				$('p.tr_id_' + item).remove();
+				$('td.buttons.tr_id_' + item).removeClass('match_downloading match_downloaded match_cachehit').addClass('match_old_download');
 			}
 		    })
 		  })
