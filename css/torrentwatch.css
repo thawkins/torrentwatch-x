@@ -368,6 +368,10 @@ div.dialog_window {
 	padding: 5px;
 	}
 
+div#configuration  {
+	top: 10px;
+}
+
 h2.dialog_heading {
 	font-size: 1.3em;
 	text-align: center;

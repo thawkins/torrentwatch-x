@@ -318,4 +318,4 @@ $(function() {
 })(jQuery);
 setTimeout(function() {
     location.reload()
-},300000);
+},900000);
