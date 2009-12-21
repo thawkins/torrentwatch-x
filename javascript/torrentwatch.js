@@ -191,7 +191,7 @@ $(function() {
 		  })
 		  $('.torrent').removeClass('active');
                   window.torInfo = null;
-		},3000)
+		},10000)
     });
 
     // Ajax progress bar
@@ -316,8 +316,6 @@ $(function() {
 	},1700);
      }
 })(jQuery);
-/*
 setTimeout(function() {
     location.reload()
 },300000);
-*/
