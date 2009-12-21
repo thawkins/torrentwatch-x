@@ -132,6 +132,7 @@ function torInfo($torHash) {
                           $Ratio = 0;
                         } else {
                           $Ratio = $Uploaded/$Downloaded;
+			  $Ratio = round($Ratio, 2);
                         }
                         if($totalSize) { 
                           $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
