@@ -9,7 +9,7 @@ function setup_rss_list_html() {
 
 function show_transmission_div() {
   global $html_out;
-  $html_out .= '<div id="transmission_list" class="transmission hidden">';
+  $html_out .= '<div id="transmission_list" class="transmission">';
   $html_out .= '<ul id="transmission_list" class="torrentlist">';
   $html_out .= '<li class="header">Transmission</li>';
 }
@@ -20,13 +20,15 @@ function show_transmission_list_html() {
   $i = 0;
   foreach($result['arguments']['torrents'] as $torrent) {
     $torInfo = torInfo($torrent['hashString']); 
-    $html_out .= '<li id="tr_id_' . $torrent['id'] . '" class="torrent match_transmission ' . $torrent['hashString'] . '">
+    $html_out .= '<li id="clientId_' . $torrent['id'] . '" class="torrent match_transmission ' . $torrent['hashString'] . '">
 		  <table width="100%" cellspacing="0"><tr><td class="buttons left match_transmission">
 			<p><img height=10 src="images/tor_start.png"></p>
-			<p><img height=10 src="images/tor_move.png"></p>
+		        <p><a href="#" title="Delete torrent but keep data" onclick="javascript:$.delTorrent(\'torrentwatch.php?delTorrent=' . $torrent['hashString'] . '&trash=false\')">
+			<img height=10 src="images/tor_stop.png"></a></p>
 		      </td><td class="buttons right match_transmission">
-		        <p><img height=10 src="images/tor_stop.png"></p>
-			<p><img height=10 src="images/tor_trash.png"></p>
+			<p><img height=10 src="images/tor_move.png"></p>
+		        <p><a href="#" title="Delete torrent and its data" onclick="javascript:$.delTorrent(\'torrentwatch.php?delTorrent=' . $torrent['hashString'] . '&trash=true\')">
+			<img height=10 src="images/tor_trash.png"></a></p>
 		      </td><td class="torrent_name">
 		  <span class="torrent_name">' . $torrent['name'] . '</span>
                   <div id="tor_' . $torrent['id'] . '" class="torInfo tor_' . $torrent['hashString'] . '">' . $torInfo['torInfo'] . '</div>

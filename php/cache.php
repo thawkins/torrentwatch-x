@@ -23,6 +23,7 @@ function add_cache($title) {
   if (isset($config_values['Settings']['Cache Dir'])) {
     $cache_file = $config_values['Settings']['Cache Dir'] . '/rss_dl_' . filename_encode($title);
     touch($cache_file);
+    return($cache_file);
   }
 }
 

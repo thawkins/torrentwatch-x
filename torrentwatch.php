@@ -23,7 +23,7 @@ function parse_options() {
 	if(empty($commands))
 		return FALSE;
 
-	file_put_contents('/tmp/twlog', 'TorrentWatch: '.$_SERVER['PHP_SELF']."\n".print_r($_GET, TRUE), FILE_APPEND);
+	//file_put_contents('/tmp/twlog', 'TorrentWatch: '.$_SERVER['PHP_SELF']."\n".print_r($_GET, TRUE), FILE_APPEND);
 	if(preg_match("/^\//", $commands[0])) {
 		$commands[0] = preg_replace("/^\//", '', $commands[0]);
 	}
@@ -46,6 +46,10 @@ function parse_options() {
 		case 'getHash':
 			$response = torInfo($_REQUEST['getHash']);
 			echo json_encode($response);
+			exit;
+		case 'delTorrent':
+		        $response = delTorrent($_REQUEST['delTorrent'], $_REQUEST['trash']);
+			echo "$response";
 			exit;
 		case 'updateFavorite':
 			update_favorite();
@@ -86,10 +90,8 @@ function parse_options() {
 		case 'dlTorrent':
 			// Loaded via ajax
 			$r = client_add_torrent(trim(urldecode($_GET['link'])), $config_values['Settings']['Download Dir'], $_GET['title']);
-                        if($r) add_cache($_GET['title']);
-			//display_history();
-			echo $r;
-			close_html();
+                        if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
+			echo $torHash;
 			exit(0);
 			break;
 		case 'clearHistory':
@@ -122,7 +124,7 @@ function torInfo($torHash) {
 	switch($config_values['Settings']['Client']) {
 		case 'Transmission':
 			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
-		      		'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => $torHash), 'method' => 'torrent-get', 'tag' => 3);
+		      		'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => $torHash), 'method' => 'torrent-get');
 			$response = transmission_rpc($request);
                         $totalSize = $response['arguments']['torrents']['0']['totalSize'];
                         $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
@@ -161,11 +163,25 @@ function getClientData($recent) {
 		case 'Transmission':
 			if($recent) {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
-		          'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => 'recently-active'), 'method' => 'torrent-get', 'tag' => 3);
+		          'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
-		          'totalSize', 'uploadedEver', 'downloadedEver')), 'method' => 'torrent-get', 'tag' => 3);
+		          'totalSize', 'uploadedEver', 'downloadedEver')), 'method' => 'torrent-get');
 			}
+			$response = transmission_rpc($request);
+			return json_encode($response);
+		break;
+		case 'default':
+			exit;
+	}
+}
+
+function delTorrent($torHash, $trash) {
+	global $config_values;
+
+	switch($config_values['Settings']['Client']) {	
+		case 'Transmission':
+			$request = array('arguments' => array('delete-local-data' => $trash, 'ids' => $torHash), 'method' => 'torrent-remove');
 			$response = transmission_rpc($request);
 			return json_encode($response);
 		break;
@@ -304,10 +320,10 @@ $html_out = "";
 $debug_output = "Torrentwatch Debug:";
 $verbosity = 0;
 
-display_history();
 parse_options();
 display_global_config();
 display_favorites();
+display_history();
 display_clearCache();
 display_legend();
 

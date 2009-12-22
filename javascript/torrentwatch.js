@@ -116,12 +116,13 @@ $(function() {
       return false;
     });
     // Clear Cache ajax submit
-    $("#clear_cache a:not(.toggleDialog)").click(function() {
+    //$("a.clear_cache a:not(.toggleDialog)").click(function() {
+    $('a.clear_cache').live('click', function(e) {
       $.get(this.href, '', $.loadDynamicData, 'html');
       return false;
     });
 
-      Math.formatBytes = function(bytes) {
+     Math.formatBytes = function(bytes) {
           var size;
           var unit;
 
@@ -162,35 +163,53 @@ $(function() {
 
          return size + unit;
      };
+
      Math.roundWithPrecision = function(floatnum, precision) {
          return Math.round ( floatnum * Math.pow ( 10, precision ) ) / Math.pow ( 10, precision );
      };
 
+     getClientData = function() {
+	window.torInfo = 1;
+	  $.getJSON('/torrentwatch.php', {'getClientData': 1, 'recent': 1}, function(json) {
+	    $.each(json.arguments.torrents, function(i, item){
+		var Ratio = Math.roundWithPrecision(item.uploadedEver/item.downloadedEver,2);
+		var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
+		if(!(Ratio > 0)) var Ratio = 0;
+		if(!(Percentage > 0)) var Percentage = 0;
+		var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
+		    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
+		$('div.tor_' + item.hashString).html(clientData);
+		$('li.' + item.hashString).addClass('clientId_' + item.id);
+		if(item.leftUntilDone == 0) $('.' + item.hashString + '.match_downloading').removeClass('match_downloading').addClass('match_cachehit');
+	    })
+	    $.each(json.arguments.removed, function(i, item){
+		if($('li.clientId_' + item).length != 0) {
+			$('li.clientId_' + item + ' div.torInfo').remove();
+			$('li.clientId_' + item + ' p.activeTorrent').addClass('hidden');
+			$('li.clientId_' + item + ' td.buttons').removeClass('match_downloading match_downloaded match_cachehit')
+								.addClass('match_old_download');
+			$('li.clientId_' + item).removeClass('clientId_' + item);
+		}
+		if($('div#transmission_list li#clientId_' + item).length != 0) {
+			$('div#transmission_list li#clientId_' + item).remove();
+		}
+	    })
+	  })
+	  $('.torrent').removeClass('active');
+	  window.torInfo = null;
+     }
+
      $(document).ready(function() {
+		if($('div#transmission_list').lenght != 0) {
+			$('a#torClient ').html('Transmission');
+			setTimeout(function() {
+				$('div#transmission_list').hide();
+			},1000)
+		} else {
+			$('a#torClient ').remove();
+		}
                 setInterval(function() {
-		window.torInfo = 1;
-		  $.getJSON('/torrentwatch.php', {'getClientData': 1, 'recent': 1}, function(json) {
-		    $.each(json.arguments.torrents, function(i, item){
-			var Ratio = Math.roundWithPrecision(item.uploadedEver/item.downloadedEver,2);
-			var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
-			if(!(Ratio > 0)) var Ratio = 0;
-			if(!(Percentage > 0)) var Percentage = 0;
-		    	var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
-			    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
-			$('.tor_' + item.hashString).html(clientData);
-                        if(item.leftUntilDone == 0) $('.' + item.hashString + '.match_downloading').removeClass('match_downloading').addClass('match_cachehit');
-		    })
-		    $.each(json.arguments.removed, function(i, item){
-			if($('#tr_id_' + item).length != 0) {
-				$('div#tr_id_' + item).remove();
-				$('div.torInfo.tr_id_' + item).remove();
-				$('p.tr_id_' + item).remove();
-				$('td.buttons.tr_id_' + item).removeClass('match_downloading match_downloaded match_cachehit').addClass('match_old_download');
-			}
-		    })
-		  })
-		  $('.torrent').removeClass('active');
-                  window.torInfo = null;
+			getClientData();
 		},10000)
     });
 
@@ -309,13 +328,30 @@ $(function() {
 	$.get(url, '', $.loadDynamicData, 'html');
     }
     
-    $.dlTorrent = function(url) {
-	$.get(url);
-	setTimeout(function() {
+    $.dlTorrent = function(url,id) {
+	$.get(url, function(torHash) {
+		$('li#' + id).removeClass('match_nomatch').addClass('match_downloading');
+		$('li#' + id + ' td.buttons').removeClass('match_nomatch').addClass('match_downloading');
+		if($('li#' + id + ' div.torInfo').length == 0) {
+		  $('li#' + id + ' td.torrent_name')
+		  .append('<div id=tor_' + id + ' class="torInfo tor_' + torHash.match(/\w+/) + '"></div>');
+		}
+		$('li#' + id + ' p.hidden').removeClass('hidden');
+		$('li#' + id).removeClass('###torHash###').addClass(torHash);
+		var p =  $('li#' + id + ' p.delete');
+		p.html(p.html().replace(/###torHash###/g, torHash.match(/\w+/)));
+		var p =  $('li#' + id + ' p.trash');
+		p.html(p.html().replace(/###torHash###/g, torHash.match(/\w+/)));
+		getClientData();
+	})
+	/*setTimeout(function() {
 	    location.reload()
-	},1700);
-     }
+	},1700);*/
+    }
+    $.delTorrent = function(url) {
+	$.get(url, function() {
+	    getClientData();
+	});
+    }
+
 })(jQuery);
-setTimeout(function() {
-    location.reload()
-},900000);
