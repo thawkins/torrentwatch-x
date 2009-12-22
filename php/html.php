@@ -10,8 +10,8 @@ function setup_rss_list_html() {
 function show_transmission_div() {
   global $html_out;
   $html_out .= '<div id="transmission_list" class="transmission">';
+  $html_out .= '<div class="header">Transmission</div>';
   $html_out .= '<ul id="transmission_list" class="torrentlist">';
-  $html_out .= '<li class="header">Transmission</li>';
 }
 
 function show_transmission_list_html() {
@@ -32,7 +32,7 @@ function show_transmission_list_html() {
 		      </td><td class="torrent_name">
 		  <span class="torrent_name">' . $torrent['name'] . '</span>
                   <div id="tor_' . $torrent['id'] . '" class="torInfo tor_' . $torrent['hashString'] . '">' . $torInfo['torInfo'] . '</div>
-		  </td></tr></table></li>';
+		  </td></tr></table><span class="dateAdded hidden">' . $torrent['addedDate'] . '</span></li>';
     $i++;
   }
 }

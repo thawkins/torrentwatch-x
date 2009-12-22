@@ -64,6 +64,7 @@ $(function() {
 			$('.feed').hide() 
 			$('.transmission').fadeIn("normal");
 		}
+		$("ul#transmission_list>li").tsort("span.dateAdded",{order:"desc"});
 		break;
             }
             tor.markAlt().closest("#torrentlist_container").fadeIn("normal");
