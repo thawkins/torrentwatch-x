@@ -306,8 +306,12 @@ function feeds_perform_matching($feeds) {
         break;
     }
   }
-  show_transmission_div();
-  show_transmission_list_html();
+
+  if($config_values['Settings']['Client'] == "Transmission") {
+    show_transmission_div();
+    show_transmission_list_html();
+  }
+
   if(isset($config_values['Global']['HTMLOutput'])) {
     echo('</div>');
     finish_rss_list_html();
