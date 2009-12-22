@@ -163,10 +163,10 @@ function getClientData($recent) {
 		case 'Transmission':
 			if($recent) {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
-		          'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
+		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
-		          'totalSize', 'uploadedEver', 'downloadedEver')), 'method' => 'torrent-get');
+		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate')), 'method' => 'torrent-get');
 			}
 			$response = transmission_rpc($request);
 			return json_encode($response);
