@@ -19,55 +19,70 @@ $(function() {
             break;
         }
     });
-    // Filter Bar - Buttons
-    $("ul#filterbar_container li:not(#filter_bytext)").click(function() {
-        if($(this).is('.selected'))
-            return;
-        $(this).addClass('selected').siblings().removeClass("selected");
-        var filter = this.id;
-        $("div#torrentlist_container").show(function() {
-            var tor = $("li.torrent").show();
-            switch (filter) {
-            case 'filter_all':
+
+    displayFilter = function(filter) {
+	$.cookie('TWFILTER', filter);
+        var tor = $("li.torrent").show();
+	if(filter == 'all') {
 	 	if($('.transmission').is(":visible")) {
 			$('.feed').show();
 			$('.transmission').hide();
 		}
-		break;
-            case 'filter_matching':
+	} else if(filter == 'matching') {
 	 	if($('.transmission').is(":visible")) {
 			$('.feed').show()
 			$('.transmission').hide();
 		}
                 tor.filter(".match_nomatch").hide();
-                break;
-            case 'filter_downloading':
+	} else if(filter == 'downloading') {
 	 	if($('.transmission').is(":visible")) {
 			$('.feed').show();
 			$('.transmission').hide();
 		}
                 tor.not('.match_downloading').hide();
-                break;
-            case 'filter_downloaded':
+	} else if(filter == 'downloaded') {
 	 	if($('.transmission').is(":visible")) {
 			$('.feed').show();
 			$('.transmission').hide();
 		}
                 tor.not('.match_cachehit, .match_match, .match_downloaded').hide();
-                break;
-	    case 'filter_transmission':
+	} else if(filter == 'transmission') {
 		if($('.feed').is(':visible')) { 
 			$('.transmission').show()
 			$('.feed').hide() 
 		}
 		getAllClientData();
+	}
+        tor.markAlt().closest("#torrentlist_container div.feed");
+	$('#filter_' + filter).addClass('selected').siblings().removeClass("selected");
+    }
+    // Filter Bar - Buttons
+    $("ul#filterbar_container li:not(#filter_bytext)").click(function() {
+        if($(this).is('.selected'))
+            return;
+        var filter = this.id;
+        $("div#torrentlist_container").show(function() {
+            switch (filter) {
+            case 'filter_all':
+		displayFilter('all');
+		break;
+            case 'filter_matching':
+		displayFilter('matching');
+		break;
+            case 'filter_downloading':
+		displayFilter('downloading');
+		break;
+            case 'filter_downloaded':
+		displayFilter('downloaded');
+		break;
+	    case 'filter_transmission':
+		displayFilter('transmission');
 		break;
             }
-            tor.markAlt().closest("#torrentlist_container div.feed");
-	    $("li.torrent").removeClass('hidden_bytext');
-	    $("input#filter_text_input").val('');
         });
     });
+
+
     // Filter Bar -- By Text
     $("input#filter_text_input").keyup(function() {
         var filterText = $(this).val().toLowerCase();
@@ -245,9 +260,6 @@ $(function() {
      $(document).ready(function() {
 		if($('#transmission_data').lenght != 0) {
 			$('a#torClient ').html('Transmission');
-			setTimeout(function() {
-				$('#transmission_data').hide();
-			},1000)
 		} else {
 			$('a#torClient ').remove();
 		}
@@ -288,6 +300,11 @@ $(function() {
                     });
                 }
             }, 50);
+	    var filter = $.cookie('TWFILTER');
+	    if(!(filter)) filter = 'all';
+	    setTimeout(function() {
+	      displayFilter(filter);
+	    }, 100)
         }, 100);
     };
     $(window).resize(function() {
@@ -387,9 +404,6 @@ $(function() {
 		p.html(p.html().replace(/###torHash###/g, torHash.match(/\w+/)));
 		getRecentClientData();
 	})
-	/*setTimeout(function() {
-	    location.reload()
-	},1700);*/
     }
     $.delTorrent = function(url) {
 	$.get(url, function() {
