@@ -172,13 +172,26 @@ $(function() {
      getClientData = function() {
 	window.torInfo = 1;
 	  $.getJSON('/torrentwatch.php', {'getClientData': 1, 'recent': 1}, function(json) {
+            if(json == null) return;
 	    $.each(json.arguments.torrents, function(i, item){
 		var Ratio = Math.roundWithPrecision(item.uploadedEver/item.downloadedEver,2);
 		var Percentage = Math.roundWithPrecision(((item.totalSize-item.leftUntilDone)/item.totalSize)*100,2)
 		if(!(Ratio > 0)) var Ratio = 0;
 		if(!(Percentage > 0)) var Percentage = 0;
-		var clientData = "DL:&nbsp;" + Math.formatBytes(item.totalSize-item.leftUntilDone) + "&nbsp;of&nbsp;"
-		    + Math.formatBytes(item.totalSize) + "&nbsp;(" + Percentage + "%)&nbsp;&nbsp;-&nbsp;&nbsp;Ratio:&nbsp;" + Ratio ;
+		if(item.status == 1) {
+		  var clientData = 'Waiting for peers';
+		} else if(item.status == 2) {
+		  var clientData = 'Verifying files (' + Percentage + '%)' ;
+		} else if(item.status == 4) {
+		  var clientData = 'Downloading from ' + item.peersSendingToUs + ' of ' + item.peersConnected + ' peers: ' + 
+				    Math.formatBytes(item.totalSize-item.leftUntilDone) + ' of ' + Math.formatBytes(item.totalSize) +
+				    ' (' + Percentage + '%)  -  Ratio: ' + Ratio ;
+		} else if(item.status == 8) {
+		  var clientData = 'Seeding to ' + item.peersGettingFromUs + ' of ' + item.peersConnected + ' peers' + 
+				    '  -  Ratio: ' + Ratio ;
+		} else if(item.status == 16) {
+		  var clientData = "Paused";
+		}
 		$('div.tor_' + item.hashString).html(clientData);
 		$('li.' + item.hashString).addClass('clientId_' + item.id);
 		if(item.leftUntilDone == 0) $('.' + item.hashString + '.match_downloading').removeClass('match_downloading').addClass('match_cachehit');

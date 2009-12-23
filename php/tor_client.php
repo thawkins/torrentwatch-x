@@ -7,33 +7,48 @@
 
 function transmission_sessionId() {
   global $config_values;
-  $tr_user = $config_values['Settings']['Transmission Login'];
-  $tr_pass = base64_decode($config_values['Settings']['Transmission Password']);
-  $tr_host = $config_values['Settings']['Transmission Host'];
-  $tr_port = $config_values['Settings']['Transmission Port'];
-  $tr_uri = $config_values['Settings']['Transmission URI'];
+  $sessionIdFile = '/tmp/.Transmission-Session-Id';
+
+  if(file_exists($sessionIdFile)) {
+    $handle = fopen($sessionIdFile, r);
+    $sessionId = fread($handle, filesize($sessionIdFile));
+  } else {
+    $tr_user = $config_values['Settings']['Transmission Login'];
+    $tr_pass = base64_decode($config_values['Settings']['Transmission Password']);
+    $tr_host = $config_values['Settings']['Transmission Host'];
+    $tr_port = $config_values['Settings']['Transmission Port'];
+    $tr_uri = $config_values['Settings']['Transmission URI'];
 
 
-  $sid = curl_init();
-  $sid_options = array(CURLOPT_RETURNTRANSFER => true,
+    $sid = curl_init();
+    $sid_options = array(CURLOPT_RETURNTRANSFER => true,
                    CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
                    CURLOPT_HEADER => true,
                    CURLOPT_NOBODY => true,
                    CURLOPT_USERPWD => "$tr_user:$tr_pass"
                   );
 
-  curl_setopt_array($sid, $sid_options);
+    curl_setopt_array($sid, $sid_options);
 
-  $header = curl_exec($sid);
-  curl_close($sid);
+    $header = curl_exec($sid);
+    curl_close($sid);
   
-  preg_match("/X-Transmission-Session-Id:\s(\w+)/",$header,$ID);
+    preg_match("/X-Transmission-Session-Id:\s(\w+)/",$header,$ID);
 
-  return $ID[1];
+    $handle = fopen($sessionIdFile, "w");
+    fwrite($handle, $ID[1]);
+    fclose($handle);
+  
+    $sessionId = $ID[1];
+  }
+
+  return $sessionId;
 }
 
 function transmission_rpc($request) {
   global $config_values;
+  $sessionIdFile = '/tmp/.Transmission-Session-Id';
+
   $tr_user = $config_values['Settings']['Transmission Login'];
   $tr_pass = base64_decode($config_values['Settings']['Transmission Password']);
   $tr_uri = $config_values['Settings']['Transmission URI'];
@@ -42,14 +57,16 @@ function transmission_rpc($request) {
 
   $request = json_encode($request);
   $reqLen = strlen("$request");
+  
+  $run = 1; 
+  while($run) { 
+    $SessionId = transmission_sessionId();
 
-  $SessionId = transmission_sessionId();
-
-  $post = curl_init();
-  $post_options = array(CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
-                   	CURLOPT_USERPWD => "$tr_user:$tr_pass",
-                        CURLOPT_HTTPHEADER => array (
+    $post = curl_init();
+    $post_options = array(CURLOPT_RETURNTRANSFER => true,
+                          CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
+                       	  CURLOPT_USERPWD => "$tr_user:$tr_pass",
+                          CURLOPT_HTTPHEADER => array (
                                                 "POST $tr_uri HTTP/1.1",
                                                 "Host: $tr_host",
                                                 "X-Transmission-Session-Id: $SessionId",
@@ -57,13 +74,19 @@ function transmission_rpc($request) {
                                                 "Content-Length: $reqLen",
                                                 'Content-Type: application/json'
                                                ),
-                        CURLOPT_POSTFIELDS => "$request"
-                  );
-  curl_setopt_array($post, $post_options);
+                          CURLOPT_POSTFIELDS => "$request"
+                   );
+    curl_setopt_array($post, $post_options);
 
-  $raw = curl_exec($post);
-  curl_close($post);
- 
+    $raw = curl_exec($post);
+    curl_close($post);
+
+    if(preg_match('/409: Conflict/', $raw)) {
+      unlink($sessionIdFile);
+    } else {
+      $run = 0;
+    }
+  }
   return json_decode($raw, TRUE);
 }
 
