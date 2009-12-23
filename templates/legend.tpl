@@ -9,9 +9,9 @@
       <li class='legend match_cachehit'>
         <span class='torrent_name'><b>Cache Hit - Download</b><br><i> This item is either downloading or downloaded.</i></span>
       <li class='legend match_old_download'>
-        <span class='torrent_name'><b>Cache Hit - Old Download</b><br><i> This item was downloaded but is no longer in the torrent client, or the cache file was removed while to torrent was still active.</i></span>
+        <span class='torrent_name'><b>Cache Hit - Old Download</b><br><i> This item was downloaded but is no longer in the torrent client, or the cache file was removed while the torrent was still active.</i></span>
       <li class='legend match_test'>
-        <span class='torrent_name'><b>Test Hit</b><br><i> This item is ready to download.  Press Refresh to start all test hits.</i></span>
+        <span class='torrent_name'><b>Test Hit</b><br><i> This item is ready to download.  Press your browser's reload button to start all test hits.</i></span>
       <li class='legend match_match'>
         <span class='torrent_name'><b>New Hit</b><br><i> This item has just been started.</i></span>
     </ul>

@@ -124,18 +124,12 @@ function torInfo($torHash) {
 	switch($config_values['Settings']['Client']) {
 		case 'Transmission':
 			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
-		      		'totalSize', 'uploadedEver', 'downloadedEver'), 'ids' => $torHash), 'method' => 'torrent-get');
+		      		'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => $torHash), 'method' => 'torrent-get');
 			$response = transmission_rpc($request);
                         $totalSize = $response['arguments']['torrents']['0']['totalSize'];
                         $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
                         $Uploaded = $response['arguments']['torrents']['0']['uploadedEver'];
                         $Downloaded = $response['arguments']['torrents']['0']['downloadedEver'];
-                        if(!($Downloaded) || !($Uploaded)) {
-                          $Ratio = 0;
-                        } else {
-                          $Ratio = $Uploaded/$Downloaded;
-			  $Ratio = round($Ratio, 2);
-                        }
                         if($totalSize) { 
                           $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
                         }
@@ -143,12 +137,25 @@ function torInfo($torHash) {
                         if(!($totalSize)) {
                           return array( 'dlStatus' => 'old_download' );
                         } else {
+                          if(!($Downloaded) || !($Uploaded)) {
+                            $ratio = 0;
+                          } else {
+                            $ratio = $Uploaded/$Downloaded;
+			    $ratio = round($ratio, 2);
+                          }
                           $sizeDone = human_readable($totalSize-$leftUntilDone);
                           $totalSize = human_readable($totalSize);
-                          return array( 'torInfo' => "DL: $sizeDone of $totalSize ($percentage%)
-                                &nbsp;-&nbsp;&nbsp;Ratio: $Ratio",
+                          return array( 
                                 'dlStatus' => $dlStatus,
-				'id' => $response['arguments']['torrents']['0']['id'] );
+				'sizeDone' => $sizeDone,
+				'totalSize' => $totalSize,
+				'percentage' => $percentage,
+				'ratio' => $ratio,
+				'status' => $response['arguments']['torrents']['0']['status'],
+				'peersSendingToUs' => $response['arguments']['torrents']['0']['peersSendingToUs'],
+				'peersGettingFromUs' => $response['arguments']['torrents']['0']['peersGettingFromUs'],
+				'peersConnected' => $response['arguments']['torrents']['0']['peersConnected']
+			 	);
                         }
 			exit;
 		case 'default':
@@ -163,10 +170,10 @@ function getClientData($recent) {
 		case 'Transmission':
 			if($recent) {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
-		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
+		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
-		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate')), 'method' => 'torrent-get');
+		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected')), 'method' => 'torrent-get');
 			}
 			$response = transmission_rpc($request);
 			return json_encode($response);

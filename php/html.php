@@ -17,6 +17,7 @@ function show_transmission_div() {
 function show_transmission_list_html() {
   global $html_out;
   $result = json_decode(getClientData(0), TRUE);
+  if(!($result)) return; 
   $i = 0;
   foreach($result['arguments']['torrents'] as $torrent) {
     $torInfo = torInfo($torrent['hashString']); 
