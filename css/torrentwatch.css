@@ -143,9 +143,9 @@ ul.mainoptions li.divider {
 
 ul#filterbar_container {
 	position: fixed;
-        background: #ddd url('../graphics/filter_bar.png') repeat-x bottom left;
+        background: #ddd;
 	border-bottom: 1px solid #979797;
-	height: 18px;
+	height: 22px;
 	right: 0;
 	left: 0;
 	z-index: 2;
@@ -169,36 +169,40 @@ ul#filterbar_container li a {
 
 ul#filterbar_container li:not(#filter_bytext):hover {
 	background: transparent url('../images/filter_hover_left.png') no-repeat top left;
-	height: 15;
+	display: inline-block;
+	height: 16;
 	}
 
 ul#filterbar_container li:hover a {
 	background: transparent url('../images/filter_hover_right.png') no-repeat top right;
-	height: 15;
+	display: inline-block;
+	height: 16;
 	}
 
 ul#filterbar_container li.selected {
 	background: transparent url('../images/filter_selected_left.png') no-repeat top left;
-	height: 15;
+	display: inline-block;
+	height: 16;
 	}
 
 ul#filterbar_container li.selected a {
 	background: transparent url('../images/filter_selected_right.png') no-repeat top right;
-	height: 15;
+	display: inline-block;
+	height: 16px;
 	}
 
 ul#filterbar_container li#filter_bytext {
 	float: right;
 	margin: 0;
-  border: 0;
+	border: 0;
 	}
 
 input#filter_text_input {
-	height: 1.4em; 
+	height: 1.6em; 
 	width: 8em; 
 	border: 1px solid #5D80A1; 
 	padding: 0.1em 0.5em 0.15em 1.5em;
-	margin: 0.1em 0.5em;
+	margin: 0.2em 0.5em;
 	border-radius: 10px;
 	background: #FFF url('../images/filter_icon.png') top left no-repeat;
 	-o-border-radius: 8px; 
@@ -238,7 +242,7 @@ div#torrentlist_container {
 	position: absolute;
 	overflow: auto;
 	width: 100%;
-	top: 88px;
+	top: 92px;
 	bottom: 0;
 	left: 0;
 	right: 0;

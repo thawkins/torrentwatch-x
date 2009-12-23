@@ -14,7 +14,7 @@ function finish_rss_list_html() {
 
 function show_transmission_div() {
   global $html_out;
-  $html_out .= '<div id="transmission_list" class="transmission">';
+  $html_out .= '<div id="transmission_data" class="transmission">';
   $html_out .= '<div class="header">Transmission</div>';
   $html_out .= '<ul id="transmission_list" class="torrentlist">';
 }

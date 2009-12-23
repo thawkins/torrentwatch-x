@@ -1,14 +1,16 @@
 <?php
 if($item['description']) $description = $item['description'];
 if($item['pubDate']) $pubDate = $item['pubDate'];
-if($matched == "downloading" || $matched == "downloaded" || $matched == "cachehit" ) { $hidden = ""; } else { $hidden = "hidden"; } 
 if(!($torHash)) $torHash = '###torHash###';
 
 if($torInfo) {
   $stats = $torInfo['stats'];
   $clientId = $torInfo['clientId'];
   $infoDiv = "<div id='tor_$id' class='torInfo tor_$torHash $clientId'>$stats</div>";
+  if($torInfo['status'] == 4) $matched = "downloading";
 }
+
+if($matched == "downloading" || $matched == "downloaded" || $matched == "cachehit" ) { $hidden = ""; } else { $hidden = "hidden"; } 
 
 print <<< EOH
 

@@ -164,7 +164,8 @@ function torInfo($torHash) {
 		  	  }
 			  return array( 
 				'stats' => $stats,
-				'clientId' => $clientId
+				'clientId' => $clientId,
+				'status' => $status
 			 	);
                         }
 			exit;
