@@ -309,7 +309,6 @@ function feeds_perform_matching($feeds) {
 
   if($config_values['Settings']['Client'] == "Transmission") {
     show_transmission_div();
-    show_transmission_list_html();
   }
 
   if(isset($config_values['Global']['HTMLOutput'])) {
