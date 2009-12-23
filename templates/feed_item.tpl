@@ -1,31 +1,14 @@
 <?php
-if($torInfo) { 
-  $clientId = 'clientId_' . $torInfo['id'];
-  $sizeDone = $torInfo['sizeDone'];
-  $totalSize = $torInfo['totalSize'];
-  $percentage = $torInfo['percentage'];
-  $ratio = $torInfo['ratio'];
-  $status = $torInfo['status'];
-  $peersSendingToUs = $torInfo['peersSendingToUs'];
-  $peersGettingFromUs = $torInfo['peersGettingFromUs'];
-  $peersConnected = $torInfo['peersConnected'];
-}
 if($item['description']) $description = $item['description'];
 if($item['pubDate']) $pubDate = $item['pubDate'];
 if($matched == "downloading" || $matched == "downloaded" || $matched == "cachehit" ) { $hidden = ""; } else { $hidden = "hidden"; } 
 if(!($torHash)) $torHash = '###torHash###';
-if($status == 1) {
-  $stats = "Waiting for peers";
-} else if($status == 2) {
-  $stats = "Verifying files ($percentage%)";
-} else if($status == 4) {
-  $stats = "Downloading from $peersSendingToUs of $peersConnected peers: $sizeDone of $totalSize ($percentage%)  -  Ratio: $ratio";
-} else if($status == 8) {
-  $stats = "Seeding to $peersGettingFromUs of $peersConnected peers  -  Ratio: $ratio";
-} else if($status == 16) {
-  $stats = "Paused";
+
+if($torInfo) {
+  $stats = $torInfo['stats'];
+  $clientId = $torInfo['clientId'];
+  $infoDiv = "<div id='tor_$id' class='torInfo tor_$torHash $clientId'>$stats</div>";
 }
-if($torInfo) $infoDiv = "<div id='tor_$id' class='torInfo tor_$torHash $clientId'>$stats</div>";
 
 print <<< EOH
 

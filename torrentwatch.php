@@ -145,16 +145,26 @@ function torInfo($torHash) {
                           }
                           $sizeDone = human_readable($totalSize-$leftUntilDone);
                           $totalSize = human_readable($totalSize);
-                          return array( 
-                                'dlStatus' => $dlStatus,
-				'sizeDone' => $sizeDone,
-				'totalSize' => $totalSize,
-				'percentage' => $percentage,
-				'ratio' => $ratio,
-				'status' => $response['arguments']['torrents']['0']['status'],
-				'peersSendingToUs' => $response['arguments']['torrents']['0']['peersSendingToUs'],
-				'peersGettingFromUs' => $response['arguments']['torrents']['0']['peersGettingFromUs'],
-				'peersConnected' => $response['arguments']['torrents']['0']['peersConnected']
+			  $clientId = 'clientId_' . $response['arguments']['torrents']['0']['id'];
+			  $status = $response['arguments']['torrents']['0']['status'];
+			  $peersSendingToUs = $response['arguments']['torrents']['0']['peersSendingToUs'];
+			  $peersGettingFromUs = $response['arguments']['torrents']['0']['peersGettingFromUs'];
+			  $peersConnected = $response['arguments']['torrents']['0']['peersConnected'];
+		  	  if($status == 1) {
+			    $stats = "Waiting for peers";
+			  } else if($status == 2) {
+			    $stats = "Verifying files ($percentage%)";
+			  } else if($status == 4) {
+			    $stats = "Downloading from $peersSendingToUs of $peersConnected peers:
+				      $sizeDone of $totalSize ($percentage%)  -  Ratio: $ratio";
+			  } else if($status == 8) {
+			    $stats = "Seeding to $peersGettingFromUs of $peersConnected peers  -  Ratio: $ratio";
+			  } else if($status == 16) {
+			    $stats = "Paused";
+		  	  }
+			  return array( 
+				'stats' => $stats,
+				'clientId' => $clientId
 			 	);
                         }
 			exit;
