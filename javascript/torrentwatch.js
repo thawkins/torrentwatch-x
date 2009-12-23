@@ -187,8 +187,8 @@ $(function() {
 								.addClass('match_old_download');
 			$('li.clientId_' + item).removeClass('clientId_' + item);
 		  }
-		  if($('div#transmission_list li#clientId_' + item).length != 0) {
-			$('div#transmission_list li#clientId_' + item).remove();
+		  if($('#transmission_data li#clientId_' + item).length != 0) {
+			$('#transmission_data li#clientId_' + item).remove();
 		  }
 	  })
 	})
@@ -233,20 +233,20 @@ $(function() {
 			'<td class="torrent_name"><span class="torrent_name">' + item.name + '</span>' +
 			'<div id=tor_' + item.id + ' class="torInfo tor_' + item.hashString + '">' + clientData + '</div>' +
 			'</td></tr></table><span class="dateAdded hidden">' + item.addedDate + '</span></li>';
-		if($('ul#transmission_list li#clientId_' + item.id).length == 0) {
+		if($('#transmission_list li#clientId_' + item.id).length == 0) {
 			$('#transmission_list').append(transmissionList);
 		}
 
 		if(item.leftUntilDone == 0) $('.' + item.hashString + '.match_downloading').removeClass('match_downloading').addClass('match_cachehit');
 	})
-	$('ul#transmission_list>li').tsort('span.dateAdded',{order:'desc'}).filter(":visible:even").addClass('alt');
+	$('#transmission_list>li').tsort('span.dateAdded',{order:'desc'}).filter(":visible:even").addClass('alt');
      }
 
      $(document).ready(function() {
-		if($('div#transmission_list').lenght != 0) {
+		if($('#transmission_data').lenght != 0) {
 			$('a#torClient ').html('Transmission');
 			setTimeout(function() {
-				$('div#transmission_list').hide();
+				$('#transmission_data').hide();
 			},1000)
 		} else {
 			$('a#torClient ').remove();
