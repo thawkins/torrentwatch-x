@@ -343,6 +343,7 @@ span.torrent_name {
 	margin-right: 10px;
 	}
 
+span.dateAdded,
 span.torrent_pubDate {
 	float: right;
 	}	
