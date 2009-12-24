@@ -51,6 +51,14 @@ function parse_options() {
 		        $response = delTorrent($_REQUEST['delTorrent'], $_REQUEST['trash']);
 			echo "$response";
 			exit;
+		case 'stopTorrent':
+		        $response = stopTorrent($_REQUEST['stopTorrent']);
+			echo "$response";
+			exit;
+		case 'startTorrent':
+		        $response = startTorrent($_REQUEST['startTorrent']);
+			echo "$response";
+			exit;
 		case 'updateFavorite':
 			update_favorite();
 			break;
@@ -145,7 +153,7 @@ function torInfo($torHash) {
                           }
                           $sizeDone = human_readable($totalSize-$leftUntilDone);
                           $totalSize = human_readable($totalSize);
-			  $clientId = 'clientId_' . $response['arguments']['torrents']['0']['id'];
+			  $clientId = $response['arguments']['torrents']['0']['id'];
 			  $status = $response['arguments']['torrents']['0']['status'];
 			  $peersSendingToUs = $response['arguments']['torrents']['0']['peersSendingToUs'];
 			  $peersGettingFromUs = $response['arguments']['torrents']['0']['peersGettingFromUs'];
@@ -169,8 +177,6 @@ function torInfo($torHash) {
 			 	);
                         }
 			exit;
-		case 'default':
-			exit;
 	}
 }
 
@@ -189,8 +195,6 @@ function getClientData($recent) {
 			$response = transmission_rpc($request);
 			return json_encode($response);
 		break;
-		case 'default':
-			exit;
 	}
 }
 
@@ -203,8 +207,30 @@ function delTorrent($torHash, $trash) {
 			$response = transmission_rpc($request);
 			return json_encode($response);
 		break;
-		case 'default':
-			exit;
+	}
+}
+
+function stopTorrent($torHash) {
+	global $config_values;
+
+	switch($config_values['Settings']['Client']) {	
+		case 'Transmission':
+			$request = array('arguments' => array('ids' => $torHash), 'method' => 'torrent-stop');
+			$response = transmission_rpc($request);
+			return json_encode($response);
+		break;
+	}
+}
+
+function startTorrent($torHash) {
+	global $config_values;
+
+	switch($config_values['Settings']['Client']) {	
+		case 'Transmission':
+			$request = array('arguments' => array('ids' => $torHash), 'method' => 'torrent-start');
+			$response = transmission_rpc($request);
+			return json_encode($response);
+		break;
 	}
 }
 
