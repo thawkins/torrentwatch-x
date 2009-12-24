@@ -261,7 +261,7 @@ $(function() {
 		$('div.tor_' + item.hashString).html(clientData);
 		$('li.' + item.hashString).addClass('clientId_' + item.id);
 
-		if(item.status == 16 && recent == 0) {
+		if(item.status == 16) {
 			$('li.' + item.hashString + ' p.torStop').hide(); 
 			$('li.' + item.hashString + ' p.torStart').show();
 		}
