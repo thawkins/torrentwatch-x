@@ -181,7 +181,22 @@ $(function() {
      Math.roundWithPrecision = function(floatnum, precision) {
          return Math.round ( floatnum * Math.pow ( 10, precision ) ) / Math.pow ( 10, precision );
      };
-     
+    
+     torStartStopToggle = function(torHash) {
+            var curObject = $('li.' + torHash + ' p.torStart');
+            if(curObject.is(":visible")) {
+                curObject.hide();
+            } else {
+                curObject.show();
+            }
+            var curObject = $('li.' + torHash + ' p.torStop');
+            if(curObject.is(":visible")) {
+                curObject.hide();
+            } else {
+                curObject.show();
+            }
+     }
+
      getAllClientData = function() {
 	$.getJSON('/torrentwatch.php', {'getClientData': 1, 'recent': 0}, function(json) {
 	  processClientData(json, 0);
@@ -264,6 +279,13 @@ $(function() {
 		if(item.status == 16) {
 			$('li.' + item.hashString + ' p.torStop').hide(); 
 			$('li.' + item.hashString + ' p.torStart').show();
+		} else if(recent == 1) {
+			var curObject = $('li.' + item.hashString + ' p.torStart');
+			setTimeout(function() {
+			if(curObject.is(":visible")) {
+				torStartStopToggle(item.hashString);
+			}
+			}, 1000)
 		}
 		
 
@@ -432,26 +454,29 @@ $(function() {
 	})
     }
     $.delTorrent = function(torHash, trash) {
-	$.get('torrentwatch.php?delTorrent=' + torHash + "&trash=" + trash, function() {
-	    getRecentClientData();
+	$.getJSON('torrentwatch.php', {'delTorrent': torHash, 'trash': trash}, function(json) {
+	    if(json.result == "success") {
+		getRecentClientData();
+	    } else {
+		alert('Request failed');
+	    }
 	});
     }
     $.stopStartTorrent = function(stopStart, torHash) {
-	$.get('torrentwatch.php?' + stopStart + 'Torrent=' + torHash, function() {
-	    $('li.' + torHash + ' p.dlTorrent').hide();
-	    var curObject = $('li.' + torHash + ' p.torStart');
-	    if(curObject.is(":visible")) {
-		curObject.hide();
+	var cmd = stopStart + 'Torrent';
+	if(stopStart == 'stop') { 
+	  var param = {'stopTorrent': torHash}
+	} else if(stopStart == 'start') {
+	  var param = {'startTorrent': torHash}
+	}
+	$.getJSON('torrentwatch.php', param, function(json) {
+	    if(json.result == "success") {
+		$('li.' + torHash + ' p.dlTorrent').hide();
+		torStartStopToggle(torHash);
+		getRecentClientData();
 	    } else {
-		curObject.show();
+		alert('Request failed');
 	    }
-	    var curObject = $('li.' + torHash + ' p.torStop');
-	    if(curObject.is(":visible")) {
-		curObject.hide();
-	    } else {
-		curObject.show();
-	    }
-	    getRecentClientData();
 	});
     }
 })(jQuery);
