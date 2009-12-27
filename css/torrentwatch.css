@@ -275,15 +275,16 @@ ul.torrentlist li.torrent.alt {
 	}
 
 ul.torrentlist p {
-	padding: 2px;
+	padding: 1px;
 }
 
 ul.torrentlist td.buttons {
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 1px;
+	padding-bottom: 1px;
 	text-align: center;
 	vertical-align: middle;
 	width: 15px;
+	height: 15px;
 }
 
 div#show_legend li.legend.match_nomatch,
