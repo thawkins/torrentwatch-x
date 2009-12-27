@@ -161,28 +161,30 @@ ul#filterbar_container li {
 	color: #4E4E4F;
 	}
 
+	
 ul#filterbar_container li a {
 	padding-right: 0.5em;
 	text-decoration: none;
 	color: #333;
 	}
 
-ul#filterbar_container li:not(#filter_bytext):hover {
+
+ul#filterbar_container li:hover {
 	background: transparent url('../images/filter_hover_left.png') no-repeat top left;
 	display: inline-block;
-	height: 16;
+	height: 16px;
 	}
 
 ul#filterbar_container li:hover a {
 	background: transparent url('../images/filter_hover_right.png') no-repeat top right;
 	display: inline-block;
-	height: 16;
+	height: 16px;
 	}
 
 ul#filterbar_container li.selected {
 	background: transparent url('../images/filter_selected_left.png') no-repeat top left;
 	display: inline-block;
-	height: 16;
+	height: 16px;
 	}
 
 ul#filterbar_container li.selected a {
@@ -191,18 +193,20 @@ ul#filterbar_container li.selected a {
 	height: 16px;
 	}
 
+ul#filterbar_container li#filter_bytext:hover,
 ul#filterbar_container li#filter_bytext {
+	background: none;
 	float: right;
 	margin: 0;
 	border: 0;
 	}
 
 input#filter_text_input {
-	height: 1.6em; 
+	height: 13px; 
 	width: 8em; 
 	border: 1px solid #5D80A1; 
-	padding: 0.1em 0.5em 0.15em 1.5em;
-	margin: 0.2em 0.5em;
+	padding: 1px 5px 2px 15px;
+	margin: 2px 5px;
 	border-radius: 10px;
 	background: #FFF url('../images/filter_icon.png') top left no-repeat;
 	-o-border-radius: 8px; 
@@ -224,7 +228,7 @@ input#filter_text_input.blur {
  *------------*/
 
 ul.show_legend {
-	border: 1px solid grey;
+	border: 1px solid gray;
 }
 
 ul.show_legend li {
@@ -289,7 +293,7 @@ ul.torrentlist td.buttons.match_nomatch {
 
 div#show_legend li.legend.match_old_download,
 ul.torrentlist td.buttons.match_old_download {
-	background-color: lightgrey;
+	background-color: #CDCDCD;
 }
 
 div#show_legend li.legend.match_duplicate,
@@ -334,7 +338,7 @@ ul.torrentlist td.torrent_name {
 
 ul.torrentlist div.torInfo {
 	color: green;
-	font-size: 9;
+	font-size: 9px;
 	margin-top: 4px;
 }
 
@@ -534,13 +538,13 @@ div.feeditem input[type=text] {
  **********************************/
 div.dialog_window#favorites {
 	width: 590px;
-	margin-left: -287;
-	height: 250;
+	margin-left: -287px;
+	height: 250px;
 }
 
 div.favorite {
 	height: 248px;
-	width: 180;
+	width: 180px;
 	float: left;
 	clear: left;
 	border: 1px solid gray;
@@ -571,7 +575,7 @@ ul.favorite li a {
 	font-size: 0.8em;
 	text-decoration: none;
 	color: #000000;
-	overflow: none;
+	overflow: hidden;
 	}
 
 ul.favorite li:hover {
@@ -579,7 +583,7 @@ ul.favorite li:hover {
 	}
 
 form.favinfo {
-	height: 248;
+	height: 248px;
 	display: none;
 	padding: 5px 0;
 	margin: 5px 0;
@@ -655,7 +659,7 @@ div#history a.toggleDialog {
 
 div.dialog_window#history {
 	width: 583px;
-	margin-left: -288;
+	margin-left: -288px;
 }
 
 div.timer {

@@ -35,3 +35,4 @@ torrentwatch cvs -> torrentwatch-x 0.1
 	-- More intuitive interface, no more context menu.
 	-- Fixed some IE issues.
 	-- More transmission support.
+	-- Fixed html so it's w3c compatible.
