@@ -34,5 +34,9 @@ torrentwatch cvs -> torrentwatch-x 0.1
 0.4
 	-- More intuitive interface, no more context menu.
 	-- Fixed some IE issues.
-	-- More transmission support.
-	-- Fixed html so it's w3c compatible.
+	-- Transmission support.
+	   - Pause/Start downloads
+	   - Remove or Trash downloads
+	   - Move downloads
+	   - Full list of transmission downloads
+	-- Fixed some html & css so it's w3c compatible.
