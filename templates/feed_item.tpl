@@ -6,23 +6,30 @@ if(!($torHash)) $torHash = '###torHash###';
 if($torInfo) {
   $stats = $torInfo['stats'];
   $clientId = $torInfo['clientId'];
-  $infoDiv = "<div id='tor_$id' class='torInfo tor_$torHash clientId_$clientId'>$stats</div>";
+  $infoDiv = "<div id='tor_$id' class='torInfo tor_$torHash'>$stats</div>";
   if($torInfo['status'] == 4) $matched = "downloading";
 }
 
 if($matched == "downloading" || $matched == "downloaded" || $matched == "cachehit" ) { 
   $hidden = ""; 
   $dlTorrent = "dlTorrent hidden";
-  $torStart = "torStart";
+  if ($torInfo['status'] == 16) {
+    $torStart = "torStart";
+    $torStop= "torStop hidden";
+  } else {
+    $torStart = "torStart hidden";
+    $torStop= "torStop";
+  }
 } else {
   $hidden = "hidden";
   $dlTorrent = "dlTorrent";
   $torStart = "torStart hidden";
+  $torStop = "torStop hidden";
 } 
 
 print <<< EOH
 
-<li id=$id name=$id class="torrent match_$matched $alt $torHash clientId_$clientId" title="$description">
+<li id=$id name=$id class="torrent match_$matched $alt $torHash" title="$description">
 <table width="100%" cellspacing="0"><tr><td class="buttons left match_$matched">
 
 <p class='$dlTorrent'>
@@ -33,7 +40,7 @@ print <<< EOH
 <a href="#" title="Resume download" onclick='javascript:$.stopStartTorrent("start", "$torHash")'>
 <img height=10 src="images/tor_start.png"></a></p>
 
-<p class="activeTorrent torStop hidden">
+<p class="activeTorrent $torStop">
 <a href="#" title="Pause download" onclick='javascript:$.stopStartTorrent("stop", "$torHash")'>
 <img height=10 src="images/tor_pause.png"></a></p>
 

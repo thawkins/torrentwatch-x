@@ -59,6 +59,10 @@ function parse_options() {
 		        $response = startTorrent($_REQUEST['startTorrent']);
 			echo "$response";
 			exit;
+		case 'moveTo':
+		        $response = moveTorrent($_REQUEST['moveTo'], $_REQUEST['torId']);
+			echo "$response";
+			exit;
 		case 'updateFavorite':
 			update_favorite();
 			break;
@@ -186,10 +190,10 @@ function getClientData($recent) {
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
 			if($recent) {
-			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
+			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone', 'downloadDir', 
 		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
-			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone',
+			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone', 'downloadDir',
 		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected')), 'method' => 'torrent-get');
 			}
 			$response = transmission_rpc($request);
@@ -228,6 +232,18 @@ function startTorrent($torHash) {
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
 			$request = array('arguments' => array('ids' => $torHash), 'method' => 'torrent-start');
+			$response = transmission_rpc($request);
+			return json_encode($response);
+		break;
+	}
+}
+
+function moveTorrent($location, $torId) {
+	global $config_values;
+
+	switch($config_values['Settings']['Client']) {	
+		case 'Transmission':
+			$request = array('arguments' => array('location' => $location, 'move' => 'true', 'ids' => (int)$torId), 'method' => 'torrent-set-location');
 			$response = transmission_rpc($request);
 			return json_encode($response);
 		break;
