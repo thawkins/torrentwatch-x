@@ -115,7 +115,13 @@ $(function() {
             target += ':9091/transmission/web/';
             break;
         }
-        $("#webui a").text(client).href = target;
+        if(client != 'folder') { 
+            alert(target);
+            $("#webui a").text(client)[0].href = target;
+            $('li#webui').show();
+        } else {
+            $('li#webui').hide();
+        }
     };
     
     // Perform the first load of the dynamic information
@@ -380,11 +386,6 @@ $(function() {
     };
 
     $(document).ready(function() {
-        if ($('#transmission_data').lenght !== 0) {
-            $('a#torClient ').html('Transmission');
-        } else {
-            $('a#torClient ').remove();
-        }
         setInterval(function() {
             getRecentClientData();
         },
@@ -432,6 +433,17 @@ $(function() {
             }
             getAllClientData();
             setTimeout(function() {
+                if ($('#transmission_data').length > 0) {
+                    $('a#torClient ').show().html('Transmission');
+                } else {
+                    $('a#torClient').hide();
+                    $('p.activeTorrent.delete').hide();
+                    $('p.activeTorrent.trash').hide();
+                    if(filter == 'transmission') {
+                        filter = 'all';
+                    }
+                }
+                
                 displayFilter(filter);
             },
             100);
