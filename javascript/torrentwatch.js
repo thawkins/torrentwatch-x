@@ -209,7 +209,7 @@ $(function() {
     };
 
     getAllClientData = function() {
-        $.getJSON('/torrentwatch.php', {
+        $.getJSON('torrentwatch.php', {
             'getClientData': 1,
             'recent': 0
         },
@@ -223,7 +223,7 @@ $(function() {
 
     getRecentClientData = function() {
         window.torInfo = 1;
-        $.getJSON('/torrentwatch.php', {
+        $.getJSON('torrentwatch.php', {
             'getClientData': 1,
             'recent': 1
         },
