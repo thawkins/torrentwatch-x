@@ -198,9 +198,11 @@ function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL
     _debug("Deep Directorys, change dest to $dest\n", 1);
   }
   if(!file_exists($dest) or !is_dir($dest)) {
+	old_umask = umask(0);
     if(file_exists($dest))
       unlink($dest);
     mkdir($dest, 0777, TRUE);
+	umask(old_umask);
   }
   switch($config_values['Settings']['Client']) {
     case 'Transmission':
