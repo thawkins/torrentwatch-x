@@ -40,3 +40,4 @@ torrentwatch cvs -> torrentwatch-x 0.1
 	   - Move downloads
 	   - Full list of transmission downloads
 	-- Fixed some html & css so it's w3c compatible.
+	-- Upgraded to jquery 1.3.2.
