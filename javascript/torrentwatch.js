@@ -116,7 +116,6 @@ $(function() {
             break;
         }
         if(client != 'folder') { 
-            alert(target);
             $("#webui a").text(client)[0].href = target;
             $('li#webui').show();
         } else {
