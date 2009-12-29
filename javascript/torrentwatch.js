@@ -126,6 +126,7 @@ $(function() {
     function(e) {
         e.stopImmediatePropagation();
         $.submitForm(this);
+        $('div#' + this.parentNode.id).hide();
     });
     // Clear History ajax submit
     $("a#clearhistory").live('click',

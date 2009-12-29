@@ -17,5 +17,5 @@ Installation Instructions
 - Make sure the webserver can write to the following files and directories:
 	- $docroot/rss_dl.history
 	- $docroot/rss_cache/
-- Create a cron-entry for the user running the webserver for periodically checking for updates:
+- Create a cron-entry for the user running the webserver for periodically checking for new torrents:
 	*/30 * * * * /var/www/mezzanine/rss_dl.php -D >/dev/null
