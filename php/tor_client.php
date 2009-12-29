@@ -200,7 +200,7 @@ function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL
   if(!file_exists($dest) or !is_dir($dest)) {
     if(file_exists($dest))
       unlink($dest);
-    mkdir($dest, 777, TRUE);
+    mkdir($dest, 0777, TRUE);
   }
   switch($config_values['Settings']['Client']) {
     case 'Transmission':
