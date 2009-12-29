@@ -3,3 +3,5 @@ rss_cache
 php/config.php
 robots.txt
 mk_archive.sh
+.AppleDouble
+._*

@@ -5,7 +5,7 @@
     <label class="category">Web UI Settings</label>
     <div id="config_webui">
       <label class="item select">Font Size:</label>
-      <select name="webui" id="config_webui">
+      <select name="webui" id="config_webui" onChange="changeFontSize(this.options[this.selectedIndex].value)">
         <option value="Small">Small</option>
         <option value="Medium" selected>Medium</option>
         <option value="Large">Large</option>
@@ -14,7 +14,7 @@
     <label class="category">Torrent Client Settings</label>
     <div id="config_torrentclient">
       <label class="item select" title="Which torrent client to use">Client:</label>
-      <select name="client" id="client">
+      <select name="client" id="client" onChange="changeClient(this.options[this.selectedIndex].value)">
         <option value="Transmission" <?php echo $transmission; ?>>Transmission</option>
         <option value="folder" <?php echo $folderclient; ?>>Save torrent in folder</option>
       </select>

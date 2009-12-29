@@ -35,7 +35,7 @@ body {
 
 input, select {
 	margin-left: 2em;
-	display: inline;
+	border: 1px solid #787878;
 	}
 
 input[type=text] {
@@ -532,20 +532,20 @@ div.form_radio {
  *
  ****************************/
 
-div.dialog_window#configuration select,
 div.dialog_window#configuration input.text,
-div.dialog_window#configuration input[type=text] { 
-	position: absolute;
-	right: 30px;
-	width: 225px;
-	}
-
 div.dialog_window#configuration input.password,
+div.dialog_window#configuration input[type=text],
 div.dialog_window#configuration input[type=password] {
 	position: absolute;
 	right: 30px;
 	width: 225px;
 	}
+
+div.dialog_window#configuration select {
+    position: absolute;
+	right: 30px;
+    width: 227px;
+}
 
 div.dialog_window#configuration input[type=checkbox] {
 	margin: 4px 5px 0 22px;
@@ -657,7 +657,12 @@ form.favinfo input#idx {
 	display: none;
 	}
 
-form.favinfo select,
+form.favinfo select {
+    position: absolute;
+	right: 45px;
+	width: 242px;
+}
+
 form.favinfo input.text,
 form.favinfo input[type=text] {
 	position: absolute;
