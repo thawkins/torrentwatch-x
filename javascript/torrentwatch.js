@@ -351,7 +351,7 @@ $(function() {
                 toggleTorMove(item.id);
             });
 
-            $('div.tor_' + item.hashString).html(clientData);
+            $('li.' + item.hashString + ' div.torInfo').html(clientData);
             $('li.' + item.hashString).addClass('clientId_' + item.id);
 
             if (item.status == 16) {
