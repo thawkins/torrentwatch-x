@@ -245,13 +245,14 @@ $(function() {
 		var transmissionList = 
 			'<li id="clientId_' + item.id + '" class="torrent match_transmission ' + item.hashString + '">' +
 			'<table width="100%" cellspacing="0"><tr><td class="buttons left match_transmission">' +
-			'<p class="button torStart hidden"><img height=10 src="images/tor_start.png" /></p>' +
-			'<p class="button torStop"><img height=10 src="images/tor_pause.png" /></a></p>' +
-			'<p class="button torDel"><img height=10 src="images/tor_stop.png" /></a></p></td>' +
-			'<td class="buttons right match_transmission">' +
-			'<p class="button torMove"><img height=10 src="images/tor_move.png" /></p>' +
-			'<p class="button torTrash"><img height=10 src="images/tor_trash.png" /></a></p></td>' +
-			'<td class="torrent_name"><span class="torrent_name">' + item.name + '</span>' +
+			'<p title="Resume download" class="button torStart hidden"><img height=10 src="images/tor_start.png" /></p>' +
+			'<p title="Pause download" class="button torStop"><img height=10 src="images/tor_pause.png" /></p>' +
+			'<p title="Delete torrent but keep data" class="button torDel"><img height=10 src="images/tor_stop.png" /></p>' +
+			'</td><td class="buttons right match_transmission">' +
+			'<p title="Set location or move torrent data.&#13;Current loaction: ' + item.downloadDir + '" class="button torMove">' +
+			'<img height=10 src="images/tor_move.png" /></p>' +
+			'<p title="Delete torrent and its data" class="button torTrash"><img height=10 src="images/tor_trash.png" /></p>' +
+			'</td><td class="torrent_name"><span class="torrent_name">' + item.name + '</span>' +
 			'<span class="dateAdded hidden">' + item.addedDate + '</span>' +
 			'<div id=tor_' + item.id + ' class="torInfo tor_' + item.hashString + '">' + clientData + '</div>' +
 			'<div id="move_' + item.id + '" class="move_data hidden">' +
