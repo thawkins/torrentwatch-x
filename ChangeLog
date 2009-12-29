@@ -33,7 +33,7 @@ torrentwatch cvs -> torrentwatch-x 0.1
 
 0.4
 	-- More intuitive interface, no more context menu.
-	-- Fixed some IE issues.
+	-- Fixed most IE issues.
 	-- Transmission support.
 	   - Pause/Start downloads
 	   - Remove or Trash downloads

@@ -10,7 +10,7 @@ if($torInfo) {
   if($torInfo['status'] == 4) $matched = "downloading";
 }
 
-if($matched == "downloading" || $matched == "downloaded" || $matched == "cachehit" ) { 
+if($matched == "downloading" || $matched == "downloaded" || $matched == "cachehit" || $matched == "match") { 
   $hidden = ""; 
   $dlTorrent = "dlTorrent hidden";
   if ($torInfo['status'] == 16) {
