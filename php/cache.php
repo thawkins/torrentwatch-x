@@ -11,7 +11,7 @@ function cache_setup()
     if(!file_exists($config_values['Settings']['Cache Dir']) ||
        !is_dir($config_values['Settings']['Cache Dir'])) {
       if(!(file_exists($config_values['Settings']['Cache Dir'])))
-	 mkdir($config_values['Settings']['Cache Dir'], 777, TRUE);
+	 mkdir($config_values['Settings']['Cache Dir'], 0777, TRUE);
     }
   }
 }
