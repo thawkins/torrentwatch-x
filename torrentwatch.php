@@ -60,7 +60,7 @@ function parse_options() {
 			echo "$response";
 			exit;
 		case 'moveTo':
-		        $response = moveTorrent($_REQUEST['moveTo'], $_REQUEST['torId']);
+		        $response = moveTorrent($_REQUEST['moveTo'], $_REQUEST['torId'], $_REQUEST['move']);
 			echo "$response";
 			exit;
 		case 'updateFavorite':
@@ -238,12 +238,12 @@ function startTorrent($torHash) {
 	}
 }
 
-function moveTorrent($location, $torId) {
+function moveTorrent($location, $torId, $move) {
 	global $config_values;
 
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
-			$request = array('arguments' => array('location' => $location, 'move' => 'true', 'ids' => (int)$torId), 'method' => 'torrent-set-location');
+			$request = array('arguments' => array('location' => $location, 'move' => $move, 'ids' => (int)$torId), 'method' => 'torrent-set-location');
 			$response = transmission_rpc($request);
 			return json_encode($response);
 		break;

@@ -274,6 +274,22 @@ ul.torrentlist li.torrent.alt {
 	background-color: #EDF3FE;
 	}
 
+ul.torrentlist li.torrent.paused {
+	background-color: #FBBFBF;
+}
+
+ul.torrentlist li.torrent.downloading {
+	background-color: #f2e2ff;
+}
+
+ul.torrentlist li.torrent.verifying {
+	background-color: #FFFFCC;
+}
+
+ul.torrentlist li.torrent.waiting {
+	background-color: #FFFFFF;
+}
+
 ul.torrentlist p {
 	padding: 1px;
 }
@@ -361,7 +377,7 @@ span.torrent_pubDate {
 
 div.dialog_window {
 	display: none;
-	position: absolute;
+	position: fixed; 
 	margin-left: auto;
 	margin-right: auto;
 	left: 50%;
@@ -380,7 +396,6 @@ div.dialog_window {
 	}
 
 div.move_data {
-	display: none;
 	position: inherit;
 	padding: 5px 10px 0px 0px;
 }
@@ -450,6 +465,10 @@ a.button {
 	text-align: center;
 	text-decoration: none;
 	}
+
+p.button {
+	cursor: pointer;
+}
 
 input[type=submit] {
 	width: 62px;
@@ -656,7 +675,6 @@ div#history {
 	}
 
 ul#historyItems {
-	position: inherit;
 	top: 0;
 	bottom: 35px;
 	left: 0;
@@ -675,7 +693,6 @@ div#history ul li{
 
 
 div#history a {
-	position: inherit;
 	bottom: 0.2em;
 	}
 
