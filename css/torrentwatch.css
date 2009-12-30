@@ -478,6 +478,20 @@ input[type=submit] {
 div.legend input {
 	clear: left;
 	}
+	
+div#clientError {
+    top: 5px;
+    text-align: center;
+    width: 330px;
+    margin-left: -170px;
+	
+}
+
+div#clientError h2 {
+	font-weight: bold;
+	color: red;
+	margin-bottom: 4px;
+}
 
 /********************************
  *

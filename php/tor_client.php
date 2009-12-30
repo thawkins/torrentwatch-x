@@ -21,11 +21,13 @@ function transmission_sessionId() {
 
 
     $sid = curl_init();
-    $sid_options = array(CURLOPT_RETURNTRANSFER => true,
-                   CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
-                   CURLOPT_HEADER => true,
-                   CURLOPT_NOBODY => true,
-                   CURLOPT_USERPWD => "$tr_user:$tr_pass"
+    $sid_options = array(CURLOPT_CONNECTTIMEOUT => 3,
+                    CURLOPT_TIMEOUT => 3,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
+                    CURLOPT_HEADER => true,
+                    CURLOPT_NOBODY => true,
+                    CURLOPT_USERPWD => "$tr_user:$tr_pass"
                   );
 
     curl_setopt_array($sid, $sid_options);
@@ -63,9 +65,11 @@ function transmission_rpc($request) {
     $SessionId = transmission_sessionId();
 
     $post = curl_init();
-    $post_options = array(CURLOPT_RETURNTRANSFER => true,
+    $post_options = array(CURLOPT_CONNECTTIMEOUT => 3,
+                          CURLOPT_TIMEOUT => 3,
+                          CURLOPT_RETURNTRANSFER => true,
                           CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
-                       	  CURLOPT_USERPWD => "$tr_user:$tr_pass",
+                          CURLOPT_USERPWD => "$tr_user:$tr_pass",
                           CURLOPT_HTTPHEADER => array (
                                                 "POST $tr_uri HTTP/1.1",
                                                 "Host: $tr_host",
@@ -75,7 +79,7 @@ function transmission_rpc($request) {
                                                 'Content-Type: application/json'
                                                ),
                           CURLOPT_POSTFIELDS => "$request"
-                   );
+                       );
     curl_setopt_array($post, $post_options);
 
     $raw = curl_exec($post);
@@ -139,10 +143,10 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio = -1) {
 
   if($seedRatio != "" && $seedRatio >= 0 && ($torHash)) {
     $request = array('method' => 'torrent-set',
-		     'arguments' => array('hashString' => $torHash,
-	 	     'seedRatioLimit' => $seedRatio,
-		     'seedRatioMode' => 1)
-		    );
+             'arguments' => array('hashString' => $torHash,
+             'seedRatioLimit' => $seedRatio,
+             'seedRatioMode' => 1)
+            );
     $response = transmission_rpc($request);
     _debug(json_encode($response),0);
     _debug("\r\n",0);
@@ -198,11 +202,11 @@ function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL
     _debug("Deep Directorys, change dest to $dest\n", 1);
   }
   if(!file_exists($dest) or !is_dir($dest)) {
-	$old_umask = umask(0);
+    $old_umask = umask(0);
     if(file_exists($dest))
       unlink($dest);
     mkdir($dest, 0777, TRUE);
-	umask($old_umask);
+    umask($old_umask);
   }
   switch($config_values['Settings']['Client']) {
     case 'Transmission':
