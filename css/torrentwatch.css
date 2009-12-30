@@ -496,6 +496,15 @@ div#clientError h2 {
 	margin-bottom: 4px;
 }
 
+div#fileRights {
+    top: 5px;
+    color: red;
+    text-align: center;
+    width: 600px;
+    margin-left: -310px;
+	
+}
+
 /********************************
  *
  * W I Z A R D   D I A L O G S

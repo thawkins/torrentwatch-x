@@ -363,6 +363,29 @@ function close_html() {
 	echo $html_out;
 	$html_out = "";
 }
+
+function check_file_rights() {
+    global $config_values;
+    $toCheck = array('cache_dir' => $config_values['Settings']['Cache Dir'],
+                    'download_dir' => $config_values['Settings']['Download Dir'],
+                    'configFile' => platform_getConfigFile()
+                    );
+                    
+    $deepDir = $config_values['Settings']['Deep Directories'];
+    
+    $myuid = posix_getuid();
+    $error = false;
+    foreach ($toCheck as $key => $file) {
+        if(!($deepDir) && $key == 'download_dir') break;
+        if(!(is_writable($file))) $error .= "$key:&nbsp;<i>\"$file\"</i>&nbsp;&nbsp;is not writable for uid: $myuid <br />";
+        if(!(is_readable($file))) $error .= "$key:&nbsp;<i>\"$file\"</i>&nbsp;&nbsp;is not readable for uid: $myuid <br />";
+    }
+    
+    if($error) {
+        echo "<div id=\"fileRights\" class=\"dialog_window\" style=\"display: block\">$error</div>";
+    }
+}
+
 //
 //
 // MAIN Function
@@ -382,6 +405,7 @@ $verbosity = 0;
 
 parse_options();
 display_global_config();
+check_file_rights();
 display_favorites();
 display_history();
 display_clearCache();
