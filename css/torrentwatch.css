@@ -24,6 +24,9 @@ div.rss_debug {
  * G L O B A L
  *
  * ---------------*/
+html {
+    overflow: hidden;
+}
 
 body {
 	font: 85% "lucida grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
