@@ -45,20 +45,20 @@ function show_torrent_html($item, $feed, $feedName, $alt, $torHash, $matched, $i
 }
 
 // The opening of the div which contains all the feeditems(one div per feed)
-function show_feed_html($rss, $idx) {
+function show_feed_html($rss, $idx, $firstFeed) {
   global $html_out, $config_values;
-  if($config_values['Settings']['Combine Feeds']) {
-      if($idx != 0) return;
+  if($config_values['Settings']['Combine Feeds'] == 1) {
+      if($idx != $firstFeed) return;
   } else {
-      $html_out .= "<div class='header'>".$rss['title']."</div>\n";
+      $headerDiv = "<div class=\"header\">".$rss['title']."</div>\n";
   }
   $html_out .= "<div class='feed' id='feed_$idx'><ul id='torrentlist' class='torrentlist'>";
+  $html_out .= $headerDiv;
 }
 
 // Closing the div which contains all the feed items
-function close_feed_html($idx, $totalFeeds) {
+function close_feed_html() {
   global $html_out, $config_values;
-  if($config_values['Settings']['Combine Feeds'] && $idx != 1) return;
   $html_out .= '</ul></div>';
 }
 
