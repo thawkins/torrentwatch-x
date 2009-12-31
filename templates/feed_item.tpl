@@ -3,6 +3,10 @@ if($item['description']) $description = $item['description'];
 if($item['pubDate']) $pubDate = $item['pubDate'];
 if(!($torHash)) $torHash = '###torHash###';
 
+if($config_values['Settings']['Combine Feeds'] == 1) {
+    $feedItem = "<p class=\"feed_name\">$feedName</p>";
+}
+
 if($torInfo) {
   $stats = $torInfo['stats'];
   $clientId = $torInfo['clientId'];
@@ -60,10 +64,12 @@ print <<< EOH
 
 
 </td><td class="torrent_name">
-<span class='torrent_pubDate'>$pubDate</span>
 <span class='torrent_name'>$title</span>
-
 $infoDiv
+</td><td class='feed_info'>
+<p class='torrent_pubDate'>$pubDate</p>
+$feedItem
+
 </td></tr></table></li>
 
 EOH;

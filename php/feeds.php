@@ -207,9 +207,8 @@ function get_torHash($cache_file) {
   }
 }
 
-function rss_perform_matching($rs, $idx) {
+function rss_perform_matching($rs, $idx, $feedName) {
   global $config_values, $matched;
-
 
   if(count($rs['items']) == 0)
     return;
@@ -241,7 +240,7 @@ function rss_perform_matching($rs, $idx) {
       if(!($rsnr)) { $rsnr = 1; } else { $rsnr ++; };
       if(strlen($rsnr) <= 1) $rsnr = 0 . $rsnr;
       $id = $idx . $rsnr;
-      show_torrent_html($item, $rs['URL'], $alt, $torHash, $matched, $id);
+      show_torrent_html($item, $rs['URL'], $feedName, $alt, $torHash, $matched, $id);
     }
     
     if($alt=='alt') {
@@ -251,7 +250,7 @@ function rss_perform_matching($rs, $idx) {
     }
   }
   if(isset($config_values['Global']['HTMLOutput']))
-    close_feed_html();
+    close_feed_html($idx, count($rs['items']));
   unset($item);
 }
 
@@ -294,7 +293,8 @@ function feeds_perform_matching($feeds) {
   foreach($feeds as $key => $feed) {
     switch($feed['Type']) {
       case 'RSS':
-        rss_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key);
+        rss_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key,
+                             $feed['Name']);
         break;
 /*
       case 'Atom':
