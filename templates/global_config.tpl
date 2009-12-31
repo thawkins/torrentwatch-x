@@ -2,14 +2,18 @@
  <h2 class="dialog_heading">Configuration</h2>
   <form action="torrentwatch.php?setGlobals=1" id="config_form">
    <div class="config_form">   
-    <label class="category">Web UI Settings</label>
+    <label class="category">Interface Settings</label>
     <div id="config_webui">
-      <label class="item select">Font Size:</label>
+      <label class="item select">Choose Font Size:</label>
       <select name="webui" id="config_webui" onChange="changeFontSize(this.options[this.selectedIndex].value)">
         <option value="Small">Small</option>
         <option value="Medium" selected>Medium</option>
         <option value="Large">Large</option>
       </select>
+    </div>
+    <div id="config_combinefeeds">
+      <input type="checkbox" name="combinefeeds" value=1 <?php echo $combinefeeds; ?>>
+      <label class="item checkbox" title="Combine all feeds into 1 list">Combine Feeds</label>
     </div>
     <label class="category">Torrent Client Settings</label>
     <div id="config_torrentclient">

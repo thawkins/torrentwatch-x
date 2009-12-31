@@ -433,6 +433,7 @@ $(function() {
                 filter = 'all';
             }
             getClientData(0);
+            $('#torrentlist>li').tsort('p.torrent_pubDate', {order: 'desc'});
             setTimeout(function() {
                 if ($('#transmission_data').length > 0) {
                     $('a#torClient ').show().html('Transmission');
@@ -443,9 +444,9 @@ $(function() {
                     if(filter == 'transmission') {
                         filter = 'all';
                     }
-                }
-                
+                }                
                 displayFilter(filter);
+                
             },
             100);
         },

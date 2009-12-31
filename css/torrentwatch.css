@@ -255,7 +255,7 @@ div#torrentlist_container {
 	right: 0;
 	}
 
-ul.torrentlist li.header,
+div#torrentlist_container div.header,
 div.transmission div.header {
 	border-bottom: 1px solid #ccc;
 	font-size: 1.4em;
@@ -298,10 +298,8 @@ ul.torrentlist p {
 }
 
 ul.torrentlist td.buttons {
-	padding-top: 3px;
-	padding-bottom: 1px;
 	text-align: center;
-	vertical-align: top;
+	vertical-align: middle;
 	width: 15px;
 	height: 15px;
 }
@@ -365,12 +363,28 @@ ul.torrentlist div.torInfo {
 
 span.torrent_name {
 	margin-right: 10px;
-	}
+}
 
+td.torrent_name {
+    vertical-align: middle;
+}
+
+td.feed_info {
+    text-align: right;
+    vertical-align: middle;
+	padding: 1px 2px 1px 0;
+}
 span.dateAdded,
-span.torrent_pubDate {
-	float: right;
-	}	
+p.torrent_pubDate {
+    padding-bottom: 1px;
+    font-size: 10px;
+}	
+
+p.feed_name {
+    padding-top: 1px;
+    font-size: 9px;
+    color: #777777;
+}
 
 /*--------------------------
  *
@@ -574,7 +588,8 @@ div.dialog_window#configuration select {
 }
 
 div.dialog_window#configuration input[type=checkbox] {
-	margin: 4px 5px 0 22px;
+	margin: 2px 2px 0 13px;
+	border: 1px solid gray;
 	}
 
 div.config_form {

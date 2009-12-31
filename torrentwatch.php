@@ -256,7 +256,7 @@ function display_global_config() {
 	$savetorrent=$transmission="";
 	$deepfull=$deeptitle=$deepoff=$verifyepisode="";
 	$matchregexp=$matchglob=$matchsimple="";
-	$onlynewer=$folderclient="";
+	$onlynewer=$folderclient=$combinefeeds="";
 
 	switch($config_values['Settings']['Client']) {
 		case 'Transmission':
@@ -269,6 +269,8 @@ function display_global_config() {
 			// Shouldn't happen
 			break;
 	}
+	if($config_values['Settings']['Combine Feeds'] == 1)
+	    $combinefeeds = 'checked=1';
 
 	if($config_values['Settings']['Save Torrents'] == 1)
 		$savetorrent = 'checked=1';
