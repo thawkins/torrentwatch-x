@@ -13,7 +13,7 @@
                     <div class="category">
                         <label class="category">Interface Settings</label>
                     </div>
-                    <div class="left">
+                    <div class="int_settings left">
                         <div id="config_webui">
                             <label class="item select">Choose Font Size:</label> 
                             <select name="webui" id="config_webui" onchange="changeFontSize(this.options[this.selectedIndex].value)">
@@ -29,7 +29,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="right">
+                    <div class="int_settings right">
                         <div id="config_combinefeeds">
                             <input type="checkbox" name="combinefeeds" value="1"
                             <?php echo $combinefeeds; ?>> <label class="item checkbox"
@@ -39,7 +39,7 @@
                     <div class="category">
                         <label class="category">Torrent Client Settings</label>
                     </div>
-                    <div class="left">
+                    <div class="tor_client_settings left">
                         <div id="config_torrentclient">
                             <label class="item select" title="Which torrent client to use">Client:</label> 
                             <select name="client" id="client" onchange="changeClient(this.options[this.selectedIndex].value)">
@@ -56,7 +56,7 @@
                              value="<?php echo $config_values['Settings']['Extension']; ?>">
                         </div>
                         <div id="config_downloaddir" title="Default directory to start items in">
-                            <label class="item textinput">Download Directory:</label> <input type="text" class="text" name="downdir"
+                            <label class="item textinput">Download Dir:</label> <input type="text" class="text" name="downdir"
                              value="<?php echo $config_values['Settings']['Download Dir']; ?>">
                         </div>
                         <div id="config_tr_host" title="Hostname">
@@ -64,7 +64,7 @@
                              value="<?php echo $config_values['Settings']['Transmission Host']; ?>">
                         </div>
                     </div>
-                    <div class="right">
+                    <div class="tor_client_settings right">
                         <div id="config_tr_port" title="Port">
                             <label class="item textinput">Port:</label> <input type="text" class="text" name="trport" 
                              value="<?php echo $config_values['Settings']['Transmission Port']; ?>">
@@ -78,10 +78,10 @@
                              value="<?php echo $config_values['Settings']['Transmission Password']; ?>">
                         </div>
                     </div>
-                    <div class="category">
+                    <div class="category tor_settings">
                         <label class="category" id="torrent_settings">Torrent Settings</label>
                     </div>
-                    <div class="left">
+                    <div class="tor_settings left">
                         <div id="config_deepdir">
                             <label class="item select" title="Save downloads in multi-directory structure">Deep Directories:</label>
                              <select name="deepdir">
@@ -97,7 +97,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="right">
+                    <div class="tor_settings right">
                         <div id="config_watchdir">
                             <label class="item textinput" title="Directory to look for new .torrents">Watch Dir:</label>
                             <input type="text" class="text" name="watchdir"
@@ -111,7 +111,7 @@
                     <div class="category">
                         <label class="category">Favorites Settings</label>
                     </div>
-                    <div class="left">
+                    <div class="fav_settings left">
                         <div id="config_matchstyle">
                             <label class="item select" title="Type of filter to use">Matching Style:</label>
                             <select name="matchstyle">
@@ -127,7 +127,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="right">
+                    <div class="fav_settings right">
                         <div id="config_verifyepisodes" title="Try not to download duplicate episodes">
                             <input type="checkbox" name="verifyepisodes" value="1" <?php echo $verifyepisode; ?>>
                             <label class="item checkbox">Verify Episodes</label>

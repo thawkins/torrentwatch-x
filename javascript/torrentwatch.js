@@ -99,18 +99,19 @@ $(function() {
     
     // Switching visible items for different clients    
     changeClient = function(client) {
+        $.cookie('TORCLIENT', client);
         $(".favorite_seedratio, #config_folderclient").css("display", "none");
         $("#torrent_settings").css("display", "block");
         var target = 'http://' + location.hostname;
         switch (client) {
         case 'folder':
-            $("#config_watchdir, #config_savetorrent, #config_deepdir, #torrent_settings, div.favorite_savein, #config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port").css("display", "none");
+            $(".config_form .tor_settings, div.category tor_settings, #torrent_settings, div.favorite_savein, #config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port").css("display", "none");
             $("#config_folderclient, #config_downloaddir").css("display", "block");
             $("form.favinfo, ul.favorite");
             target = '#';
             break;
         case 'Transmission':
-            $("#config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port, #config_downloaddir, #config_watchdir, #config_savetorrent, #config_deepdir, div.favorite_seedratio, div.favorite_savein").css("display", "block");
+            $(".config_form .tor_settings, div.category tor_settings, #config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port, #config_downloaddir, div.favorite_seedratio, div.favorite_savein").css("display", "block");
             $("ul.favorite").css("height", 245);
             target += ':9091/transmission/web/';
             break;
@@ -118,6 +119,7 @@ $(function() {
         if(client != 'folder') { 
             $("#webui a").text(client)[0].href = target;
             $('li#webui').show();
+            window.noClient = true;
         } else {
             $('li#webui').hide();
         }
@@ -269,6 +271,7 @@ $(function() {
     };
 
     getClientData = function(recent) {
+        if($.cookie('TORCLIENT') == 'folder') { return; }
         window.torInfo = recent;
         var runCheck = 0;
         $.get('torrentwatch.php', {
