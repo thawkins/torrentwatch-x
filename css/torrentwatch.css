@@ -236,6 +236,7 @@ ul.show_legend {
 
 ul.show_legend li {
 	padding: 5px 5px 5px 5px;
+	font-size: 12px;
 }
 
 /*-------------------------
@@ -451,6 +452,8 @@ div.move_data label {
 	
 div#configuration  {
 	top: 10px;
+	width: 700px;
+	margin-left: -350px;
 }
 
 h2.dialog_heading {
@@ -571,19 +574,56 @@ div.form_radio {
  * C O N F I G   D I A L O G 
  *
  ****************************/
+div.dialog_window#configuration div.left {
+    margin-top: 10px;
+    float: left;
+    width: 372px;
+}
 
-div.dialog_window#configuration input.text,
-div.dialog_window#configuration input.password,
-div.dialog_window#configuration input[type=text],
-div.dialog_window#configuration input[type=password] {
-	position: absolute;
-	right: 30px;
-	width: 225px;
-	}
+div.dialog_window#configuration div.right {
+    margin-top: 10px;
+    float: left;
+    width: 322px;
+    border-left: 1px solid gray;
+    border-style:dotted;
+}
 
-div.dialog_window#configuration select {
+div.dialog_window#configuration div.category {
+    width: 698px;
+    height: 32px;
+    float: left;
+    text-align: center;
+    border-bottom: 1px solid gray;
+    border-style:dotted;
+}
+
+div.dialog_window#configuration div.left input.text,
+div.dialog_window#configuration div.left input.password,
+div.dialog_window#configuration div.left input[type=text],
+div.dialog_window#configuration div.left input[type=password] {
     position: absolute;
-	right: 30px;
+    left: 120px;
+	width: 225px;
+}
+
+div.dialog_window#configuration div.right input.text,
+div.dialog_window#configuration div.right input.password,
+div.dialog_window#configuration div.right input[type=text],
+div.dialog_window#configuration div.right input[type=password] {
+    position: absolute;
+    right: 15px;
+	width: 225px;
+}
+
+div.dialog_window#configuration div.left select {
+    position: absolute;
+	left: 120px;
+    width: 227px;
+}
+
+div.dialog_window#configuration div.right select {
+    position: absolute;
+	right: 15px;
     width: 227px;
 }
 
@@ -596,6 +636,7 @@ div.config_form {
 	border: 1px solid gray;
 	padding: 0 0 5px 0;
 	margin: 5px 0 0 0 ;
+	height: 350px;
 }
 
 form#config_form div {
