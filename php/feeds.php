@@ -215,7 +215,7 @@ function rss_perform_matching($rs, $idx, $feedName) {
   $percPerFeed = 80/count($config_values['Feeds']);
   $percPerItem = $percPerFeed/count($rs['items']);
   if(isset($config_values['Global']['HTMLOutput']) && $config_values['Settings']['Combine Feeds'] == 0) {
-    show_feed_html($rs, $idx);
+    show_feed_html($idx);
   }
   $alt = 'alt';
   foreach($rs['items'] as $item) {
