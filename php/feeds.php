@@ -209,16 +209,13 @@ function get_torHash($cache_file) {
 
 function rss_perform_matching($rs, $idx, $feedName) {
   global $config_values, $matched;
-  
-  static $firstFeed;
-  if(!(isset($firstFeed))) $firstFeed = (int)$idx;
 
   if(count($rs['items']) == 0)
     return;
   $percPerFeed = 80/count($config_values['Feeds']);
   $percPerItem = $percPerFeed/count($rs['items']);
-  if(isset($config_values['Global']['HTMLOutput'])) {
-    show_feed_html($rs, $idx, $firstFeed);
+  if(isset($config_values['Global']['HTMLOutput']) && $config_values['Settings']['Combine Feeds'] == 0) {
+    show_feed_html($rs, $idx);
   }
   $alt = 'alt';
   foreach($rs['items'] as $item) {
@@ -252,6 +249,7 @@ function rss_perform_matching($rs, $idx, $feedName) {
       $alt='alt';
     }
   }
+  
   if(isset($config_values['Global']['HTMLOutput']) && $config_values['Settings']['Combine Feeds'] == 0) {
     close_feed_html($idx, 0);
   }
@@ -294,6 +292,11 @@ function feeds_perform_matching($feeds) {
     echo('<div class="progressBarUpdates">');
     setup_rss_list_html();
   }
+  
+  if(isset($config_values['Global']['HTMLOutput']) && $config_values['Settings']['Combine Feeds'] == 1) {
+    show_feed_html($rs, combined);
+  }
+  
   cache_setup();
   foreach($feeds as $key => $feed) {
     switch($feed['Type']) {
@@ -311,7 +314,8 @@ function feeds_perform_matching($feeds) {
         break;
     }
   }
-  if($config_values['Settings']['Combine Feeds'] == 1) {
+  
+  if(isset($config_values['Global']['HTMLOutput']) && $config_values['Settings']['Combine Feeds'] == 1) {
     close_feed_html();
   }
   
