@@ -52,10 +52,6 @@
       <label class="item textinput" title="Directory to look for new .torrents">Watch Directory:</label>
       <input type="text" class="text" name="watchdir" value="<?php echo $config_values['Settings']['Watch Dir']; ?>">
     </div>
-    <div id="config_savetorrent">
-      <input type="checkbox" name="savetorrents" value=1 <?php echo $savetorrent; ?>>
-      <label class="item checkbox" title="Save torrent to download directory">Save torrent files</label>
-    </div>
     <div id="config_deepdir">
       <label class="item select" title="Save downloads in multi-directory structure">Deep Directories:</label>
       <select name="deepdir">
@@ -63,6 +59,10 @@
         <option value="Title" <?php echo $deeptitle; ?>>Show Title</option>
         <option value="0" <?php echo $deepoff; ?>>Off</option>
       </select>
+    </div>
+    <div id="config_savetorrent">
+      <input type="checkbox" name="savetorrents" value=1 <?php echo $savetorrent; ?>>
+      <label class="item checkbox" title="Save torrent to download directory">Save torrent files</label>
     </div>
     <label class="category">Favorites Settings</label>
     <div id="config_matchstyle">
@@ -76,8 +76,6 @@
     <div id="config_verifyepisodes" title="Try not to download duplicate episodes">
       <input type="checkbox" name="verifyepisodes" value=1 <?php echo $verifyepisode; ?>>
       <label class="item checkbox">Verify Episodes</label>
-    </div>
-    <div id="config_onlynewer" title="Only download episodes newer than the last">
       <input type="checkbox" name="onlynewer" value=1 <?php echo $onlynewer; ?>>
       <label class="item checkbox">Newer Episodes Only</label>
     </div>
