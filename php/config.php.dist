@@ -12,7 +12,7 @@ function setup_default_config() {
       $config_values['Settings'][$a] = $b;
     }
   }
-  _debug("Initializing Torrentwatch Configuration\n", 1);
+  //_debug("Initializing Torrentwatch Configuration\n", 1);
 
   if(!isset($config_values['Settings']))
     $config_values['Settings'] = array();
@@ -25,7 +25,7 @@ function setup_default_config() {
   _default('Transmission URI', '/transmission/rpc');
   _default('Watch Dir', platform_getDownloadDir());
   _default('Download Dir', platform_getDownloadDir());
-  _default('Cache Dir', $basedir."/rss_cache");
+  _default('Cache Dir', $basedir."/rss_cache/");
   _default('Save Torrents', "0");
   _default('Run Torrentwatch', "True");
   _default('Cron', "/etc/cron.hourly");
@@ -33,6 +33,7 @@ function setup_default_config() {
   _default('Verify Episode', "1");
   _default('Only Newer', "1");
   _default('Deep Directories', "0");
+  _default('Combine Feeds', '0');
   _default('History', $basedir."/rss_cache/rss_dl.history");
   _default('MatchStyle',"simple");
   _default('FirstRun',"1");
@@ -83,10 +84,11 @@ function read_config_file() {
           }
         } else {
           $config_values[$group][$option] = $value;
-        }
+        }        
       }
     }
   }
+  
   fclose($fp);
   // Create the base arrays if not already
      
@@ -159,19 +161,21 @@ function update_global_config() {
   global $config_values;
   $input = array('Transmission Login' => 'truser',
                  'Transmission Password' => 'trpass',
-		 'Transmission Host' => 'trhost',
-		 'Transmission Port' => 'trport',
-		 'Transmission URI' => 'truri',
-		 'Download Dir'     => 'downdir',
+		         'Transmission Host' => 'trhost',
+        		 'Transmission Port' => 'trport',
+        		 'Transmission URI' => 'truri',
+        		 'Download Dir'     => 'downdir',
                  'Watch Dir'        => 'watchdir',
                  'Deep Directories' => 'deepdir',
+                 'Combine Feeds'    => 'combinefeeds',
                  'Client'           => 'client',
                  'MatchStyle'       => 'matchstyle',
                  'Only Newer'       => 'onlynewer',
                  'Extension'        => 'extension');
-  $checkboxs = array('Verify Episode' => 'verifyepisodes',
+  $checkboxs = array('Combine Feeds' => 'combinefeeds',
+                     'Verify Episode' => 'verifyepisodes',
                      'Save Torrents'  => 'savetorrents',
-                     'Only Newer'     => 'onlynewer');
+                     'Only Newer'     => 'onlynewer',);
   foreach($input as $key => $data)
     if(isset($_GET[$data]))
       $config_values['Settings'][$key] = $_GET[$data];
@@ -270,11 +274,9 @@ function add_feed() {
       case 'RSS':
         $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['title'];
         break;
-/*
       case 'Atom':
         $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['Name'];
         break;
-*/
     }
   } else
     _debug("Could not connect to Feed/guess Feed Type", -1);
