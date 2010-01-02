@@ -190,8 +190,7 @@ function getClientData($recent) {
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
 			if($recent) {
-			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone', 'downloadDir', 
-		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
+			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone', 'downloadDir',
 		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected')), 'method' => 'torrent-get');

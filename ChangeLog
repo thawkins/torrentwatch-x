@@ -45,5 +45,7 @@ torrentwatch cvs -> torrentwatch-x 0.1
 0.4.1
 	-- Fixed transmission button.
 
-0.5
+0.4.2
 	-- Added error message when torrent client fails.
+	-- Added support for combining feeds.
+	-- Added option to change the feed name.
