@@ -126,6 +126,7 @@ function update_global_config() {
         		 'Download Dir'     => 'downdir',
                  'Watch Dir'        => 'watchdir',
                  'Deep Directories' => 'deepdir',
+                 'Default Seed Ratio' => 'defaultratio',
                  'Combine Feeds'    => 'combinefeeds',
                  'Client'           => 'client',
                  'MatchStyle'       => 'matchstyle',
