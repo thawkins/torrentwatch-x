@@ -78,6 +78,8 @@ function parse_options() {
 			write_config_file();
 			break;
 		case 'matchTitle':
+		    $seedRatio = $config_values['Settings']['Default Seed Ratio'];
+		    if(!($seedRatio)) $seedRatio = -1;
 			if(($tmp = guess_match(html_entity_decode($_GET['title'])))) {
 				$_GET['name'] = trim(strtr($tmp['key'], "._", "  "));
 				$_GET['filter'] = trim($tmp['key']);
@@ -87,7 +89,7 @@ function parse_options() {
 				$_GET['feed'] = $_GET['rss'];
 				$_GET['button'] = 'Add';
 				$_GET['savein'] = 'Default';
-				$_GET['seedratio'] = '-1';
+				$_GET['seedratio'] = $seedRatio;
 			} else {
 				$_GET['name'] = $_GET['title'];
 				$_GET['filter'] = $_GET['title'];
@@ -95,7 +97,7 @@ function parse_options() {
 				$_GET['feed'] = $_GET['rss'];
 				$_GET['button'] = 'Add';
 				$_GET['savein'] = 'Default';
-				$_GET['seedratio'] = '-1';
+				$_GET['seedratio'] = $seedRatio;
 			}
 			update_favorite();
 			break;

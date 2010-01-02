@@ -96,6 +96,11 @@
                                 </option>
                             </select>
                         </div>
+                        <div id="default_ratio">
+                            <label class="item textinput" title="Set default Seed Ratio">Default Seed Ratio:</label>
+                            <input type="text" class="text" name="defaultratio"
+                             value="<?php echo $config_values['Settings']['Default Seed Ratio']; ?>">
+                        </div>
                     </div>
                     <div class="tor_settings right">
                         <div id="config_watchdir">
