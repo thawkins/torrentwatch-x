@@ -333,7 +333,10 @@ $(function() {
 
             var liClass;
             var clientData;
-            if (item.status == 1) {
+            if (item.errorString) {
+                clientData = item.errorString;
+                liClass = "paused";
+            } else if (item.status == 1) {
                 clientData = 'Waiting for peers';
                 liClass = 'waiting';
             } else if (item.status == 2) {
