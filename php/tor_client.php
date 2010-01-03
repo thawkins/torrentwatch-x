@@ -143,7 +143,7 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio) {
 
   if($seedRatio >= 0 && ($torHash)) {
     $request = array('method' => 'torrent-set',
-             'arguments' => array('hashString' => $torHash,
+             'arguments' => array('ids' => $torHash,
              'seedRatioLimit' => $seedRatio,
              'seedRatioMode' => 1)
             );
