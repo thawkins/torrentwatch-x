@@ -651,6 +651,7 @@ div.feeditem {
 	height: 35px;
 }
 
+
 div.feeditem.add {
     border-bottom: 1px solid gray;
     margin-bottom: 10px;
@@ -677,15 +678,30 @@ div.feeditem label.item  a:active {
 	color: black;
 	}
 
+div#feeds div#feedName {
+    margin-left: 4px;
+    float: left;
+    width: 251px;
+}
+
 div.feeditem input[type=text] {
     position: relative;
     top: 6px;
-	width: 220px;
+	width: 240px;
 	margin: 3px 0;
+}
+
+div.feeditem input.feed_name[type=text] {
+    margin: 3px 0 0 15px;
 }
 
 div.feeditem input.feed_link[type=text] {
     width: 280px;
+}
+
+div.feeditem input.seed_ratio[type=text] {
+    width: 2em;
+    margin-left: 6px;
 }
 
 div.feeditem button {

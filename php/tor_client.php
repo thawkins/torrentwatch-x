@@ -169,7 +169,7 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio) {
   }
 }
 
-function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL) {
+function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL) {
   global $config_values, $hit;
   $hit = 1;
   $filename = htmlspecialchars_decode($filename);
@@ -187,6 +187,7 @@ function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL
     _debug("Couldn't open torrent: $filename\n",-1);
     return FALSE;
   }
+  
   $tor_info = new BDecode("", $tor);
   if(!($tor_name = $tor_info->{'result'}['info']['name'])) {
     $tor_name = $title;
@@ -208,8 +209,17 @@ function client_add_torrent($filename, $dest, $title, &$fav = NULL, $feed = NULL
     mkdir($dest, 0777, TRUE);
     umask($old_umask);
   }
-  $seedRatio = $config_values['Settings']['Default Seed Ratio'];
+  
+  foreach($config_values['Feeds'] as $key => $feedLink) {
+      if($feedLink['Link'] == "$feed") $idx = $key;
+  }
+  if($config_values['Feeds'][$idx]['seedRatio']) {
+      $seedRatio = $config_values['Feeds'][$idx]['seedRatio'];
+  } else {
+      $seedRatio = $config_values['Settings']['Default Seed Ratio'];
+  }
   if(!($seedRatio)) $seedRatio = -1;
+  
   switch($config_values['Settings']['Client']) {
     case 'Transmission':
       $return = transmission_add_torrent($tor, $dest, $title, _isset($fav, 'seedRatio', $seedRatio));

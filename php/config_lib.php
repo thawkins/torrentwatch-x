@@ -99,8 +99,6 @@ function write_config_file() {
     }
   }
   array_walk($config_values, 'group_callback');
-  _debug("Finalized Config\n");
-  _debug($config_out,2);
   $dir = dirname($config_file);
   if(!is_dir($dir)) {
     _debug("Creating configuration directory\n", 1);
@@ -230,14 +228,17 @@ function add_feed() {
     $config_values['Feeds'][]['Link'] = $link;
     $idx = end(array_keys($config_values['Feeds']));
     $config_values['Feeds'][$idx]['Type'] = $tmp;
+    $config_values['Feeds'][$idx]['seedRatio'] = $config_values['Settings']['Default Seed Ratio'];
     load_feeds(array(0 => array('Type' => $tmp, 'Link' => $link)));
     switch($tmp) {
       case 'RSS':
         $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['title'];
         break;
+      /*
       case 'Atom':
         $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['Name'];
         break;
+      */
     }
   } else
     _debug("Could not connect to Feed/guess Feed Type", -1);
@@ -249,6 +250,7 @@ function update_feedData() {
     if(isset($_GET['idx']) AND isset($config_values['Feeds'][$_GET['idx']])) {
         if(!($_GET['feed_name'])) return;
         $config_values['Feeds'][$_GET['idx']]['Name'] = $_GET['feed_name'];
+        $config_values['Feeds'][$_GET['idx']]['seedRatio'] = $_GET['seed_ratio'];
     }
 }
 

@@ -78,7 +78,16 @@ function parse_options() {
 			write_config_file();
 			break;
 		case 'matchTitle':
-		    $seedRatio = $config_values['Settings']['Default Seed Ratio'];
+		    $feedLink = $_GET['rss'];
+		    foreach($config_values['Feeds'] as $key => $feed) {
+		        if($feed['Link'] == "$feedLink") $idx = $key;
+		    }
+    		if($config_values['Feeds'][$idx]['seedRatio']) {
+                $seedRatio = $config_values['Feeds'][$idx]['seedRatio'];
+            } else {
+                $seedRatio = $config_values['Settings']['Default Seed Ratio'];
+            }
+		
 		    if(!($seedRatio)) $seedRatio = -1;
 			if(($tmp = guess_match(html_entity_decode($_GET['title'])))) {
 				$_GET['name'] = trim(strtr($tmp['key'], "._", "  "));
@@ -103,7 +112,8 @@ function parse_options() {
 			break;
 		case 'dlTorrent':
 			// Loaded via ajax
-			$r = client_add_torrent(trim(urldecode($_GET['link'])), $config_values['Settings']['Download Dir'], $_GET['title']);
+			$r = client_add_torrent(trim(urldecode($_GET['link'])), $config_values['Settings']['Download Dir'],
+			                        $_GET['title'], $_GET['feed']);
                         if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
 			echo $torHash;
 			exit(0);
@@ -379,6 +389,7 @@ function check_file_rights() {
     $myuid = posix_getuid();
     $error = false;
     foreach ($toCheck as $key => $file) {
+        if(!(file_exists($file))) $error .= "$key:&nbsp;<i>\"$file\"</i>&nbsp;&nbsp;does not exist <br />";
         if(!($deepDir) && $key == 'download_dir') break;
         if(!(is_writable($file))) $error .= "$key:&nbsp;<i>\"$file\"</i>&nbsp;&nbsp;is not writable for uid: $myuid <br />";
         if(!(is_readable($file))) $error .= "$key:&nbsp;<i>\"$file\"</i>&nbsp;&nbsp;is not readable for uid: $myuid <br />";
