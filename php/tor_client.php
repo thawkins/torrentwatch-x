@@ -102,13 +102,13 @@ function get_deep_dir($dest, $tor_name) {
       case 'Title':
         $guess = guess_match($tor_name, TRUE);
         if(isset($guess['key'])) {
-          $dest = $dest."/".$guess['key'];
+          $dest = $dest."/".ucwords(strtolower($guess['key']));
           break;
         }
         _debug("Deep Directories: Couldn't match $tor_name Reverting to Full\n", 1);
       case 'Full':
       default:
-        $dest = $dest."/".$tor_name;
+        $dest = $dest."/".ucwords(strtolower($tor_name));
         break;
     }
     return $dest;
@@ -202,7 +202,6 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
     $dest = get_deep_dir($dest, $tor_name);
     _debug("Deep Directorys, change dest to $dest\n", 1);
   }
-  $dest = ucwords($dest);
   if(!file_exists($dest) or !is_dir($dest)) {
     $old_umask = umask(0);
     if(file_exists($dest))
