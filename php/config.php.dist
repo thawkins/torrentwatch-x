@@ -39,5 +39,6 @@ function setup_default_config() {
   _default('FirstRun',"1");
   _default('Extension',"torrent");
   _default('verbosity','0');
+  _default('Default Seed Ratio', '-1');
 }
 ?>

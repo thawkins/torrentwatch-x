@@ -7,14 +7,17 @@
       <input type="text" class="feed_link" name="link">
       </form>
   </div>
+  <div id="feedName"><label class="item">Name</label></div>
+  <label class="item">Ratio</label>
   <?php if(isset($config_values['Feeds'])): ?>
     <?php foreach($config_values['Feeds'] as $key => $feed): ?>
       <div class="feeditem">
           <form action="torrentwatch.php?updateFeed=1" class="feedform">  
-          <label class="item">Feed <?php echo $key; ?>:</label>
           <input type="hidden" name="idx" value="<?php echo $key; ?>">
-          <input type="text" name="feed_name" title="<?php echo $feed['Link']; ?>"
+          <input class="feed_name" type="text" name="feed_name" title="<?php echo $feed['Link']; ?>"
                  value="<?php echo $feed['Name']; ?>"</input>
+         <input class="seed_ratio" type="text" name="seed_ratio" title="Set default seed ratio for this feed."
+                value="<?php echo $feed['seedRatio']; ?>"</input>
           <a class="submitForm button" id="Delete" href="#">Delete</a>
           <a class="submitForm button" id="Update" href="#">Update</a>
           </form>

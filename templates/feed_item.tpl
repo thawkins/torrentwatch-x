@@ -37,7 +37,7 @@ print <<< EOH
 <table width="100%" cellspacing="0"><tr><td class="buttons left match_$matched">
 
 <p class='$dlTorrent'>
-<a href="#" title="Download this torrent" onclick='javascript:$.dlTorrent("torrentwatch.php?dlTorrent=1&title=$utitle&link=$ulink","$id")'>
+<a href="#" title="Download this torrent" onclick='javascript:$.dlTorrent("torrentwatch.php?dlTorrent=1&title=$utitle&link=$ulink&feed=$feed","$id")'>
 <img height=10 src="images/tor_start.png"></a></p>
 
 <p class="activeTorrent $torStart">
