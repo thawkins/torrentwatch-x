@@ -202,6 +202,7 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
     $dest = get_deep_dir($dest, $tor_name);
     _debug("Deep Directorys, change dest to $dest\n", 1);
   }
+  $dest = ucwords($dest);
   if(!file_exists($dest) or !is_dir($dest)) {
     $old_umask = umask(0);
     if(file_exists($dest))
