@@ -1,51 +1,59 @@
 torrentwatch cvs -> torrentwatch-x 0.1
-	-- ported the original torrentwatch to linux.
-	   Only transmission and save to folder support for now.
-	   I will make another port for nzb support later.
-	   Support for other torrent clients will be added later
-	-- Ported all Transmission connections to php-curl
-	-- Added support for authentication with transmission
-	-- Better IE support
-	-- Renamed (the php file) index.cgi to torrentwatch.php
+    -- ported the original torrentwatch to linux.
+       Only transmission and save to folder support for now.
+       I will make another port for nzb support later.
+       Support for other torrent clients will be added later
+    -- Ported all Transmission connections to php-curl
+    -- Added support for authentication with transmission
+    -- Better IE support
+    -- Renamed (the php file) index.cgi to torrentwatch.php
 
 0.2
-	-- Changed feed itmes to only display the name as a link to the rss feed itself.
-	-- Changed some CSS settings and layout stuff.
-	-- Changed filter behavior. You can now set a starting point as well.
-	   1x12 as well as s01e12 syntax is allowed.
-	   Hover over the "Episodes" input field in the favorites screen for more info.
+    -- Changed feed itmes to only display the name as a link to the rss feed itself.
+    -- Changed some CSS settings and layout stuff.
+    -- Changed filter behavior. You can now set a starting point as well.
+       1x12 as well as s01e12 syntax is allowed.
+       Hover over the "Episodes" input field in the favorites screen for more info.
 
 0.2.1
-	-- Added leds for Active downloads and old Downloads (see legend)
-	-- Fix that makes torrenwatch-x download PROPER and REPACK torrents
-	   regardless if the specific episode was downloaded before.
+    -- Added leds for Active downloads and old Downloads (see legend)
+    -- Fix that makes torrenwatch-x download PROPER and REPACK torrents
+       regardless if the specific episode was downloaded before.
 
 0.3
-	-- Disabled atom support for now. If anyone needs support for atom
-	   Sent me a messages and a atom feed to work with :)
-	-- Added support for CDATA sections within xml rss-feeds.
-	-- Moved the configfile location option to config.php
-	-- Live download stats within the torrentlist.
-	   Updates every 5 minutes.
-	  (Thanks macTijn and Habbie for the javascript help)
-	-- Removed refresh button. not very usefull anyway.
-	-- Auto refresh every 5 minutes.
+    -- Disabled atom support for now. If anyone needs support for atom
+       Sent me a messages and a atom feed to work with :)
+    -- Added support for CDATA sections within xml rss-feeds.
+    -- Moved the configfile location option to config.php
+    -- Live download stats within the torrentlist.
+       Updates every 5 minutes.
+      (Thanks macTijn and Habbie for the javascript help)
+    -- Removed refresh button. not very usefull anyway.
+    -- Auto refresh every 5 minutes.
 
 0.4
-	-- More intuitive interface, no more context menu.
-	-- Fixed most IE issues.
-	-- Transmission support.
-	   - Pause/Start downloads
-	   - Remove or Trash downloads
-	   - Move downloads
-	   - Full list of transmission downloads
-	-- Fixed some html & css so it's w3c compatible.
-	-- Upgraded to jquery 1.3.2.
+    -- More intuitive interface, no more context menu.
+    -- Fixed most IE issues.
+    -- Transmission support.
+       - Pause/Start downloads
+       - Remove or Trash downloads
+       - Move downloads
+       - Full list of transmission downloads
+    -- Fixed some html & css so it's w3c compatible.
+    -- Upgraded to jquery 1.3.2.
 
 0.4.1
-	-- Fixed transmission button.
+    -- Fixed transmission button.
 
 0.4.2
-	-- Added error message when torrent client fails.
-	-- Added support for combining feeds.
-	-- Added option to change the feed name.
+    -- Added error message when torrent client fails.
+    -- Added option to change the feed name.
+    -- Added support for combining feeds.
+
+current
+    -- Added Default ratio option.
+    -- Added ratio per feed option.
+    -- When Tranmission returns an error, this now is shown.
+    -- Fixed a bug which caused ratio settings to be set for all torrents instead of the one that was added.
+    -- Fixed a bug which allowed a show directory to be created if a directory name with differing case already existed.
+    -- Fix: transmission port no longer hardcoded in javascript.
