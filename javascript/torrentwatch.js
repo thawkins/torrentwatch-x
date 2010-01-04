@@ -108,20 +108,17 @@ $(function() {
             $(".config_form .tor_settings, div.category tor_settings, #torrent_settings, div.favorite_savein, #config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port").css("display", "none");
             $("#config_folderclient, #config_downloaddir").css("display", "block");
             $("form.favinfo, ul.favorite");
-            target = '#';
+            $('li#webui').hide();
             break;
         case 'Transmission':
             $(".config_form .tor_settings, div.category tor_settings, #config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port, #config_downloaddir, div.favorite_seedratio, div.favorite_savein").css("display", "block");
             $("ul.favorite").css("height", 245);
-            target += ':9091/transmission/web/';
+            $.get('torrentwatch.php', { get_tr_port: 1 }, function(port) {
+                target += ':' + port.match(/\d+/) + '/transmission/web/';
+                $("#webui a").text(client)[0].href = target;
+                $('li#webui').show();
+            })
             break;
-        }
-        if(client != 'folder') { 
-            $("#webui a").text(client)[0].href = target;
-            $('li#webui').show();
-            window.noClient = true;
-        } else {
-            $('li#webui').hide();
         }
     };
     

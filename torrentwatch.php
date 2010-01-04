@@ -1,5 +1,4 @@
 <?php
-
 // disable any kind of caching
 header( "Expires: Mon, 20 Dec 2000 01:00:00 GMT" );
 header( "Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT" );
@@ -126,6 +125,10 @@ function parse_options() {
 			close_html();
 			exit(0);
 			break;
+	    case 'get_tr_port':
+            global $config_values;
+            echo $config_values['Settings']['Transmission Port'];
+            exit;
 		default:
 			$output = "<script type='text/javascript'>alert('Bad Paramaters passed to ".$_SERVER['PHP_SELF'].":  ".$_SERVER['REQUEST_URI']."');</script>";
 	}
@@ -399,6 +402,7 @@ function check_file_rights() {
         echo "<div id=\"fileRights\" class=\"dialog_window\" style=\"display: block\">$error</div>";
     }
 }
+
 
 //
 //

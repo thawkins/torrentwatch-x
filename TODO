@@ -3,6 +3,6 @@
 - Delete old episodes from transmission which are replaces by REPACK or PROPER episodes.
 
 - Torrent client support:
-	- utorrent support
-	- rtorrent support
-	- vuze support
+    - utorrent support
+    - rtorrent support
+    - vuze support
