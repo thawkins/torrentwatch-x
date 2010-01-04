@@ -125,9 +125,9 @@ function parse_options() {
 			close_html();
 			exit(0);
 			break;
-	    case 'get_tr_port':
+	    case 'get_tr_location':
             global $config_values;
-            echo $config_values['Settings']['Transmission Port'];
+            echo $config_values['Settings']['Transmission Host'] . ':' . $config_values['Settings']['Transmission Port'];
             exit;
 		default:
 			$output = "<script type='text/javascript'>alert('Bad Paramaters passed to ".$_SERVER['PHP_SELF'].":  ".$_SERVER['REQUEST_URI']."');</script>";

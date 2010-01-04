@@ -56,4 +56,4 @@ current
     -- When Tranmission returns an error, this now is shown.
     -- Fixed a bug which caused ratio settings to be set for all torrents instead of the one that was added.
     -- Fixed a bug which allowed a show directory to be created if a directory name with differing case already existed.
-    -- Fix: transmission port no longer hardcoded in javascript.
+    -- Fix: transmission hostname and port no longer hardcoded in javascript.
