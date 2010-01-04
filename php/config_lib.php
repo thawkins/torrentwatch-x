@@ -1,5 +1,42 @@
 <?php
 
+function setup_default_config() {
+  global $config_values;
+  function _default($a, $b) {
+    global $config_values;
+    if(!isset($config_values['Settings'][$a])) {
+      $config_values['Settings'][$a] = $b;
+    }
+  }
+
+  if(!isset($config_values['Settings']))
+    $config_values['Settings'] = array();
+  // Sensible Defaults 
+  $basedir = get_base_dir();
+  _default('Transmission Login', '');
+  _default('Transmission Password', '');
+  _default('Transmission Host', 'localhost');
+  _default('Transmission Port', '9091');
+  _default('Transmission URI', '/transmission/rpc');
+  _default('Watch Dir', platform_getDownloadDir());
+  _default('Download Dir', platform_getDownloadDir());
+  _default('Cache Dir', $basedir."/rss_cache/");
+  _default('Save Torrents', "0");
+  _default('Run Torrentwatch', "True");
+  _default('Cron', "/etc/cron.hourly");
+  _default('Client', "Transmission");
+  _default('Verify Episode', "1");
+  _default('Only Newer', "1");
+  _default('Deep Directories', "0");
+  _default('Combine Feeds', '0');
+  _default('History', $basedir."/rss_cache/rss_dl.history");
+  _default('MatchStyle',"simple");
+  _default('FirstRun',"1");
+  _default('Extension',"torrent");
+  _default('verbosity','0');
+  _default('Default Seed Ratio', '-1');
+}
+
 // This function is from
 // http://www.codewalkers.com/c/a/Miscellaneous/Configuration-File-Processing-with-PHP/2/
 // It has been modified to support multidimensional arrays in the form of

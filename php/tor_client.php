@@ -7,11 +7,13 @@
 
 function transmission_sessionId() {
   global $config_values;
-  $sessionIdFile = '/tmp/.Transmission-Session-Id';
+  $sessionIdFile = get_tr_sessionIdFile();
 
   if(file_exists($sessionIdFile)) {
-    $handle = fopen($sessionIdFile, r);
-    $sessionId = fread($handle, filesize($sessionIdFile));
+      if(filesize($filesize > 0)) {
+        $handle = fopen($sessionIdFile, r);
+        $sessionId = fread($handle, filesize($sessionIdFile));
+    }
   } else {
     $tr_user = $config_values['Settings']['Transmission Login'];
     $tr_pass = base64_decode($config_values['Settings']['Transmission Password']);
