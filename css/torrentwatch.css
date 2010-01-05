@@ -8,7 +8,7 @@
 	License: GNU General Public License v2
 */
 
-/* Modifications by Erik Bernhardson
+/* Modifications by Joris Vandalon
  * inspired by Clutch
  */
 
@@ -796,16 +796,18 @@ form.favinfo div.favorite_seed_and_episode {
      width: 340px;
 }
 
-form.favinfo label.lastSeason{
+form.favinfo label.lastSeason {
     position: absolute;
     right: 60px;
     top: 2px;
+    margin-left: 0;
 }
 
 form.favinfo label.lastEpisode{
     position: absolute;
     right: 25px;
     top: 2px;
+    margin-left: 0;
 }
 
 form.favinfo input.seedratio[type=text] {
