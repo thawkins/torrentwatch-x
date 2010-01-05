@@ -382,14 +382,21 @@ function close_html() {
 
 function check_file_rights() {
     global $config_values;
+
+    $myuid = posix_getuid();
+    $configDir = dirname(platform_getConfigFile()) . '/';
+    if(!is_writable($configDir)) {
+	echo "<div id=\"fileRights\" class=\"dialog_window\" style=\"display: block\">Please create the directory $configDir and make sure it's readable and writeable for the user running the webserver (uid: $myuid). </div>";
+    }
+
+    if($config_values['Settings']['FirstRun']) return 0;
+
     $toCheck = array('cache_dir' => $config_values['Settings']['Cache Dir'],
                     'download_dir' => $config_values['Settings']['Download Dir'],
-                    'configFile' => platform_getConfigFile()
                     );
                     
     $deepDir = $config_values['Settings']['Deep Directories'];
     
-    $myuid = posix_getuid();
     $error = false;
     foreach ($toCheck as $key => $file) {
         if(!(file_exists($file))) $error .= "$key:&nbsp;<i>\"$file\"</i>&nbsp;&nbsp;does not exist <br />";
