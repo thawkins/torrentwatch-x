@@ -439,7 +439,9 @@ $(function() {
                 filter = 'all';
             }
             getClientData(0);
-            $('#torrentlist>li').tsort('p.torrent_pubDate', {order: 'desc'});
+            if($('#torrentlist div.header').length == 0) {
+                $('#torrentlist>li').tsort('p.torrent_pubDate', {order: 'desc'});
+            }
             setTimeout(function() {
                 if ($('#transmission_data').length > 0) {
                     $('a#torClient ').show().html('Transmission');
