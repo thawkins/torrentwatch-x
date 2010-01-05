@@ -542,10 +542,25 @@ div#welcome5 label {
 	margin-top: 0.2em;
 	display: block;
 	}
-
+	
 div.form_radio {
 	padding-left: 10px;
 	}
+
+div.form_input {
+    margin: 10px 0 10px 20px;
+}
+
+div.form_input input.form_downdir[type=text] {
+    width: 200px;
+    margin-left: 12px;
+}
+
+div#welcome5 input.form_email[type=text] {
+    width: 300px;
+    margin: 10px 0 10px 12px;
+}
+
 
 /***************************
  *
