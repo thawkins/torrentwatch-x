@@ -31,8 +31,8 @@
                     </div>
                     <div class="int_settings right">
                         <div id="config_combinefeeds">
-                            <input type="checkbox" name="combinefeeds" value="1"
-                            <?php echo $combinefeeds; ?>> <label class="item checkbox"
+                            <input type="checkbox" name="combinefeeds" value="1" <?php echo $combinefeeds; ?>/>
+                            <label class="item checkbox"
                             title="Combine all feeds into 1 list">Combine Feeds</label>
                         </div>
                     </div>
@@ -53,29 +53,29 @@
                         </div>
                         <div id="config_folderclient">
                             <label class="item">File Extension</label> <input type="text" class="text" name="extension" 
-                             value="<?php echo $config_values['Settings']['Extension']; ?>">
+                             value="<?php echo $config_values['Settings']['Extension']; ?>"/>
                         </div>
                         <div id="config_downloaddir" title="Default directory to start items in">
                             <label class="item textinput">Download Dir:</label> <input type="text" class="text" name="downdir"
-                             value="<?php echo $config_values['Settings']['Download Dir']; ?>">
+                             value="<?php echo $config_values['Settings']['Download Dir']; ?>"/>
                         </div>
                         <div id="config_tr_host" title="Hostname">
                             <label class="item textinput">Hostname:</label> <input type="text" class="text" name="trhost"
-                             value="<?php echo $config_values['Settings']['Transmission Host']; ?>">
+                             value="<?php echo $config_values['Settings']['Transmission Host']; ?>"/>
                         </div>
                     </div>
                     <div class="tor_client_settings right">
                         <div id="config_tr_port" title="Port">
                             <label class="item textinput">Port:</label> <input type="text" class="text" name="trport" 
-                             value="<?php echo $config_values['Settings']['Transmission Port']; ?>">
+                             value="<?php echo $config_values['Settings']['Transmission Port']; ?>"/>
                         </div>
                         <div id="config_tr_user" title="Username">
                             <label class="item textinput">Username:</label> <input type="text" class="text" name="truser"
-                             value="<?php echo $config_values['Settings']['Transmission Login']; ?>">
+                             value="<?php echo $config_values['Settings']['Transmission Login']; ?>"/>
                         </div>
                         <div id="config_tr_password" title="Password">
                             <label class="item textinput">Password:</label> <input type="password" class="password" name="trpass"
-                             value="<?php echo $config_values['Settings']['Transmission Password']; ?>">
+                             value="<?php echo $config_values['Settings']['Transmission Password']; ?>"/>
                         </div>
                     </div>
                     <div class="category tor_settings">
@@ -99,17 +99,17 @@
                         <div id="default_ratio">
                             <label class="item textinput" title="Set default Seed Ratio">Default Seed Ratio:</label>
                             <input type="text" class="text" name="defaultratio"
-                             value="<?php echo $config_values['Settings']['Default Seed Ratio']; ?>">
+                             value="<?php echo $config_values['Settings']['Default Seed Ratio']; ?>"/>
                         </div>
                     </div>
                     <div class="tor_settings right">
                         <div id="config_watchdir">
                             <label class="item textinput" title="Directory to look for new .torrents">Watch Dir:</label>
                             <input type="text" class="text" name="watchdir"
-                             value="<?php echo $config_values['Settings']['Watch Dir']; ?>">
+                             value="<?php echo $config_values['Settings']['Watch Dir']; ?>"/>
                         </div>
                         <div id="config_savetorrent">
-                            <input type="checkbox" name="savetorrents" value="1" <?php echo $savetorrent; ?>> 
+                            <input type="checkbox" name="savetorrents" value="1" <?php echo $savetorrent; ?>/> 
                             <label class="item checkbox" title="Save torrent to download directory">Save torrent files</label>
                         </div>
                     </div>
@@ -134,12 +134,23 @@
                     </div>
                     <div class="fav_settings right">
                         <div id="config_verifyepisodes" title="Try not to download duplicate episodes">
-                            <input type="checkbox" name="verifyepisodes" value="1" <?php echo $verifyepisode; ?>>
+                            <input type="checkbox" name="verifyepisodes" value="1" <?php echo $verifyepisode; ?>/>
                             <label class="item checkbox">Verify Episodes</label>
                         </div>
                         <div>
-                            <input type="checkbox" name="onlynewer" value="1" <?php echo $onlynewer; ?>> 
+                            <input type="checkbox" name="onlynewer" value="1" <?php echo $onlynewer; ?>/> 
                             <label class="item checkbox">Newer Episodes Only</label>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <label class="category">Other Settings</label>
+                    </div>
+                    <div class="other_settings left">
+                        <div id="email_address">
+                            <label class="item">Email Address:</label>
+                            <input type="text" name ="emailAddress" class="text" 
+                            title="Enter an email address here to send warnings and errors to."
+                            value="<?php echo $config_values['Settings']['Email Address']; ?>"/>
                         </div>
                     </div>
                 </div>

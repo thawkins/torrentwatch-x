@@ -153,20 +153,21 @@ function write_config_file() {
 
 function update_global_config() {
   global $config_values;
-  $input = array('Transmission Login' => 'truser',
+  $input = array('Email Address'      => 'emailAddress',
+                 'Transmission Login' => 'truser',
                  'Transmission Password' => 'trpass',
-		         'Transmission Host' => 'trhost',
-        		 'Transmission Port' => 'trport',
-        		 'Transmission URI' => 'truri',
-        		 'Download Dir'     => 'downdir',
-                 'Watch Dir'        => 'watchdir',
-                 'Deep Directories' => 'deepdir',
+		         'Transmission Host'  => 'trhost',
+        		 'Transmission Port'  => 'trport',
+        		 'Transmission URI'   => 'truri',
+        		 'Download Dir'       => 'downdir',
+                 'Watch Dir'          => 'watchdir',
+                 'Deep Directories'   => 'deepdir',
                  'Default Seed Ratio' => 'defaultratio',
-                 'Combine Feeds'    => 'combinefeeds',
-                 'Client'           => 'client',
-                 'MatchStyle'       => 'matchstyle',
-                 'Only Newer'       => 'onlynewer',
-                 'Extension'        => 'extension');
+                 'Combine Feeds'      => 'combinefeeds',
+                 'Client'             => 'client',
+                 'MatchStyle'         => 'matchstyle',
+                 'Only Newer'         => 'onlynewer',
+                 'Extension'          => 'extension');
   $checkboxs = array('Combine Feeds' => 'combinefeeds',
                      'Verify Episode' => 'verifyepisodes',
                      'Save Torrents'  => 'savetorrents',
@@ -227,7 +228,10 @@ function add_favorite() {
                 "episodes"  => "Episodes",
                 "feed"      => "Feed",
                 "quality"   => "Quality",
-                "seedratio" => "seedRatio");
+                "seedratio" => "seedRatio",
+                "season"    => "Season",
+                "episode"   => "Episode");
+   
   foreach($list as $key => $data) {
     if(isset($_GET[$key]))
       $config_values['Favorites'][$idx][$data] = urldecode($_GET[$key]);
@@ -244,10 +248,41 @@ function del_favorite() {
 }
 
 function updateFavoriteEpisode(&$fav, $title) {
+  global $config_values;
+  
   if(!$guess = guess_match($title, TRUE))
     return;
   if(!preg_match('/(\d+)x(\d+)/i', $guess['episode'], $regs))
     return;
+  $curEpisode = preg_replace('/(\d+)x/i', "", $guess['episode']);
+  $curSeason = preg_replace('/x(\d+)/i', "", $guess['episode']);
+  $expectedEpisode = sprintf('%02d', $fav['Episode'] + 1);
+  $emailAddress = $config_values['Settings']['Email Address'];
+  _debug('bla: ' . $fav['Episode']);
+  if($fav['Episode'] && $curEpisode > $expectedEpisode && $emailAddress) {
+      $show = $guess['key'];
+      $episode = $guess['episode'];
+      $expected = $curSeason . "x" . $expectedEpisode;
+      $oldEpisode = $fav['Episode'];
+      $oldSeason = $fav['Season'];
+      $newEpisode = $curEpisode + 1;
+      $newSeason = $curSeason + 1;
+      $mail = <<<END
+Hi,
+
+This is an automated warning from TorrentWatch-X.
+
+Matched "$show $episode" but expected "$expected".
+This usualy means that a double episode is downloaded before this one.
+But it could mean that you missed an episode or that "$episode" is a special episode.
+If this is the case you need to reset the "Last Downloaded Episode" setting to "$oldSeason x $oldEpisode" in the Favorites menu.
+If you don't, the next match wil be "Season: $curSeason Episode: $newEpisode" or "Season $newSeason Episode: 1".
+
+END;
+
+  $subject = "TorrentWatch-X: got $show $episode, expected $expected";
+  mail($emailAddress, $subject, $mail, 'From: TorrentWatch-X' );
+  }
   if(!isset($fav['Season'],$fav['Episode']) || $regs[1] > $fav['Season']) {
     $fav['Season'] = $regs[1];
     $fav['Episode'] = $regs[2];
