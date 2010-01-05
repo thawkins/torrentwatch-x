@@ -271,7 +271,7 @@ $(function() {
     };
 
     getClientData = function(recent) {
-        if($.cookie('TORCLIENT') == 'folder' || $.cookie('TORCLIENT') == NULL) { return; }
+        if($.cookie('TORCLIENT') == 'folder' || $.cookie('TORCLIENT') == null) { return; }
         window.torInfo = recent;
         var runCheck = 0;
         $.get('torrentwatch.php', {

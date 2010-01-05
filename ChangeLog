@@ -55,11 +55,11 @@ current
     -- Added ratio per feed option.
     -- Added option to set email address. This will be used for warnings and errors.
     -- Added last season and episode field in favorites. 
-    -- Added Download dir and email address to wizzard.
+    -- Added Download dir and email address to wizard.
     -- When Tranmission returns an error, this now is shown.
     -- Cleaned up config.php some more. Moved function to config_lib.php.
     -- Fixed a bug which caused ratio settings to be set for all torrents instead of the one that was added.
     -- Fixed a bug which allowed a show directory to be created if a directory name with differing case already existed.
     -- Fixed a sorting bug if rss feed had no <pubDate> tag.
     -- Fix: transmission hostname and port no longer hardcoded in javascript.
-    -- Fixed: some wizzard bugs.
+    -- Fixed: some wizard bugs.
