@@ -79,6 +79,11 @@
       <input type="radio" name="client" value="folder"/>
       <label class="item">Save torrent in folder</label>
     </div>
+    <div class="form_input" title="Default directory to start items in">
+        <label class="item textinput" >Default Download Directory:</label><br />
+        <input type="text" class="form_downdir" name="downdir" value="~/Download" />
+    </div>
+    
 
     <a class="toggleDialog button" href="#welcome3">Next</a>
     <a class="toggleDialog button" href="#welcome1">Back</a>
@@ -134,6 +139,9 @@
 
   <div id="welcome5" class="dialog_window welcome">
     <h2 class="dialog_heading">Initial Configuration is Complete!</h2>
+    <br/>
+    <label class="item">Please enter an e-mail address to sent warnings or errors to:</label>
+    <input type="text" name ="emailAddress" class="text form_email" title="Enter an email address here to send warnings and errors to." />
     <br/>
     <label class="item">To get started click Apply below and you will be presented with the episodes in your chosen feed.</label>
     <label class="item">Right click on any show on the list and add it to your favorites.<br/>Once a show is in your favorites it will automatically download every week</label>
