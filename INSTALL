@@ -15,8 +15,8 @@ Installation Instructions
 - Configure your webserver so it points to the directory you used for torrentwatch-x.
 - Create a directory '/etc/torrentwatch' and make sure the webserver can write there.
 - Make sure the webserver can write to the following files and directories:
-	- $docroot/rss_dl.history
 	- $docroot/rss_cache/
+	- If you will be using the "deep directories" option the default download directory should be writable as well.
 - Create a cron-entry for the user running the webserver for periodically checking for new torrents.
   Example:
   

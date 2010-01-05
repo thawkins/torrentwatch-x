@@ -24,7 +24,7 @@ function setup_default_config() {
   _default('Save Torrents', "0");
   _default('Run Torrentwatch', "True");
   _default('Cron', "/etc/cron.hourly");
-  _default('Client', "Transmission");
+  _default('Client', "");
   _default('Verify Episode', "1");
   _default('Only Newer', "1");
   _default('Deep Directories', "0");
