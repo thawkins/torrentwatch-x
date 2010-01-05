@@ -31,9 +31,15 @@
     <label class="item" title="Regexp Filter against full title">Quality:</label>
     <input type="text" class="text" name="quality" value="<?php echo $item['Quality']; ?>">
   </div>
-  <div class="favorite_seedratio"><label class="item" title="Maximum seeding ratio, set to -1 to disable">Seed Ratio:</label>
-    <input type="text" class="text" name="seedratio" value="<?php echo _isset($item, 'seedRatio', '-1'); ?>">
+  <div class="favorite_seed_and_episode">
+    <input type="text" class="seedratio text" name="seedratio" value="<?php echo _isset($item, 'seedRatio', '-1'); ?>">
+    <label class="item" title="Maximum seeding ratio, set to -1 to disable">Seed Ratio:</label>
+     <label class="lastSeason item"> Last Downloaded Episode:</label>
+    <input class='lastSeason text' type="text" name="season" value="<?php echo $item['Season']; ?>">
+     <label class="lastEpisode item">x</label>
+    <input class='lastEpisode text' type="text" name="episode" value="<?php echo $item['Episode']; ?>">
   </div>
+  
 <?php if($config_values['Settings']['Client'] == "folder") { echo '<br><br><br>'; }; ?>
   <div class="buttonContainer">
     <a class="submitForm button" id="Update" href="#">Update</a>

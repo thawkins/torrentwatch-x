@@ -127,11 +127,11 @@ function check_for_torrent(&$item, $key, $opts) {
       if(_isset($config_values['Settings'], 'Only Newer') == 1) {
         if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)) {
           if($item['Season'] > $regs[1]) {
-	    _debug($item['Season'] .' > '.$regs[1] . "; ", 1);
+    	    _debug($item['Season'] .' > '.$regs[1] . "; ", 1);
             $matched = "old";
             return FALSE;
           } else if($item['Season'] == $regs[1] && $item['Episode'] >= $regs[2] && (!(preg_match('/proper|repack/i', $rs['title'])))) {
-	    _debug($item['Episode'] .' >= '.$regs[2] . "; ", 1);
+    	    _debug($item['Episode'] .' >= '.$regs[2] . "; ", 1);
             $matched = "old";
             return FALSE;
 	  }

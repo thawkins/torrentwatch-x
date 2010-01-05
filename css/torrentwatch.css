@@ -636,7 +636,7 @@ div.config_form {
 	border: 1px solid gray;
 	padding: 0 0 5px 0;
 	margin: 5px 0 0 0 ;
-	height: 350px;
+	height: 415px;
 }
 
 form#config_form div {
@@ -787,8 +787,54 @@ form.favinfo input[type=text] {
 	position: absolute;
 	right: 45px;
 	width: 240px;
-	}
+}
 
+form.favinfo div.favorite_seed_and_episode {
+     position: absolute;
+     float: right;
+     right: 45px;
+     width: 340px;
+}
+
+form.favinfo label.lastSeason{
+    position: absolute;
+    right: 60px;
+    top: 2px;
+}
+
+form.favinfo label.lastEpisode{
+    position: absolute;
+    right: 25px;
+    top: 2px;
+}
+
+form.favinfo input.seedratio[type=text] {
+    position: absolute;
+    right: 220px;
+    width: 20px;
+    text-align: center;
+}
+
+form.favinfo input.lastSeason[type=text] {
+    position: absolute;
+    right: 35px;
+    width: 20px;
+    text-align: center;
+}
+
+form.favinfo input.lastEpisode[type=text] {
+    position: absolute;
+    right: 0;
+    width: 20px;
+    text-align: center;
+}
+
+div.favinfo div.buttonContainer {
+    position: absolute;
+    float; right;
+    bottom: 20px;
+    right: 5px;
+}
 /******************************
  *
  * H I S T O R Y   D I A L O G
