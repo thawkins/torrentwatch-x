@@ -163,7 +163,7 @@ function parse_one_rss($feed) {
   $rss = new lastRSS;
   $rss->stripHTML = True;
   $rss->CDATA = content; 
-  $rss->cache_time = 15*60;
+  $rss->cache_time = (15*60)-10;
   $rss->date_format = 'M j, H:i';
 
   if(isset($config_values['Settings']['Cache Dir']))
