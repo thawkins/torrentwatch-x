@@ -205,7 +205,8 @@ function update_feed() {
   } else if($_GET['button'] == "Update") {
       update_feedData();
   } else {
-      add_feed();
+      $link = $_GET['link'];
+      add_feed($link);
   }
   write_config_file();
 }
@@ -258,7 +259,6 @@ function updateFavoriteEpisode(&$fav, $title) {
   $curSeason = preg_replace('/x(\d+)/i', "", $guess['episode']);
   $expectedEpisode = sprintf('%02d', $fav['Episode'] + 1);
   $emailAddress = $config_values['Settings']['Email Address'];
-  _debug('bla: ' . $fav['Episode']);
   if($fav['Episode'] && $curEpisode > $expectedEpisode && $emailAddress) {
       $show = $guess['key'];
       $episode = $guess['episode'];
@@ -291,29 +291,30 @@ END;
   write_config_file();
 } 
 
-function add_feed() {
+function add_feed($link) {
   global $config_values;
-  _debug('adding feed');
-  if(isset($_GET['link']) AND ($tmp = guess_feedtype($_GET['link'])) != 'Unknown') {
-    _debug('really adding feed');
-    $link = $_GET['link'];
-    $config_values['Feeds'][]['Link'] = $link;
-    $idx = end(array_keys($config_values['Feeds']));
-    $config_values['Feeds'][$idx]['Type'] = $tmp;
-    $config_values['Feeds'][$idx]['seedRatio'] = $config_values['Settings']['Default Seed Ratio'];
-    load_feeds(array(0 => array('Type' => $tmp, 'Link' => $link)));
-    switch($tmp) {
-      case 'RSS':
-        $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['title'];
-        break;
-      /*
-      case 'Atom':
-        $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['Name'];
-        break;
-      */
-    }
-  } else
-    _debug("Could not connect to Feed/guess Feed Type", -1);
+  _debug('adding feed: ' . $link);
+  
+  if(isset($link) AND ($tmp = guess_feedtype($link)) != 'Unknown') {
+        _debug('really adding feed');
+        $config_values['Feeds'][]['Link'] = $link;
+        $idx = end(array_keys($config_values['Feeds']));
+        $config_values['Feeds'][$idx]['Type'] = $tmp;
+        $config_values['Feeds'][$idx]['seedRatio'] = $config_values['Settings']['Default Seed Ratio'];
+        load_feeds(array(0 => array('Type' => $tmp, 'Link' => $link)));
+        switch($tmp) {
+          case 'RSS':
+            $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['title'];
+            break;
+          /*
+          case 'Atom':
+            $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['Name'];
+            break;
+          */
+        }
+      } else {
+        _debug("Could not connect to Feed/guess Feed Type", -1);
+      }
 }
 
 function update_feedData() {

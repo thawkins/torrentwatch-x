@@ -22,14 +22,14 @@ function parse_options() {
 	if(empty($commands))
 		return FALSE;
 
-	//file_put_contents('/tmp/twlog', 'TorrentWatch: '.$_SERVER['PHP_SELF']."\n".print_r($_GET, TRUE), FILE_APPEND);
 	if(preg_match("/^\//", $commands[0])) {
 		$commands[0] = preg_replace("/^\//", '', $commands[0]);
 	}
 	switch($commands[0]) {
 		case 'firstRun':
-			if(isset($_GET['link']))
-				update_feed();
+            foreach($_GET['link'] as $link) {
+				add_feed($link);
+			}
 			update_global_config();
 			$config_values['Settings']['FirstRun'] = FALSE;
 			write_config_file();
@@ -128,6 +128,10 @@ function parse_options() {
 	    case 'get_tr_location':
             global $config_values;
             echo $config_values['Settings']['Transmission Host'] . ':' . $config_values['Settings']['Transmission Port'];
+            exit;
+        case 'get_client':
+            global $config_values;
+            echo $config_values['Settings']['Client'];
             exit;
 		default:
 			$output = "<script type='text/javascript'>alert('Bad Paramaters passed to ".$_SERVER['PHP_SELF'].":  ".$_SERVER['REQUEST_URI']."');</script>";
@@ -307,12 +311,14 @@ function display_global_config() {
 		default: $matchregexp="selected='selected'";break;
 	}
 
-  // Include the templates and append the results to html_out
-  ob_start();
-  require('templates/global_config.tpl');
-  require('templates/feeds.tpl');
-  $html_out .= ob_get_contents();
-  ob_end_clean();
+	if(!($config_values['Settings']['FirstRun'])) {
+		// Include the templates and append the results to html_out
+		ob_start();
+		require('templates/global_config.tpl');
+		require('templates/feeds.tpl');
+		$html_out .= ob_get_contents();
+		ob_end_clean();
+	}
 }
 
 
