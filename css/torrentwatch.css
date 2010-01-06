@@ -513,7 +513,7 @@ div#clientError h2 {
 	margin-bottom: 4px;
 }
 
-div#fileRights {
+div#checkFiles {
     top: 5px;
     color: red;
     text-align: center;

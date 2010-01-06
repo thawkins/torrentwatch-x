@@ -271,6 +271,11 @@ $(function() {
         }
     };
 
+    showClientError = function(error) {
+	$('div#clientError p').html('Torrent client returned no or bad data:<br />' + error);
+	$('div#clientError').show();
+    }
+
     getClientData = function() {
         if(window.client == 'Transmission') {
             var recent;
@@ -283,10 +288,15 @@ $(function() {
             },
             
             function(json) {
+		var check = json.match(/null/);
+	        if(check == 'null') {
+		    showClientError('Got no data from ' + window.client);
+		    return;
+	        }
+
                 try { json = JSON.parse(json); }
                 catch(err) { 
-                    $('div#clientError p').html('Torrent client returned no or bad data:<br />' + json);
-                    $('div#clientError').show();
+		    showClientError(json);
                     return;
                 }
                 
@@ -430,7 +440,7 @@ $(function() {
             .find("form").initForm().end().initConfigDialog().appendTo("body");
             setTimeout(function() {
                 var container = $("#torrentlist_container");
-                if (container.length === 0) {
+                if (container.length === 0 && $("#checkFiles").length === 0) {
                     current_dialog = '#welcome1';
                     $(current_dialog).show();
                 } else {
