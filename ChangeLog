@@ -56,6 +56,7 @@ current
     -- Added option to set email address. This will be used for warnings and errors.
     -- Added last season and episode field in favorites. 
     -- Added Download dir and email address to wizard.
+    -- Multiple feeds can now be chosen at once in the wizard.
     -- When Tranmission returns an error, this now is shown.
     -- Cleaned up config.php some more. Moved function to config_lib.php.
     -- Fixed a bug which caused ratio settings to be set for all torrents instead of the one that was added.

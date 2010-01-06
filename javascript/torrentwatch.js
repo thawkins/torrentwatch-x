@@ -99,7 +99,6 @@ $(function() {
     
     // Switching visible items for different clients    
     changeClient = function(client) {
-        $.cookie('TORCLIENT', client);
         $(".favorite_seedratio, #config_folderclient").css("display", "none");
         $("#torrent_settings").css("display", "block");
         switch (client) {
@@ -108,6 +107,7 @@ $(function() {
             $("#config_folderclient, #config_downloaddir").css("display", "block");
             $("form.favinfo, ul.favorite");
             $('li#webui').hide();
+            window.client = 'folder';
             break;
         case 'Transmission':
             $(".config_form .tor_settings, div.category tor_settings, #config_tr_user, #config_tr_password, #config_tr_host, #config_tr_port, #config_downloaddir, div.favorite_seedratio, div.favorite_savein").css("display", "block");
@@ -121,6 +121,7 @@ $(function() {
                 $("#webui a").text(client)[0].href = target;
                 $('li#webui').show();
             })
+            window.client = 'Transmission';
             break;
         }
     };
@@ -271,41 +272,45 @@ $(function() {
     };
 
     getClientData = function(recent) {
-        if($.cookie('TORCLIENT') == 'folder' || $.cookie('TORCLIENT') == null) { return; }
-        window.torInfo = recent;
-        var runCheck = 0;
-        $.get('torrentwatch.php', {
-            'getClientData': 1,
-            'recent': recent
-        },
-        function(json) {
-            runCheck = 1;
-            try { json = JSON.parse(json); }
-            catch(err) { 
-                $('div#clientError p').html('Torrent client returned no or bad data:<br />' + json);
-                $('div#clientError').show();
-                return;
-            }
+        client = $.getClient();
+        if(client == 'Transmission') {
+    
+            var runCheck = 0;
+            window.torInfo = recent;
+            $.get('torrentwatch.php', {
+                'getClientData': 1,
+                'recent': recent
+            },
             
-            processClientData(json, recent);
-            if(json && recent) {                    
-                $.each(json['arguments']['removed'],
-                function(i, item) {
-                    if ($('li.clientId_' + item).length !== 0) {
-                        $('li.clientId_' + item + ' div.torInfo').remove();
-                        $('li.clientId_' + item + ' p.activeTorrent').hide();
-                        $('li.clientId_' + item + ' p.dlTorrent').show();
-                        $('li.clientId_' + item + ' td.buttons').removeClass('match_downloading match_downloaded match_cachehit')
-                        .addClass('match_old_download');
-                        $('li.clientId_' + item).removeClass('clientId_' + item);
-                    }
-                    if ($('#transmission_data li#clientId_' + item).length !== 0) {
-                        $('#transmission_data li#clientId_' + item).remove();
-                    }
-                });
-            }
-        });
-        window.torInfo = null;  
+            function(json) {
+                runCheck = 1;
+                try { json = JSON.parse(json); }
+                catch(err) { 
+                    $('div#clientError p').html('Torrent client returned no or bad data:<br />' + json);
+                    $('div#clientError').show();
+                    return;
+                }
+        
+                processClientData(json, recent);
+                if(json && recent) {                    
+                    $.each(json['arguments']['removed'],
+                    function(i, item) {
+                        if ($('li.clientId_' + item).length !== 0) {
+                            $('li.clientId_' + item + ' div.torInfo').remove();
+                            $('li.clientId_' + item + ' p.activeTorrent').hide();
+                            $('li.clientId_' + item + ' p.dlTorrent').show();
+                            $('li.clientId_' + item + ' td.buttons').removeClass('match_downloading match_downloaded match_cachehit')
+                            .addClass('match_old_download');
+                            $('li.clientId_' + item).removeClass('clientId_' + item);
+                        }
+                        if ($('#transmission_data li#clientId_' + item).length !== 0) {
+                            $('#transmission_data li#clientId_' + item).remove();
+                        }
+                    });
+                }
+            });
+            window.torInfo = null;  
+        }
     };
 
     processClientData = function(json, recent) {
@@ -401,7 +406,7 @@ $(function() {
 
     // Ajax progress bar
     $("#progressbar").ajaxStart(function() {
-        if (! (window.torInfo)) {
+        if (!(window.torInfo)) {
             $(this).show();
         }
     }).ajaxStop(function() {
@@ -551,6 +556,10 @@ $(function() {
     $.dlTorrent = function(url, id) {
         $.get(url,
         function(torHash) {
+            if(!(torHash.match(/\w+/))) {
+                alert('Something went wrong while adding this torrent, torrent not added');
+                return;
+            }
             $('li#' + id).removeClass('match_nomatch').addClass('match_downloading');
             $('li#' + id + ' td.buttons').removeClass('match_nomatch').addClass('match_downloading');
             if ($('li#' + id + ' div.torInfo').length === 0) {
@@ -635,4 +644,17 @@ $(function() {
             }
         });
     };
+    
+    $.getClient = function() {
+        if(!(window.client) || window.client.size == 0) {
+            $.get('torrentwatch.php', { 'get_client': 1 }, function(client) {
+                if(client.match(/\w+/)) {
+                    window.client = client.match(/\w+/);
+                } else {
+                    window.client = 'none';
+                }
+            })
+        } 
+        return(window.client);
+    }
 })(jQuery);

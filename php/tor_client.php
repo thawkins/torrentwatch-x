@@ -243,6 +243,24 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
       file_put_contents("$dest/$tor_name.torrent", $tor);
   } else {
     _debug("Failed Starting: $tor_name  Error: $return\n",-1);
+
+    $emailAddress = $config_values['Settings']['Email Address'];
+    if($emailAddress) {
+        $mail = <<<END
+Hi,
+
+This is an automated warning from TorrentWatch-X.
+
+TorrentWatch-X tried to start "$tor_name". But this failed with the following error:
+
+"$return"
+
+END;
+
+        $subject = "TorrentWatch-X: Error while trying to start $tor_name.";
+        mail($emailAddress, $subject, $mail, 'From: TorrentWatch-X' );
+    }
+    
   }
   return ($return === 0);
 }

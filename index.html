@@ -72,7 +72,7 @@
     <label class="category">Only 2 options for now.</label>
     <br/>
     <div class="form_radio">
-      <input type="radio" name="client" value="Transmission"/>
+      <input type="radio" name="client" value="Transmission" checked/>
       <label class="item">Transmission</label>
     </div>
     <div class="form_radio">
@@ -96,15 +96,15 @@
       <label class="item">TorrentWatch-X requires a feed from the internet that will point it to the TV Episodes.<br/>&nbsp;&nbsp; Choose a feed from the list or add your own feed from the net.</label>
     <br/><br/>
     <div class="form_radio">
-      <input type="radio" name="link" value="http://ezrss.it/feed/"/><label class="item">ezRSS</label>
+      <input type="checkbox" name="link[]" value="http://ezrss.it/feed/" checked /><label class="item">ezRSS</label>
       <label class="item">The EzTV feed from ezRSS.it</label>
     </div>
     <div class="form_radio">
-      <input type="radio" name="link" value="http://rss.bt-chat.com/?group=3&amp;cat=9"/><label class="item">BTChat.com - TV Shows</label>
+      <input type="checkbox" name="link[]" value="http://rss.bt-chat.com/?group=3&amp;cat=9" checked /><label class="item">BTChat.com - TV Shows</label>
       <label class="item">TVShows from bt-chat.com</label>
     </div>
     <div class="form_radio">
-      <input type="radio" name="link" value="http://rss.thepiratebay.org/205"/><label class="item">Piratebay - TV Shows</label>
+      <input type="checkbox" name="link[]" value="http://rss.thepiratebay.org/205"/><label class="item">Piratebay - TV Shows</label>
       <label class="item">TVShows from thepiratebay.org</label>
     </div>
     <a class="toggleDialog button" href="#welcome4">Next</a>
@@ -140,7 +140,7 @@
   <div id="welcome5" class="dialog_window welcome">
     <h2 class="dialog_heading">Initial Configuration is Complete!</h2>
     <br/>
-    <label class="item">Please enter an e-mail address to sent warnings or errors to:</label>
+    <label class="item">If you want to get warnings or errors by mail, please enter an e-mail address:</label>
     <input type="text" name ="emailAddress" class="text form_email" title="Enter an email address here to send warnings and errors to." />
     <br/>
     <label class="item">To get started click Apply below and you will be presented with the episodes in your chosen feed.</label>
