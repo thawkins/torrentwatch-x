@@ -10,6 +10,12 @@ $test_run = 0;
 $firstrun = 0;
 $verbosity = 0;
 
+if(!(file_exists('php/config.php'))) {
+	$config = getcwd() . '/php/config.php';
+        echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please copy $config.dist to $config and edit it to match your environment. Then click your browsers refresh button.</div>";
+	return;
+}
+
 require_once('rss_dl_utils.php');
 
 // This function parses commands sent from a PC browser
@@ -386,14 +392,20 @@ function close_html() {
 	$html_out = "";
 }
 
-function check_file_rights() {
+function check_files() {
     global $config_values;
 
     $myuid = posix_getuid();
     $configDir = dirname(platform_getConfigFile()) . '/';
     if(!is_writable($configDir)) {
-	echo "<div id=\"fileRights\" class=\"dialog_window\" style=\"display: block\">Please create the directory $configDir and make sure it's readable and writeable for the user running the webserver (uid: $myuid). </div>";
+	echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please create the directory $configDir and make sure it's readable and writeable for the user running the webserver (uid: $myuid). </div>";
     }
+    $cwd = getcwd();
+    if(!(get_base_dir() == $cwd)) {
+        echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please edit the config.php file and set the basedir to:<br /> \"$cwd\".<br />Then click your browsers refresh button.</div>";
+	return;
+    }
+	
 
     if($config_values['Settings']['FirstRun']) return 0;
 
@@ -412,7 +424,7 @@ function check_file_rights() {
     }
     
     if($error) {
-        echo "<div id=\"fileRights\" class=\"dialog_window\" style=\"display: block\">$error</div>";
+        echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">$error</div>";
     }
 }
 
@@ -436,7 +448,7 @@ $verbosity = 0;
 
 parse_options();
 display_global_config();
-check_file_rights();
+check_files();
 display_favorites();
 display_history();
 display_clearCache();
