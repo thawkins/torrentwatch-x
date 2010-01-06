@@ -272,8 +272,7 @@ $(function() {
     };
 
     getClientData = function(recent) {
-        client = $.getClient();
-        if(client == 'Transmission') {
+        if(window.client == 'Transmission') {
     
             var runCheck = 0;
             window.torInfo = recent;
@@ -398,6 +397,7 @@ $(function() {
     };
 
     $(document).ready(function() {
+        $.getClient();
         setInterval(function() {
             getClientData(1);
         },
@@ -653,8 +653,8 @@ $(function() {
                 } else {
                     window.client = 'none';
                 }
+                return(window.client);
             })
         } 
-        return(window.client);
     }
 })(jQuery);
