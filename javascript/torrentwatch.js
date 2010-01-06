@@ -431,6 +431,7 @@ $(function() {
     current_dialog;
     // Remove old dynamic content, replace it with passed html(ajax success function)
     $.loadDynamicData = function(html) {
+        window.gotAllData = 0;
         $("#dynamicdata").remove();
         setTimeout(function() {
             var dynamic = $("<div id='dynamicdata' class='dyndata'/>");
@@ -455,6 +456,7 @@ $(function() {
             if (! (filter)) {
                 filter = 'all';
             }
+                        
             getClientData();
             if($('#torrentlist div.header').length == 0) {
                 $('#torrentlist>li').tsort('p.torrent_pubDate', {order: 'desc'});
