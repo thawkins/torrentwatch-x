@@ -116,7 +116,7 @@ $(function() {
                 if(uri.match(/\w+/) == 'localhost') { 
                     target = 'http://' + location.hostname + uri.match(/:\d+/) + '/transmission/web/';
                 } else {
-                    target = 'http://' + uri.match(/\w+:\d+/) + '/transmission/web/';
+                    target = 'http://' + uri.match(/\S+:\d+/) + '/transmission/web/';
                 }
                 $("#webui a").text(client)[0].href = target;
                 $('li#webui').show();
