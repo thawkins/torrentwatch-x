@@ -20,4 +20,4 @@ Installation Instructions
 - Create a cron-entry for the user running the webserver for periodically checking for new torrents.
   Example:
   
-	*/30 * * * * /usr/bin/php-cgi -q /var/www/mezzanine/rss_dl.php -D >/dev/null
+	*/15 * * * * /usr/bin/php-cgi -q /var/www/mezzanine/rss_dl.php -D >/dev/null
