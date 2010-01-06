@@ -271,10 +271,11 @@ $(function() {
         }
     };
 
-    getClientData = function(recent) {
+    getClientData = function() {
         if(window.client == 'Transmission') {
+            var recent;
+            if(window.gotAllData) { recent = 1; } else { recent = 0; };
     
-            var runCheck = 0;
             window.torInfo = recent;
             $.get('torrentwatch.php', {
                 'getClientData': 1,
@@ -282,15 +283,16 @@ $(function() {
             },
             
             function(json) {
-                runCheck = 1;
                 try { json = JSON.parse(json); }
                 catch(err) { 
                     $('div#clientError p').html('Torrent client returned no or bad data:<br />' + json);
                     $('div#clientError').show();
                     return;
                 }
-        
+                
+                if(recent === 0 && json.result == 'success') window.gotAllData = 1;
                 processClientData(json, recent);
+                
                 if(json && recent) {                    
                     $.each(json['arguments']['removed'],
                     function(i, item) {
@@ -399,7 +401,7 @@ $(function() {
     $(document).ready(function() {
         $.getClient();
         setInterval(function() {
-            getClientData(1);
+            getClientData();
         },
         6000);
     });
@@ -443,7 +445,7 @@ $(function() {
             if (! (filter)) {
                 filter = 'all';
             }
-            getClientData(0);
+            getClientData();
             if($('#torrentlist div.header').length == 0) {
                 $('#torrentlist>li').tsort('p.torrent_pubDate', {order: 'desc'});
             }
@@ -582,7 +584,7 @@ $(function() {
             p.html(p.html().replace(/###torHash###/g, torHash.match(/\w+/)));
             p = $('li#' + id + ' p.torStop');
             p.html(p.html().replace(/###torHash###/g, torHash.match(/\w+/)));
-            getClientData(1);
+            getClientData();
         });
     };
 
@@ -593,7 +595,7 @@ $(function() {
         },
         function(json) {
             if (json.result == "success") {
-                getClientData(1);
+                getClientData();
             } else {
                 alert('Request failed');
             }
@@ -616,7 +618,7 @@ $(function() {
             if (json.result == "success") {
                 $('li.' + torHash + ' p.dlTorrent').hide();
                 torStartStopToggle(torHash);
-                getClientData(1);
+                getClientData();
             } else {
                 alert('Request failed');
             }
@@ -638,7 +640,7 @@ $(function() {
         function(json) {
             if (json.result == "success") {
                 $('div#move_' + torId).hide();
-                getClientData(1);
+                getClientData();
             } else {
                 alert('Request failed');
             }
