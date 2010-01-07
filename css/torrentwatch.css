@@ -300,7 +300,8 @@ ul.torrentlist p {
 
 ul.torrentlist td.buttons {
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: top;
+	padding-top: 3px;
 	width: 15px;
 	height: 15px;
 }
@@ -485,10 +486,6 @@ a.button {
 	text-align: center;
 	text-decoration: none;
 	}
-
-p.button {
-	cursor: pointer;
-}
 
 input[type=submit] {
 	width: 62px;

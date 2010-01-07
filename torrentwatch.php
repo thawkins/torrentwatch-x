@@ -65,7 +65,7 @@ function parse_options() {
 			echo "$response";
 			exit;
 		case 'moveTo':
-		        $response = moveTorrent($_REQUEST['moveTo'], $_REQUEST['torId'], $_REQUEST['move']);
+		        $response = moveTorrent($_REQUEST['moveTo'], $_REQUEST['torHash']);
 			echo "$response";
 			exit;
 		case 'updateFavorite':
@@ -162,49 +162,51 @@ function torInfo($torHash) {
 		case 'Transmission':
 			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
 		      		'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => $torHash), 'method' => 'torrent-get');
-			$response = transmission_rpc($request);
-                        $totalSize = $response['arguments']['torrents']['0']['totalSize'];
-                        $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
-                        $Uploaded = $response['arguments']['torrents']['0']['uploadedEver'];
-                        $Downloaded = $response['arguments']['torrents']['0']['downloadedEver'];
-                        if($totalSize) { 
-                          $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
-                        }
-                        if($percentage < 100) { $dlStatus = "downloading"; }
-                        if(!($totalSize)) {
-                          return array( 'dlStatus' => 'old_download' );
-                        } else {
-                          if(!($Downloaded) || !($Uploaded)) {
-                            $ratio = 0;
-                          } else {
-                            $ratio = $Uploaded/$Downloaded;
-			    $ratio = round($ratio, 2);
-                          }
-                          $sizeDone = human_readable($totalSize-$leftUntilDone);
-                          $totalSize = human_readable($totalSize);
-			  $clientId = $response['arguments']['torrents']['0']['id'];
-			  $status = $response['arguments']['torrents']['0']['status'];
-			  $peersSendingToUs = $response['arguments']['torrents']['0']['peersSendingToUs'];
-			  $peersGettingFromUs = $response['arguments']['torrents']['0']['peersGettingFromUs'];
-			  $peersConnected = $response['arguments']['torrents']['0']['peersConnected'];
-		  	  if($status == 1) {
-			    $stats = "Waiting for peers";
-			  } else if($status == 2) {
-			    $stats = "Verifying files ($percentage%)";
-			  } else if($status == 4) {
-			    $stats = "Downloading from $peersSendingToUs of $peersConnected peers:
-				      $sizeDone of $totalSize ($percentage%)  -  Ratio: $ratio";
-			  } else if($status == 8) {
-			    $stats = "Seeding to $peersGettingFromUs of $peersConnected peers  -  Ratio: $ratio";
-			  } else if($status == 16) {
-			    $stats = "Paused";
-		  	  }
-			  return array( 
-				'stats' => $stats,
-				'clientId' => $clientId,
-				'status' => $status
-			 	);
-                        }
+                $response = transmission_rpc($request);
+                $totalSize = $response['arguments']['torrents']['0']['totalSize'];
+                $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
+                $Uploaded = $response['arguments']['torrents']['0']['uploadedEver'];
+                $Downloaded = $response['arguments']['torrents']['0']['downloadedEver'];
+                if($totalSize) { 
+                  $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
+                }
+                if($percentage < 100) { $dlStatus = "downloading"; }
+                if(!($totalSize)) {
+                  return array( 'dlStatus' => 'old_download' );
+                } else {
+                  if(!($Downloaded) || !($Uploaded)) {
+                    $ratio = 0;
+                } else {
+                    $ratio = $Uploaded/$Downloaded;
+                    $ratio = round($ratio, 2);
+                }
+                $bytesDone = $totalSize-$leftUntilDone;
+                $sizeDone = human_readable($totalSize-$leftUntilDone);
+                $totalSize = human_readable($totalSize);
+                $clientId = $response['arguments']['torrents']['0']['id'];
+                $status = $response['arguments']['torrents']['0']['status'];
+                $peersSendingToUs = $response['arguments']['torrents']['0']['peersSendingToUs'];
+                $peersGettingFromUs = $response['arguments']['torrents']['0']['peersGettingFromUs'];
+                $peersConnected = $response['arguments']['torrents']['0']['peersConnected'];
+                if($status == 1) {
+                    $stats = "Waiting for peers";
+                } else if($status == 2) {
+                    $stats = "Verifying files ($percentage%)";
+                } else if($status == 4) {
+                    $stats = "Downloading from $peersSendingToUs of $peersConnected peers:
+                      $sizeDone of $totalSize ($percentage%)  -  Ratio: $ratio";
+                } else if($status == 8) {
+                    $stats = "Seeding to $peersGettingFromUs of $peersConnected peers  -  Ratio: $ratio";
+                } else if($status == 16) {
+                    $stats = "Paused";
+                }
+                return array( 
+                    'stats' => $stats,
+                    'clientId' => $clientId,
+                    'status' => $status,
+                    'bytesDone' => $bytesDone
+                );
+            }
 			exit;
 	}
 }
@@ -262,12 +264,18 @@ function startTorrent($torHash) {
 	}
 }
 
-function moveTorrent($location, $torId, $move) {
+function moveTorrent($location, $torHash) {
 	global $config_values;
 
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
-			$request = array('arguments' => array('location' => $location, 'move' => $move, 'ids' => (int)$torId), 'method' => 'torrent-set-location');
+		    $torInfo = torInfo($torHash);
+		    if($torInfo['bytesDone'] > 0) {
+		        $move = true;
+	        } else {
+	            $move = false;
+            }
+        	$request = array('arguments' => array('location' => $location, 'move' => $move, 'ids' => $torHash), 'method' => 'torrent-set-location');
 			$response = transmission_rpc($request);
 			return json_encode($response);
 		break;
