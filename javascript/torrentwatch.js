@@ -425,7 +425,7 @@ $(function() {
         clientCheck = 1;
         setInterval(function() {
             if(window.client && clientCheck == 1) {
-                setTimeout(getClientData, 100);
+                setTimeout(getClientData, 500);
                 clientCheck = null;
             }
         }, 100);
