@@ -404,7 +404,7 @@ function check_files() {
     global $config_values;
 
     $myuid = posix_getuid();
-    $configDir = dirname(platform_getConfigFile()) . '/';
+    $configDir = platform_getConfigDir() . '/';
     if(!is_writable($configDir)) {
 	echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please create the directory $configDir and make sure it's readable and writeable for the user running the webserver (uid: $myuid). </div>";
     }

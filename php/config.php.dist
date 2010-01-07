@@ -4,8 +4,8 @@ require_once("config_lib.php");
 // You may change these defaults to fit your personal situation.
 
 //Config File Loaction.
-function platform_getConfigFile() {
-  return "/etc/torrentwatch/torrentwatch.config";
+function platform_getConfigDir() {
+  return "/etc/torrentwatch";
 }
 
 //TorrentWatch-X install directory

@@ -31,6 +31,15 @@ function usage() {
 	_debug( "    Note: This interface only writes to the config file when using the -i option\n",0);
 }
 
+function _debug($string, $lvl = 1) {
+  global $config_values, $verbosity, $debug_output;
+  file_put_contents('/tmp/tw-rss_dl.log', $string, FILE_APPEND);
+
+  if($verbosity >= $lvl) {
+      echo($string);
+  }
+}
+
 function parse_args() {
 	global $config_values, $argc, $argv, $test_run, $verbosity;
 	for($i=1;$i<$argc;$i++) {
