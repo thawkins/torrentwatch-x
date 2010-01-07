@@ -18,20 +18,20 @@ $verbosity = 0;
 $func_timer = 0;
 
 function usage() {
-	_debug( $_SERVER['argv'][0] . "<options> - CLI Interface to Torrent Watch\n",0);
-	_debug( "           -c <dir> : Enable Cache\n",0);
-	_debug( "           -C : Disable Cache\n",0);
-	_debug( "           -d : skip watch folder\n",0);
-	_debug( "           -D : Start torrents in watch folder\n",0);
-	_debug( "           -h : show this help\n",0);
-	_debug( "           -nv: not verbose (default)\n",0);
-	_debug( "           -q : quiet (no output)\n",0);
-	_debug( "           -v : verbose output\n",0);
-	_debug( "           -vv: verbose output(even more)\n",0);
-	_debug( "    Note: This interface only writes to the config file when using the -i option\n",0);
+	__debug( $_SERVER['argv'][0] . "<options> - CLI Interface to Torrent Watch\n",0);
+	__debug( "           -c <dir> : Enable Cache\n",0);
+	__debug( "           -C : Disable Cache\n",0);
+	__debug( "           -d : skip watch folder\n",0);
+	__debug( "           -D : Start torrents in watch folder\n",0);
+	__debug( "           -h : show this help\n",0);
+	__debug( "           -nv: not verbose (default)\n",0);
+	__debug( "           -q : quiet (no output)\n",0);
+	__debug( "           -v : verbose output\n",0);
+	__debug( "           -vv: verbose output(even more)\n",0);
+	__debug( "    Note: This interface only writes to the config file when using the -i option\n",0);
 }
 
-function _debug($string, $lvl = 1) {
+function __debug($string, $lvl = 1) {
   global $config_values, $verbosity, $debug_output;
   file_put_contents('/tmp/tw-rss_dl.log', $string, FILE_APPEND);
 
@@ -76,7 +76,7 @@ function parse_args() {
 				$verbosity = 2;
 				break;
 			default:
-				_debug("Unknown command line argument:  " . $_SERVER['argv'][$i] . "\n",0);
+				__debug("Unknown command line argument:  " . $_SERVER['argv'][$i] . "\n",0);
 				break;
 		}
 	}
@@ -96,7 +96,7 @@ function parse_args() {
 	if(isset($config_values['Settings']['Verbose']))
 		$verbosity = $config_values['Settings']['Verbose'];
 	parse_args();
-	_debug(date("F j, Y, g:i a")."\n",0);
+	__debug(date("F j, Y, g:i a")."\n",0);
 
 	if(isset($config_values['Feeds'])) {
 		load_feeds($config_values['Feeds']);
@@ -108,14 +108,14 @@ function parse_args() {
 		$hit = 0;
 		check_for_torrents($config_values['Settings']['Watch Dir'], $config_values['Settings']['Download Dir']);
 		if(!$hit)
-			_debug("No New Torrents to add from watch folder\n", 0);
+			__debug("No New Torrents to add from watch folder\n", 0);
 	} else {
-		_debug("Skipping Watch Folder\n");
+		__debug("Skipping Watch Folder\n");
 	}
 
 	unlink_temp_files();
 
-	_debug($func_timer."s\n",0);
+	__debug($func_timer."s\n",0);
 
-	_debug(timer_get_time($main_timer)."s\n",0);
+	__debug(timer_get_time($main_timer)."s\n",0);
 ?>

@@ -339,7 +339,8 @@ $(function() {
         var clientItem;
         var torListHtml = "";
         
-        if(!(window.oldStatus)) window.oldStatus = [] ;
+        if(!(window.oldStatus)) window.oldStatus = [];
+        if(!(window.oldClientData)) window.oldClientData = [];
         
         $.each(json['arguments']['torrents'],
         function(i, item) {
@@ -385,12 +386,11 @@ $(function() {
                         $('#transmission_list').append(clientItem);
                 }
                 
-                if(window.oldClientData != clientData) {
+                if(window.oldClientData[item.id] != clientData) {
                     $('li.' + item.hashString + ' div.torInfo').text(clientData);
                 }
                 
                 if(window.oldStatus[item.id] != item.id + '_' + item.status) {  
-                    console.log(window.oldStatus[item.id] + ' v.s ' + item.id + '_' + item.status);
                     if (item.status == 16) {
                         $('li.' + item.hashString + ' p.torStop').hide();
                         $('li.' + item.hashString + ' p.torStart').show();
