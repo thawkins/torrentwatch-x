@@ -241,18 +241,18 @@ $(function() {
         '<table width="100%" cellspacing="0"><tr><td class="buttons left match_transmission">' +
         '<p title="Resume download" class="button torStart ' + hideStart + '">' +
         '<a href="#" onclick="$.stopStartTorrent(\'start\', \'' + item.hashString + '\');">' +
-        '<img height=10 src="images/tor_start.png" /></p>' +
+        '<img height=10 src="images/tor_start.png" /></a></p>' +
         '<p title="Pause download" class="button torStop ' + hideStop + '">' +
         '<a href="#" onclick="$.stopStartTorrent(\'stop\', \'' + item.hashString + '\');">' +
         '<img height=10 src="images/tor_pause.png" /></a></p>' +
         '<p title="Delete torrent but keep data" class="button torDel">' +
-        '<a href="#" onclick="$.delTorrent(\'' + item.hashString + '\', \'false\');"' +
+        '<a href="#" onclick="$.delTorrent(\'' + item.hashString + '\', \'false\');">' +
         '<img height=10 src="images/tor_stop.png" /></a></p>' +
         '</td><td class="buttons right match_transmission">' +
         '<p title="Set location or move torrent data.&#13;Current loaction: ' + item.downloadDir + '" class="button torMove">' +
         '<a href="#" onclick="toggleTorMove(\'' + item.hashString + '\');"><img height=10 src="images/tor_move.png" /></a></p>' +
         '<p title="Delete torrent and its data" class="button torTrash">' +
-        '<a href="#" onclick="$.delTorrent(\'' + item.hashString + '\', \'true\');"' +
+        '<a href="#" onclick="$.delTorrent(\'' + item.hashString + '\', \'true\');">' +
         '<img height=10 src="images/tor_trash.png" /></a></p>' +
         '</td><td class="torrent_name"><span class="torrent_name">' + item.name + '</span>' +
         '<span class="dateAdded hidden">' + item.addedDate + '</span>' +
@@ -263,6 +263,7 @@ $(function() {
         '<a class="close" href="#" onclick="toggleTorMove(\'' + item.hashString + '\');">-</a>' +
         '</div></td></tr></table></li>';
 
+        //console.log(transmissionItem);
         return(transmissionItem);
     };
 
@@ -323,13 +324,21 @@ $(function() {
             $('div#clientError p').html('Torrent client dit not return any data.<br/>' +
                                     'This usualy happens when the client is not active.');
             $('div#clientError').show();
-            
+            window.errorActive = 1;
             return;
         };
-        $('div#clientError').hide();
         
-        var torListHtml = "";
+        if(window.errorActive = 1) {
+            $('div#clientError').hide();
+            window.errorActive = null;
+        }
+        
+        var status;
+        var liClass;
+        var clientData;
         var clientItem;
+        var torListHtml = "";
+        
         $.each(json['arguments']['torrents'],
         function(i, item) {
             var Ratio = Math.roundWithPrecision(item.uploadedEver / item.downloadedEver, 2);
@@ -342,8 +351,6 @@ $(function() {
                 Percentage = 0;
             }
 
-            var liClass;
-            var clientData;
             if (item.errorString) {
                 clientData = item.errorString;
                 liClass = "paused";
@@ -368,34 +375,45 @@ $(function() {
                 clientData = "Paused";
                 liClass = 'paused';
             }
+            
 	        if(recent == 1) {
 	            clientItem = getClientItem(item, clientData, liClass);
+	            
                 if ($('#transmission_list li#clientId_' + item.id).length === 0) {
                         $('#transmission_list').append(clientItem);
-                } else {
-                    $('#transmission_list li#clientId_' + item.id).replaceWith(clientItem)
                 }
                 
-                $('div.feed li.' + item.hashString + ' div.torInfo').html(clientData);
-                $('div.feed li.' + item.hashString).addClass('clientId_' + item.id);
+                $('li.' + item.hashString + ' div.torInfo').html(clientData);
+                
+                status = item.id+item.status;
+                
+                if(window.oldStatus != status) {                    
+                    if (item.status == 16) {
+                        $('li.' + item.hashString + ' p.torStop').hide();
+                        $('li.' + item.hashString + ' p.torStart').show();
+                    } else {
+                        var curTorrent = $('li.' + item.hashString + ' p.torStart');
+                        if (curTorrent.is(":visible")) {
+                            torStartStopToggle(item.hashString);
+                        }
+                    }
 
-                if (item.status == 16) {
-                    $('div.feed li.' + item.hashString + ' p.torStop').hide();
-                    $('div.feed li.' + item.hashString + ' p.torStart').show();
-                } else {
-                    var curTorrent = $('div.feed li.' + item.hashString + ' p.torStart');
-                    if (curTorrent.is(":visible")) {
-                        torStartStopToggle(item.hashString);
+                    $('li.' + item.hashString).addClass('clientId_' + item.id);
+
+                    $('#transmission_list li#clientId_' + item.id)
+                        .removeClass('paused downloading verifying waiting alt').addClass(liClass)                    
+                    
+                    if (item.leftUntilDone === 0) {
+                        $('.' + item.hashString + '.match_downloading')
+                        .removeClass('match_downloading').addClass('match_cachehit');
                     }
                 }
-
-                if (item.leftUntilDone === 0) {
-                    $('.' + item.hashString + '.match_downloading')
-                    .removeClass('match_downloading').addClass('match_cachehit');
-                }
+                
             } else {
                 torListHtml += getClientItem(item, clientData, liClass);
+                $('li.' + item.hashString).addClass('clientId_' + item.id);
             }
+            window.oldStatus = item.id+item.status;
         });
         if(recent === 0 && torListHtml) {
             $('#transmission_list').append(torListHtml);
@@ -407,7 +425,7 @@ $(function() {
         clientCheck = 1;
         setInterval(function() {
             if(window.client && clientCheck == 1) {
-                getClientData(); 
+                setTimeout(getClientData, 100);
                 clientCheck = null;
             }
         }, 100);
