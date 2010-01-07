@@ -333,11 +333,13 @@ $(function() {
             window.errorActive = null;
         }
         
-        var status;
+        var oldStatus;
         var liClass;
         var clientData;
         var clientItem;
         var torListHtml = "";
+        
+        if(!(window.oldStatus)) window.oldStatus = [] ;
         
         $.each(json['arguments']['torrents'],
         function(i, item) {
@@ -383,11 +385,12 @@ $(function() {
                         $('#transmission_list').append(clientItem);
                 }
                 
-                $('li.' + item.hashString + ' div.torInfo').html(clientData);
+                if(window.oldClientData != clientData) {
+                    $('li.' + item.hashString + ' div.torInfo').text(clientData);
+                }
                 
-                status = item.id+item.status;
-                
-                if(window.oldStatus != status) {                    
+                if(window.oldStatus[item.id] != item.id + '_' + item.status) {  
+                    console.log(window.oldStatus[item.id] + ' v.s ' + item.id + '_' + item.status);
                     if (item.status == 16) {
                         $('li.' + item.hashString + ' p.torStop').hide();
                         $('li.' + item.hashString + ' p.torStart').show();
@@ -413,7 +416,9 @@ $(function() {
                 torListHtml += getClientItem(item, clientData, liClass);
                 $('li.' + item.hashString).addClass('clientId_' + item.id);
             }
-            window.oldStatus = item.id+item.status;
+            
+            window.oldClientData = clientData;
+            window.oldStatus[item.id] = item.id + '_' + item.status;
         });
         if(recent === 0 && torListHtml) {
             $('#transmission_list').append(torListHtml);

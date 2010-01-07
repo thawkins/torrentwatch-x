@@ -44,3 +44,7 @@ function platform_getDownloadDir() {
       break;
   }
 }
+
+function platform_getConfigFile() {
+  return platform_getConfigDir() . "/torrentwatch.config";
+}
