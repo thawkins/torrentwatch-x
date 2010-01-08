@@ -93,7 +93,7 @@ function parse_args() {
 		feeds_perform_matching($config_values['Feeds']);
 	}
 
-	if(_isset($config_values['Settings'], 'Run Torrentwatch', FALSE) and !$test_run) {
+	if(_isset($config_values['Settings'], 'Run Torrentwatch', FALSE) and !$test_run and $config_values['Settings']['Watch Dir']) {
 		global $hit;
 		$hit = 0;
 		check_for_torrents($config_values['Settings']['Watch Dir'], $config_values['Settings']['Download Dir']);
