@@ -16,7 +16,7 @@ function transmission_sessionId() {
     }
   } else {
     $tr_user = $config_values['Settings']['Transmission Login'];
-    $tr_pass = base64_decode($config_values['Settings']['Transmission Password']);
+    $tr_pass = get_client_passwd();
     $tr_host = $config_values['Settings']['Transmission Host'];
     $tr_port = $config_values['Settings']['Transmission Port'];
     $tr_uri = $config_values['Settings']['Transmission URI'];
@@ -54,7 +54,7 @@ function transmission_rpc($request) {
   $sessionIdFile = '/tmp/.Transmission-Session-Id';
 
   $tr_user = $config_values['Settings']['Transmission Login'];
-  $tr_pass = base64_decode($config_values['Settings']['Transmission Password']);
+  $tr_pass = get_client_passwd();
   $tr_uri = $config_values['Settings']['Transmission URI'];
   $tr_host = $config_values['Settings']['Transmission Host'];
   $tr_port = $config_values['Settings']['Transmission Port'];
