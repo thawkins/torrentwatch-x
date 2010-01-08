@@ -387,7 +387,6 @@ $(function() {
                 }
                 
                 if(window.oldClientData[item.id] != clientData) {
-                    console.log('clientData ' + item.id + ' changed');
                     $('li.' + item.hashString + ' div.torInfo').text(clientData);
                 }
                 
