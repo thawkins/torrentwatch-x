@@ -103,7 +103,7 @@ function write_config_file() {
 
   _debug("Preparing to write config file to $config_file\n");
 
-  if(isset($config_values['Settings']['Transmission Password']) && (!(preg_match('/.*==$/', $config_values['Settings']['Transmission Password'])))) {
+  if(isset($config_values['Settings']['Transmission Password']) && (!(preg_match('/.*=$/', $config_values['Settings']['Transmission Password'])))) {
     $config_values['Settings']['Transmission Password'] = base64_encode($config_values['Settings']['Transmission Password']);
   } 
 

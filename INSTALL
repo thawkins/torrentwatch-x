@@ -23,4 +23,7 @@ Installation Instructions
   
 	*/15 * * * * /usr/bin/php-cgi -q /var/www/torrentwatch-x/rss_dl.php -D >/dev/null
 
+- When using Transmission, please make sure that you have enabled remote management (web server).
+
+
 You're done! now go to the url corresponding with your webserver/vhost config.
