@@ -5,8 +5,7 @@
 //
 // This program is a command line interface to torrentwatch
 // 
-
-ini_set('include_path', '.:'.dirname(realpath($_SERVER['argv'][0])).'/php');
+ini_set('include_path', '.:'.dirname(__FILE__).'/php');
 ini_set("precision", 4);
    
 // These are our extra functions
@@ -18,7 +17,7 @@ $verbosity = 0;
 $func_timer = 0;
 
 function usage() {
-	_debug( $_SERVER['argv'][0] . "<options> - CLI Interface to Torrent Watch\n",0);
+	_debug( __FILE__ . "<options> - CLI Interface to Torrent Watch\n",0);
 	_debug( "           -c <dir> : Enable Cache\n",0);
 	_debug( "           -C : Disable Cache\n",0);
 	_debug( "           -d : skip watch folder\n",0);
