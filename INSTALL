@@ -5,6 +5,7 @@ Dependencies
 - php-curl
 - Transmission (Tested with 1.7x)
   - Versions reported not to work: 1.34, 1.51
+- Working MTA if you wan't to get warnings and errors by mail.
 
 Installation Instructions
 *************************
