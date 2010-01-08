@@ -106,7 +106,7 @@ function write_config_file() {
 
   _debug("Preparing to write config file to $config_file\n");
 
-  if(isset($config_values['Settings']['Transmission Password']) && (!(preg_match('/^\$%&(.*)\$%&$/', $config_values['Settings']['Transmission Password'])))) {
+  if($config_values['Settings']['Transmission Password'] && (!(preg_match('/^\$%&(.*)\$%&$/', $config_values['Settings']['Transmission Password'])))) {
     $config_values['Settings']['Transmission Password'] = preg_replace('/^(.*)$/', '\$%&$1\$%&',
      base64_encode($config_values['Settings']['Transmission Password']));
   } 
