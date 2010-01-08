@@ -106,9 +106,13 @@ function write_config_file() {
 
   _debug("Preparing to write config file to $config_file\n");
 
-  if($config_values['Settings']['Transmission Password'] && (!(preg_match('/^\$%&(.*)\$%&$/', $config_values['Settings']['Transmission Password'])))) {
-    $config_values['Settings']['Transmission Password'] = preg_replace('/^(.*)$/', '\$%&$1\$%&',
-     base64_encode($config_values['Settings']['Transmission Password']));
+  if(!(preg_match('/^\$%&(.*)\$%&$/', $config_values['Settings']['Transmission Password']))) {
+        if($config_values['Settings']['Transmission Password']) {
+            $config_values['Settings']['Transmission Password'] = preg_replace('/^(.*)$/', '\$%&$1\$%&',
+             base64_encode($config_values['Settings']['Transmission Password']));
+        } else { 
+            $config_values['Settings']['Transmission Password'] = "";
+        }
   } 
 
   $config_out = ";;\n;; torrentwatch config file\n;;\n\n";
