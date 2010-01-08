@@ -178,7 +178,7 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
 
   // Detect and append cookies from the feed url
   $url = $filename;
-  if($feed && $cookies = stristr($feed, ':COOKIE:')) {
+  if($feed && $cookies = stristr($feed, ':COOKIE:') && (!(preg_match('/:COOKIE:/', $url)))) {
     $url .= $cookies;
   }
 
