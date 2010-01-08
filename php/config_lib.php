@@ -95,16 +95,20 @@ function read_config_file() {
   return true;
 }
 
-  // I wrote the reverse function of the above, please note if you use any
-  // command line options those will be written as well
+function get_client_passwd() {
+    global $config_values;
+    return base64_decode(preg_replace('/^\$%&(.*)\$%&$/', '$1', $config_values['Settings']['Transmission Password']));
+}
+
 function write_config_file() {
   global $config_values, $config_out;
   $config_file = platform_getConfigFile();
 
   _debug("Preparing to write config file to $config_file\n");
 
-  if(isset($config_values['Settings']['Transmission Password']) && (!(preg_match('/.*=$/', $config_values['Settings']['Transmission Password'])))) {
-    $config_values['Settings']['Transmission Password'] = base64_encode($config_values['Settings']['Transmission Password']);
+  if(isset($config_values['Settings']['Transmission Password']) && (!(preg_match('/^\$%&(.*)\$%&$/', $config_values['Settings']['Transmission Password'])))) {
+    $config_values['Settings']['Transmission Password'] = preg_replace('/^(.*)$/', '\$%&$1\$%&',
+     base64_encode($config_values['Settings']['Transmission Password']));
   } 
 
   $config_out = ";;\n;; torrentwatch config file\n;;\n\n";
