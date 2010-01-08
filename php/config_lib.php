@@ -18,8 +18,8 @@ function setup_default_config() {
   _default('Transmission Host', 'localhost');
   _default('Transmission Port', '9091');
   _default('Transmission URI', '/transmission/rpc');
-  _default('Watch Dir', platform_getDownloadDir());
-  _default('Download Dir', platform_getDownloadDir());
+  _default('Watch Dir', '');
+  _default('Download Dir', '/mnt/Media/Downloads');
   _default('Cache Dir', $basedir."/rss_cache/");
   _default('Save Torrents', "0");
   _default('Run Torrentwatch', "True");

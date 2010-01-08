@@ -387,6 +387,7 @@ $(function() {
                 }
                 
                 if(window.oldClientData[item.id] != clientData) {
+                    console.log('clientData ' + item.id + ' changed');
                     $('li.' + item.hashString + ' div.torInfo').text(clientData);
                 }
                 
@@ -417,7 +418,7 @@ $(function() {
                 $('li.' + item.hashString).addClass('clientId_' + item.id);
             }
             
-            window.oldClientData = clientData;
+            window.oldClientData[item.id] = clientData;
             window.oldStatus[item.id] = item.id + '_' + item.status;
         });
         if(recent === 0 && torListHtml) {

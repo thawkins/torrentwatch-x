@@ -35,16 +35,6 @@ function platform_getGunzip() {
   }
 }
 
-function platform_getDownloadDir() {
-  global $platform;
-  switch($platform) {
-    case 'Linux':
-    default:
-      return "~/Download";
-      break;
-  }
-}
-
 function platform_getConfigFile() {
   return platform_getConfigDir() . "/torrentwatch.config";
 }
