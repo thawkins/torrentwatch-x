@@ -50,7 +50,7 @@ torrentwatch cvs -> torrentwatch-x 0.1
     -- Added option to change the feed name.
     -- Added support for combining feeds.
 
-current
+0.5
     -- Added Default ratio option.
     -- Added ratio per feed option.
     -- Added option to set email address. This will be used for warnings and errors.
