@@ -144,10 +144,10 @@ function check_for_torrent(&$item, $key, $opts) {
       }
       if($link = get_torrent_link($rs)) {
         if(client_add_torrent($link, NULL, $rs['title'], $opts['URL'], $item)) {
-          add_cache($rs['title']);
+            add_cache($rs['title']);
         } else {
-          _debug("Failed adding torrent $link\n", -1);
-          return FALSE;
+            _debug("Failed adding torrent $link\n", -1);
+            return FALSE;
         }
 
       } else {                     
@@ -224,7 +224,7 @@ function rss_perform_matching($rs, $idx, $feedName) {
     $matched = "nomatch";
     if(isset($config_values['Favorites'])) {
       array_walk($config_values['Favorites'], 'check_for_torrent', 
-                 array('Obj' =>$item, 'URL' => $rs['URL']));
+                 array('Obj' => $item, 'URL' => $rs['URL']));
     }
     _debug("$matched: $item[title]\n", 1);
     $client = $config_values['Settings']['Client'];
@@ -232,8 +232,8 @@ function rss_perform_matching($rs, $idx, $feedName) {
     if(file_exists($cache_file)) {
       $torHash = get_torHash($cache_file);
       if($matched != "match" && $matched != 'cachehit' && file_exists($cache_file)) {
-	$matched = 'downloaded';
-        _debug("matched: " . $item . "\n", 1);
+          $matched = 'downloaded';
+          _debug("matched: " . $item . "\n", 1);
       }
     }
     if(isset($config_values['Global']['HTMLOutput'])) {

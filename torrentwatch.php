@@ -10,6 +10,22 @@ $test_run = 0;
 $firstrun = 0;
 $verbosity = 0;
 
+if (get_magic_quotes_gpc()) {
+    $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+    while (list($key, $val) = each($process)) {
+        foreach ($val as $k => $v) {
+            unset($process[$key][$k]);
+            if (is_array($v)) {
+                $process[$key][stripslashes($k)] = $v;
+                $process[] = &$process[$key][stripslashes($k)];
+            } else {
+                $process[$key][stripslashes($k)] = stripslashes($v);
+            }
+        }
+    }
+    unset($process);
+}
+
 if(!(file_exists('php/config.php'))) {
 	$config = getcwd() . '/php/config.php';
         echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please copy $config.dist to $config and edit it to match your environment. Then click your browsers refresh button.</div>";
@@ -117,9 +133,11 @@ function parse_options() {
 			break;
 		case 'dlTorrent':
 			// Loaded via ajax
-			$r = client_add_torrent(trim(urldecode($_GET['link'])), $config_values['Settings']['Download Dir'],
-			                        $_GET['title'], $_GET['feed']);
-                        if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
+			$r = client_add_torrent(trim($_GET['link']),
+				$config_values['Settings']['Download Dir'],
+			    $_GET['title'], $_GET['feed']);
+
+                if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
 			echo $torHash;
 			exit(0);
 			break;
