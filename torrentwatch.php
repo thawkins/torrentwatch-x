@@ -418,6 +418,20 @@ function close_html() {
 	$html_out = "";
 }
 
+function check_requirements() {
+    if(!(function_exists('json_encode'))) {
+        echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">
+            No json support found. Please make sure php is compiled with json support.</div>";
+        return 1;
+    }
+    if(!(function_exists('curl_init'))) {
+        echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">
+            No curl support found. Please make sure php5-curl is installed.</div>";
+        return 1;
+    }
+}
+    	
+    
 function check_files() {
     global $config_values;
 
@@ -474,6 +488,7 @@ $verbosity = 0;
 
 parse_options();
 display_global_config();
+if(check_requirements()) return;
 check_files();
 display_favorites();
 display_history();
