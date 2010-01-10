@@ -421,7 +421,7 @@ function close_html() {
 function check_requirements() {
     if(!(function_exists('json_encode'))) {
         echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">
-            No json support found. Please make sure php is compiled with json support.</div>";
+            No json support found. Please make sure php is compiled with json support.<br> In some cases there is a package calls php5-json that has to be installed.</div>";
         return 1;
     }
     if(!(function_exists('curl_init'))) {
