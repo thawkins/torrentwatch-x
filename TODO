@@ -1,7 +1,10 @@
 - Remove torrents which are done. (paused and met ratio requirements)
 - Add list of TV Shows to choose from.
 - Delete old episodes from transmission which are replaces by REPACK or PROPER episodes.
-- Mail user on error or warning.
+- New version notification.
+- Install/Setup script.
+- OSX Installer
+
 
 - Torrent client support:
     - utorrent support
