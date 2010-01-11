@@ -23,8 +23,8 @@ function transmission_sessionId() {
 
 
     $sid = curl_init();
-    $sid_options = array(CURLOPT_CONNECTTIMEOUT => 3,
-                    CURLOPT_TIMEOUT => 3,
+    $sid_options = array(CURLOPT_CONNECTTIMEOUT => 5,
+                    CURLOPT_TIMEOUT => 5,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
                     CURLOPT_HEADER => true,
@@ -67,8 +67,8 @@ function transmission_rpc($request) {
     $SessionId = transmission_sessionId();
 
     $post = curl_init();
-    $post_options = array(CURLOPT_CONNECTTIMEOUT => 3,
-                          CURLOPT_TIMEOUT => 3,
+    $post_options = array(CURLOPT_CONNECTTIMEOUT => 5,
+                          CURLOPT_TIMEOUT => 5,
                           CURLOPT_RETURNTRANSFER => true,
                           CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
                           CURLOPT_USERPWD => "$tr_user:$tr_pass",
