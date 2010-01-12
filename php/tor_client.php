@@ -23,16 +23,14 @@ function transmission_sessionId() {
 
 
     $sid = curl_init();
-    $sid_options = array(CURLOPT_CONNECTTIMEOUT => 5,
-                    CURLOPT_TIMEOUT => 5,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
+    $curl_options = array(CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
                     CURLOPT_HEADER => true,
                     CURLOPT_NOBODY => true,
                     CURLOPT_USERPWD => "$tr_user:$tr_pass"
                   );
+    get_curl_defaults(&$curl_options);
 
-    curl_setopt_array($sid, $sid_options);
+    curl_setopt_array($sid, $curl_options);
 
     $header = curl_exec($sid);
     curl_close($sid);
@@ -67,10 +65,7 @@ function transmission_rpc($request) {
     $SessionId = transmission_sessionId();
 
     $post = curl_init();
-    $post_options = array(CURLOPT_CONNECTTIMEOUT => 5,
-                          CURLOPT_TIMEOUT => 5,
-                          CURLOPT_RETURNTRANSFER => true,
-                          CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
+    $curl_options = array(CURLOPT_URL => "http://$tr_host:$tr_port$tr_uri",
                           CURLOPT_USERPWD => "$tr_user:$tr_pass",
                           CURLOPT_HTTPHEADER => array (
                                                 "POST $tr_uri HTTP/1.1",
@@ -82,7 +77,8 @@ function transmission_rpc($request) {
                                                ),
                           CURLOPT_POSTFIELDS => "$request"
                        );
-    curl_setopt_array($post, $post_options);
+    get_curl_defaults(&$curl_options);
+    curl_setopt_array($post, $curl_options);
 
     $raw = curl_exec($post);
     curl_close($post);
@@ -181,10 +177,16 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
   if($feed && $cookies = stristr($feed, ':COOKIE:') && (!(preg_match('/:COOKIE:/', $url)))) {
     $url .= $cookies;
   }
+  
+  $get = curl_init();
+  $getOptions[CURLOPT_URL] = $url;
+  $getOptions[CURLOPT_HTTPHEADER] = array("User-Agent" => 'Python-urllib/1.17');
+  get_curl_defaults(&$getOptions);
+  curl_setopt_array($get, $getOptions);
+  $tor = curl_exec($get);
+  curl_close($get);
 
-  $be = new BrowserEmulator();
-  $be->addHeaderLine("User-Agent", 'Python-urllib/1.17');
-  if(!($tor = $be->file_get_contents($url))) {
+  if(!($tor)) {
   print '<pre>'.print_r($_GET, TRUE).'</pre>';
     _debug("Couldn't open torrent: $filename\n" . print_r($be->headerLines, true),-1);
     return FALSE;

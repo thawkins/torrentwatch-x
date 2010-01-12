@@ -41,6 +41,13 @@ function setup_default_config() {
 // http://www.codewalkers.com/c/a/Miscellaneous/Configuration-File-Processing-with-PHP/2/
 // It has been modified to support multidimensional arrays in the form of
 // group[] = key => data as equivilent of group[key] => data
+
+function get_curl_defaults(&$curlopt) {
+    $curlopt[CURLOPT_CONNECTTIMEOUT] = 5;
+    $curlopt[CURLOPT_TIMEOUT] = 5;
+    $curlopt[CURLOPT_RETURNTRANSFER] = true;
+}
+
 function read_config_file() {
   global $config_values;
   $config_file = platform_getConfigFile();

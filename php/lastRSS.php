@@ -31,8 +31,6 @@
  ======================================================================
 */
 
-require_once('browserEmulator.php');
-
 /**
 * lastRSS
 * Simple yet powerfull PHP class to parse RSS files.
@@ -143,8 +141,14 @@ class lastRSS {
 	// -------------------------------------------------------------------
 	function Parse ($rss_url) {
 		// Open and load RSS file
-		$be = new BrowserEmulator();
-		if ($rss_content = $be->file_get_contents($rss_url)) {
+		$get = curl_init();
+        $getOptions[CURLOPT_URL] = $rss_url;
+        get_curl_defaults(&$getOptions);
+        curl_setopt_array($get, $getOptions);
+        $rss_content = curl_exec($get);
+        curl_close($get);
+        
+		if ($rss_content) {
 			// Parse document encoding
 			$result['encoding'] = $this->my_preg_match("'encoding=[\'\"](.*?)[\'\"]'si", $rss_content);
 			// if document codepage is specified, use it

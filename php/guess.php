@@ -57,8 +57,13 @@ function guess_match($title, $normalize = FALSE) {
 
 function guess_feedtype($feedurl) {
   global $config_values;
-  $be = new browserEmulator();
-  $content = explode('\n', $be->file_get_contents($feedurl));
+  $get = curl_init();
+  $getOptions[CURLOPT_URL] = $feedurl;
+  get_curl_defaults(&$getOptions);
+  curl_setopt_array($get, $getOptions);
+  $content = explode('\n', curl_exec($get));
+  curl_close($get);
+  
   // Should be on the second line, but test the first 5 incase
   // of doctype etc.
   for($i = 0;$i < 5;$i++) {
