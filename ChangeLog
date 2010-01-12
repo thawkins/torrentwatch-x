@@ -73,3 +73,4 @@ IMPORTANT: If you are updating from a previous version. Please copy php/config.p
 
 current:
     -- Fixed bug which caused tw-x not to fallback to the next IP address if a host had multiple IP addresses (round robin or IPv4 + IPv6).
+    -- Replaced BrowserEmulator with Curl.
