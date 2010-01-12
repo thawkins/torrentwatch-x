@@ -9,32 +9,6 @@ function platform_initialize() {
   global $platform;
 }
 
-function platform_getGunzip() {
-  // not really a valid reponce, but browserEmulator willtry the gzinflate function first
-  if(function_exists('gzinflate'))
-    return 'gzinflate';
-
-  global $platform;
-  switch($platform) {
-    case 'NMT':
-      if(file_exists('/bin/gunzip'))
-        return "/bin/gunzip";
-      else if(file_exists('/bin/busybox')) {
-        exec('/bin/busybox gunzip 2>&1', $output);
-        if($output[0] == 'busybox: applet not found')
-          return FALSE;
-        else
-          return "/bin/busybox gunzip";
-      }
-      return FALSE;
-    case 'Linux':
-    default:
-      if(file_exists('/bin/gunzip'))
-        return "/bin/gunzip";
-      return FALSE;
-  }
-}
-
 function platform_getConfigFile() {
   return platform_getConfigDir() . "/torrentwatch.config";
 }

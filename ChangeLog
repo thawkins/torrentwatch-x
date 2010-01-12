@@ -70,3 +70,6 @@ IMPORTANT: If you are updating from a previous version. Please copy php/config.p
     -- Fixed base64 password detection.
     -- Fixed Cookie handling. (feed syntax: http://<feed_url>:COOKIE:<cookie1>=<value2>&<cookie2>=<value2>&<cookie3>.....)
     -- Disabled magic_quotes_gpc.
+
+current:
+    -- Fixed bug which caused tw-x not to fallback to the next IP address if a host had multiple IP addresses (round robin or IPv4 + IPv6).
