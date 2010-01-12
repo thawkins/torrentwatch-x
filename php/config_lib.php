@@ -37,16 +37,23 @@ function setup_default_config() {
   _default('Default Seed Ratio', '-1');
 }
 
-// This function is from
-// http://www.codewalkers.com/c/a/Miscellaneous/Configuration-File-Processing-with-PHP/2/
-// It has been modified to support multidimensional arrays in the form of
-// group[] = key => data as equivilent of group[key] => data
-
+if(!(function_exists(get_base_dir))) {
+    function get_base_dir() {
+        return dirname(dirname(__FILE__));
+    }
+}
+    
 function get_curl_defaults(&$curlopt) {
     $curlopt[CURLOPT_CONNECTTIMEOUT] = 5;
     $curlopt[CURLOPT_TIMEOUT] = 5;
     $curlopt[CURLOPT_RETURNTRANSFER] = true;
 }
+
+// This function is from
+// http://www.codewalkers.com/c/a/Miscellaneous/Configuration-File-Processing-with-PHP/2/
+// It has been modified to support multidimensional arrays in the form of
+// group[] = key => data as equivilent of group[key] => data
+
 
 function read_config_file() {
   global $config_values;
