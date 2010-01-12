@@ -260,26 +260,19 @@ class BrowserEmulator {
     if(file_exists($url)) // local file
       return file_get_contents($url);
     $file = '';
-    $getTorrent = curl_init();
+    $get = curl_init();
     $getOptions = array(CURLOPT_CONNECTTIMEOUT => 10,
 			CURLOPT_TIMEOUT => 5,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_URL => $url
 			);
-    curl_setopt_array($getTorrent, $getOptions);
-    $file = curl_exec($getTorrent);
-    curl_close($getTorrent);
-    /*$socket = $this->fopen($url);
-    if ($socket) {
-        while (!feof($socket)) {
-          $file .= fgets($socket, 10000);
-        }
-    } else {
-	_debug('Browser Emulator: file_get_contents bad socket', -1);
+    curl_setopt_array($get, $getOptions);
+    $file = curl_exec($get);
+    if(!($file)) {
+	_debug('Browser Emulator: file_get_contents; could not get ' . $url, -1);
         return FALSE;
     }
-    fclose($socket);
-*/
+    curl_close($get);
 
     if(strstr($this->lastResponse, 'Content-Encoding: gzip') !== FALSE) {
       if(function_exists('gzinflate')) {
