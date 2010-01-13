@@ -481,7 +481,7 @@ $(function() {
             },
             50);
             var filter = $.cookie('TWFILTER');
-            if (! (filter)) {
+            if (!(filter)) {
                 filter = 'all';
             }
             if($('#torrentlist div.header').length == 0) {
@@ -534,13 +534,15 @@ $(function() {
             }
             var last = current_dialog === '#' ? '': current_dialog;
             var target = this.hash === '#' ? '#' + $(this).closest('.dialog_window').id: this.hash;
-            current_dialog = last === target ? '': this.hash;
+            current_dialog = target === last && window.dialog === 1 ? '': this.hash
             if (last) {
                 $(last).fadeOut("normal");
             }
             if (current_dialog && this.hash != '#') {
                 $(current_dialog + ' form').resetForm();
                 $(current_dialog).fadeIn("normal");
+                window.dialog = 1;
+                $(current_dialog + ' a.submitForm').click(function() { window.dialog = 0 })
             }
         });
         return this;
