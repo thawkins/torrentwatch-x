@@ -75,7 +75,7 @@ function guess_feedtype($feedurl) {
   return "Unknown";
 }
 
-/*
+
 function guess_atom_torrent($summary) {
   $wc = '[\/\:\w\.\+\?\&\=\%\;]+';
   // Detects: A HREF=\"http://someplace/with/torrent/in/the/name\"
@@ -87,5 +87,4 @@ function guess_atom_torrent($summary) {
   }
   return FALSE;
 }
-*/
 ?>

@@ -328,11 +328,9 @@ function add_feed($link) {
           case 'RSS':
             $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['title'];
             break;
-          /*
           case 'Atom':
-            $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['Name'];
+            $config_values['Feeds'][$idx]['Name'] = $config_values['Global']['Feeds'][$link]['FEED']['TITLE'];
             break;
-          */
         }
       } else {
         _debug("Could not connect to Feed/guess Feed Type", -1);
