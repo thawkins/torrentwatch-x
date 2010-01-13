@@ -539,6 +539,7 @@ $(function() {
                 $(last).fadeOut("normal");
             }
             if (current_dialog && this.hash != '#') {
+                $(current_dialog + ' form').resetForm();
                 $(current_dialog).fadeIn("normal");
             }
         });
@@ -586,11 +587,11 @@ $(function() {
                 if(window.input_change) {
                     var answer = confirm('You have unsaved changes.\nAre you sure you want to continue?');
                     if(!(answer)) return;
-                    $(last).resetForm();
                     window.input_change = 0;
                 }
                 $(last).fadeOut(400,
                 function() {
+                    $(current_favorite).resetForm();
                     $(current_favorite).fadeIn(400);
                 });
             }
