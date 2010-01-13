@@ -10,9 +10,11 @@ function transmission_sessionId() {
   $sessionIdFile = get_tr_sessionIdFile();
 
   if(file_exists($sessionIdFile)) {
-      if(filesize($filesize > 0)) {
+      if(filesize($sessionIdFile) > 0) {
         $handle = fopen($sessionIdFile, r);
-        $sessionId = fread($handle, filesize($sessionIdFile));
+        $sessionId = trim(fread($handle, filesize($sessionIdFile)));
+    } else {
+        unlink($sessionIdFile);
     }
   } else {
     $tr_user = $config_values['Settings']['Transmission Login'];
@@ -49,7 +51,7 @@ function transmission_sessionId() {
 
 function transmission_rpc($request) {
   global $config_values;
-  $sessionIdFile = '/tmp/.Transmission-Session-Id';
+  $sessionIdFile = get_tr_sessionIdFile();  
 
   $tr_user = $config_values['Settings']['Transmission Login'];
   $tr_pass = get_client_passwd();
@@ -84,7 +86,9 @@ function transmission_rpc($request) {
     curl_close($post);
 
     if(preg_match('/409: Conflict/', $raw)) {
-      unlink($sessionIdFile);
+    	if(file_exists($sessionIdFile)) {
+    	    unlink($sessionIdFile);
+    	}
     } else {
       $run = 0;
     }
