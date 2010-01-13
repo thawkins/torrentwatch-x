@@ -487,6 +487,9 @@ a.button {
 	text-decoration: none;
 	}
 
+a.disabled {
+    color: #CCCCCC;
+}
 input[type=submit] {
 	width: 62px;
 	height: 28px;

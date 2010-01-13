@@ -210,7 +210,7 @@ function update_favorite() {
     return;
   switch($_GET['button']) {
     case 'Add':
-    Case 'Update':
+    case 'Update':
       add_favorite();
       $test_run = TRUE;
       break;

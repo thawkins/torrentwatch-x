@@ -132,6 +132,7 @@ $(function() {
     // Configuration, wizard, and update/delete favorite ajax submit
     $("a.submitForm").live('click',
     function(e) {
+        window.input_change = 0;
         e.stopImmediatePropagation();
         $.submitForm(this);
         $('div#' + this.parentNode.id).hide();
@@ -453,7 +454,7 @@ $(function() {
     });
 });
 
- (function($) {
+(function($) {
     var current_favorite,
     current_dialog;
     // Remove old dynamic content, replace it with passed html(ajax success function)
@@ -504,9 +505,11 @@ $(function() {
         },
         100);
     };
+    
     $(window).resize(function() {
         $('#torrentlist_container').height($(window).height() - $('#torrentlist_container').attr('offsetTop'));
     });
+    
     $.submitForm = function(button) {
         var form;
         if ($(button).is('form')) {
@@ -521,6 +524,14 @@ $(function() {
 
     $.fn.toggleDialog = function() {
         this.each(function() {
+            $("input, select").change(function() {
+              window.input_change = 1;
+            });    
+            if(window.input_change) {
+                var answer = confirm('You have unsaved changes.\nAre you sure you want to continue?');
+                if(!(answer)) return;
+                window.input_change = 0;
+            }
             var last = current_dialog === '#' ? '': current_dialog;
             var target = this.hash === '#' ? '#' + $(this).closest('.dialog_window').id: this.hash;
             current_dialog = last === target ? '': this.hash;
@@ -537,6 +548,7 @@ $(function() {
         var selector = this.selector;
         setTimeout(function() {
             $(selector + ":first a").toggleFavorite();
+            $('#favorite_new a#Update').addClass('disabled').removeClass('submitForm');
         },
         300);
         return this.not(":first").tsort("a").end().click(function() {
@@ -559,9 +571,24 @@ $(function() {
         this.each(function() {
             var last = current_favorite;
             current_favorite = this.hash;
+            $("input").keyup(function() {
+                if($(current_favorite + ' input:text[name=name]').val().length != 0 && 
+                    $(current_favorite + ' input:text[name=filter]').val().length != 0) {
+                    $(current_favorite + ' a#Update').removeClass('disabled').addClass('submitForm');                    
+                } else {
+                    $(current_favorite + ' a#Update').addClass('disabled').removeClass('submitForm');
+                }
+            });
+            
             if (!last) {
                 $(current_favorite).show();
             } else {
+                if(window.input_change) {
+                    var answer = confirm('You have unsaved changes.\nAre you sure you want to continue?');
+                    if(!(answer)) return;
+                    $(last).resetForm();
+                    window.input_change = 0;
+                }
                 $(last).fadeOut(400,
                 function() {
                     $(current_favorite).fadeIn(400);
