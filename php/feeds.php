@@ -11,19 +11,14 @@
  return round($n,2) . " $scale";
 }
 
- function get_torrent_link($rs) {
-  if(isset($rs['id'])) { // Atom
-    if(stristr($rs['id'], 'torrent')) // torrent link in id
-      $link = $rs['id'];
-/*
-    else // torrent hidden in summary
-      $link = guess_atom_torrent($rs['summary']);
-*/
+function get_torrent_link($rs) {
+  if(isset($rs['link'])) {
+      $link = $rs['link'];
+  } else if(isset($rs['id']) || stristr($rs['id'], 'http://')) { // Atom
+    $link = $rs['id'];
   } else if(isset($rs['enclosure'])) { // RSS Enclosure
     $link = $rs['enclosure']['url'];
-  } else {  // Standard RSS
-    $link = $rs['link'];
-  }
+  } 
 
   if(strpos($link, 'newzleech.com') !== False) {
     // Special handling for newzleech
@@ -181,7 +176,6 @@ function parse_one_rss($feed) {
   return;
 }
 
-/*    
 function parse_one_atom($feed) {
   global $config_values;
   if(isset($config_values['Settings']['Cache Dir']))
@@ -197,7 +191,6 @@ function parse_one_atom($feed) {
   }
   return;
 }
-*/
 
 function get_torHash($cache_file) {
   $handle = fopen($cache_file, "r");
@@ -256,12 +249,20 @@ function rss_perform_matching($rs, $idx, $feedName) {
   unset($item);
 }
 
-/*
-function atom_perform_matching($atom, $idx) {
+function atom_perform_matching($atom, $idx, $feedName) {
   global $config_values, $matched;
+  
   $atom  = array_change_key_case_ext($atom, ARRAY_KEY_LOWERCASE);
-  if(isset($config_values['Global']['HTMLOutput']))
-    show_feed_html($atom['feed'], $idx);
+  if(count($atom['feed']) == 0)
+    return;
+  
+  $percentage = '';
+  $torHash = '';
+  $matched = "nomatch";
+  
+  if(isset($config_values['Global']['HTMLOutput']) && $config_values['Settings']['Combine Feeds'] == 0) {
+    show_feed_html($idx);
+  }
   $alt='alt';
   
   foreach($atom['feed']['entry'] as $item) {
@@ -271,8 +272,20 @@ function atom_perform_matching($atom, $idx) {
     if($matched == "nomatch") {
       _debug("No match for ".$item['title']."\n");
     }
+    $client = $config_values['Settings']['Client'];
+    $cache_file = $config_values['Settings']['Cache Dir'].'rss_dl_'.filename_encode($item['title']);
+    if(file_exists($cache_file)) {
+      $torHash = get_torHash($cache_file);
+      if($matched != "match" && $matched != 'cachehit' && file_exists($cache_file)) {
+          $matched = 'downloaded';
+          _debug("matched: " . $item . "\n", 1);
+      }
+    }
     if(isset($config_values['Global']['HTMLOutput'])) {
-      show_torrent_html($item, $key, $alt);
+     if(!($rsnr)) { $rsnr = 1; } else { $rsnr ++; };
+     if(strlen($rsnr) <= 1) $rsnr = 0 . $rsnr;
+     $id = $idx . $rsnr;
+     show_torrent_html($item, $atom['feed']['link'], $feedName, $alt, $torHash, $matched, $id);
     }
 
     if($alt=='alt') {
@@ -283,7 +296,7 @@ function atom_perform_matching($atom, $idx) {
     unset($item);
   }
 }
-*/
+
 
 function feeds_perform_matching($feeds) {
   global $config_values;
@@ -301,14 +314,11 @@ function feeds_perform_matching($feeds) {
   foreach($feeds as $key => $feed) {
     switch($feed['Type']) {
       case 'RSS':
-        rss_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key,
-                             $feed['Name']);
+        rss_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key, $feed['Name']);
         break;
-/*
       case 'Atom':
-        atom_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key);
+        atom_perform_matching($config_values['Global']['Feeds'][$feed['Link']], $key, $feed['Name']);
         break;
-*/
       default:
         _debug("Unknown Feed. Feed: ".$feed['Link']."Type: ".$feed['Type']."\n",-1);
         break;
@@ -338,11 +348,9 @@ function load_feeds($feeds) {
       case 'RSS':
         parse_one_rss($feed);
         break;
-/*
       case 'Atom':
         parse_one_atom($feed);
         break;
-*/
       default:
         _debug("Unknown Feed. Feed: ".$feed['Link']."Type: ".$feed['Type']."\n",-1);
         break;
