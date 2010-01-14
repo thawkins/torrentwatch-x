@@ -428,13 +428,6 @@ $(function() {
     };
 
     $(document).ready(function() { 
-        clientCheck = 1;
-        setInterval(function() {
-            if(window.client && clientCheck == 1) {
-                setTimeout(getClientData, 500);
-                clientCheck = null;
-            }
-        }, 100);
          
         setTimeout(function() {
             setInterval(function() {
@@ -499,7 +492,13 @@ $(function() {
                     }
                 }                
                 displayFilter(filter);
-                
+                var clientCheck = 1;
+                setInterval(function() {
+                    if(window.client && clientCheck == 1) {
+                        setTimeout(getClientData, 500);
+                        clientCheck = null;
+                    }
+                }, 100);
             },
             100);
         },
@@ -572,6 +571,11 @@ $(function() {
     };
     $.fn.toggleFavorite = function() {
         this.each(function() {
+            if(window.input_change) {
+                var answer = confirm('You have unsaved changes.\nAre you sure you want to continue?');
+                if(!(answer)) return;
+                window.input_change = 0;
+            }
             var last = current_favorite;
             current_favorite = this.hash;
             $("input").keyup(function() {
@@ -586,15 +590,10 @@ $(function() {
             if (!last) {
                 $(current_favorite).show();
             } else {
-                if(window.input_change) {
-                    var answer = confirm('You have unsaved changes.\nAre you sure you want to continue?');
-                    if(!(answer)) return;
-                    window.input_change = 0;
-                }
                 $(last).fadeOut(400,
                 function() {
-                    $(current_favorite).resetForm();
                     $(current_favorite).fadeIn(400);
+                    $(current_favorite).resetForm();
                 });
             }
         });
