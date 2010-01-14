@@ -42,14 +42,14 @@ $(function() {
                 $('.feed').show();
                 $('.transmission').hide();
             }
-            tor.not('.match_downloading').hide();
+            tor.not('.match_downloading, .match_match').hide();
             tor.markAlt().closest(".feed div.feed");
         } else if (filter == 'downloaded') {
             if ($('.transmission').is(":visible")) {
                 $('.feed').show();
                 $('.transmission').hide();
             }
-            tor.not('.match_cachehit, .match_match, .match_downloaded').hide();
+            tor.not('.match_cachehit, .match_downloaded').hide();
             tor.markAlt().closest(".feed div.feed");
         } else if (filter == 'transmission') {
             if ($('.feed').is(':visible')) {
@@ -709,4 +709,9 @@ $(function() {
         });
     };
     
+    $.toggleFeedNameUrl = function(idx) {
+        $('div.feeditem .feed_name').toggle();
+        $('div.feeditem .feed_url').toggle();
+        $('#feedNameUrl .item').toggle();        
+    }
 })(jQuery);

@@ -625,6 +625,7 @@ div.dialog_window#configuration div.left input[type=password] {
     position: absolute;
     left: 120px;
 	width: 225px;
+	padding-left: 3px;
 }
 
 div.dialog_window#configuration div.right input.text,
@@ -634,6 +635,7 @@ div.dialog_window#configuration div.right input[type=password] {
     position: absolute;
     right: 15px;
 	width: 225px;
+	padding-left: 3px;
 }
 
 div.dialog_window#configuration div.left select {
@@ -699,21 +701,23 @@ div.feeditem label.item  a:active {
 	color: black;
 	}
 
-div#feeds div#feedName {
-    margin-left: 4px;
+div#feeds div#feedNameUrl {
+    margin-left: 0;
     float: left;
-    width: 251px;
+    width: 275px;
 }
 
 div.feeditem input[type=text] {
     position: relative;
     top: 6px;
-	width: 240px;
+	width: 260px;
 	margin: 3px 0;
+	padding: 3px;
 }
 
+div.feeditem input.feed_url[type=text],
 div.feeditem input.feed_name[type=text] {
-    margin: 3px 0 0 15px;
+    margin: 3px 0 0 10px;
 }
 
 div.feeditem input.feed_link[type=text] {
@@ -725,8 +729,17 @@ div.feeditem input.seed_ratio[type=text] {
     margin-left: 6px;
 }
 
-div.feeditem button {
-    padding-top: 0;
+div.feeditem a.button {
+    margin-top: 9px;
+    padding: 3px 0 3px 0;
+}
+
+div#feeds input#showURL[type=checkbox] {
+    margin: 7px 5px 0 10px;
+}
+
+div#feeds div.buttonContainer {
+    font-size: 0.9em;
 }
 
 /***********************************
