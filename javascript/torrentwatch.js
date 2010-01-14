@@ -392,7 +392,7 @@ $(function() {
                 }
                 
                 if(window.oldStatus[item.id] != item.id + '_' + item.status) {  
-                    if (item.status == 16) {
+                    if (item.status == 16 || item.errorString) {
                         $('li.' + item.hashString + ' p.torStop').hide();
                         $('li.' + item.hashString + ' p.torStart').show();
                     } else {
