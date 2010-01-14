@@ -211,7 +211,7 @@ function update_favorite() {
   switch($_GET['button']) {
     case 'Add':
     case 'Update':
-      add_favorite();
+      $response = add_favorite();
       $test_run = TRUE;
       break;
     case 'Delete':
@@ -219,6 +219,7 @@ function update_favorite() {
       break;
   }
   write_config_file();
+  return $response;
 }
 
 function update_feed() {
@@ -235,6 +236,13 @@ function update_feed() {
 
 function add_favorite() {
   global $config_values;
+  
+  if(!($_GET['idx']) || $_GET['idx'] == 'new' ) {
+      foreach($config_values['Favorites'] as $fav) {
+      if($_GET['name'] == $fav['Name']) return("\"" . $_GET['name'] . "\" Allready exists in favorites");
+      }
+  }
+  
   if(isset($_GET['idx']) && $_GET['idx'] != 'new') {
     $idx = $_GET['idx'];
   } else if(isset($_GET['name'])) {
@@ -242,7 +250,7 @@ function add_favorite() {
     $idx = end(array_keys($config_values['Favorites']));
     $_GET['idx'] = $idx; // So display_favorite_info() can see it
   } else
-    return; // Bad form data
+    return("Bad form data, not added to favorites"); // Bad form data
 
   $list = array("name"      => "Name",
                 "filter"    => "Filter",

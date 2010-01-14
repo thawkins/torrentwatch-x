@@ -493,6 +493,11 @@ $(function() {
                 }                
                 displayFilter(filter);
                 var clientCheck = 1;
+                if($('#fav_error').length > 0) {
+                    setTimeout(function() {
+                        $('#fav_error').hide();
+                    }, 7000);
+                }
                 setInterval(function() {
                     if(window.client && clientCheck == 1) {
                         setTimeout(getClientData, 500);
