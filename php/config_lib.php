@@ -349,8 +349,9 @@ function update_feedData() {
     global $config_values;
     _debug('updating feed: ' . $idx);
     if(isset($_GET['idx']) AND isset($config_values['Feeds'][$_GET['idx']])) {
-        if(!($_GET['feed_name'])) return;
+        if(!($_GET['feed_name']) || !($_GET['feed_link'])) return;
         $config_values['Feeds'][$_GET['idx']]['Name'] = $_GET['feed_name'];
+        $config_values['Feeds'][$_GET['idx']]['Link'] = $_GET['feed_link'];
         $config_values['Feeds'][$_GET['idx']]['seedRatio'] = $_GET['seed_ratio'];
     }
 }
