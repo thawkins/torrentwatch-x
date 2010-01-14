@@ -57,6 +57,8 @@ function guess_match($title, $normalize = FALSE) {
 
 function guess_feedtype($feedurl) {
   global $config_values;
+  $response = check_for_cookies($feedurl);
+  if($response) $feedurl = $response['url'];
   $get = curl_init();
   $getOptions[CURLOPT_URL] = $feedurl;
   get_curl_defaults(&$getOptions);
