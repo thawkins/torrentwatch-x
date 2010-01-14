@@ -522,6 +522,12 @@ div#checkFiles {
 	
 }
 
+div#fav_error {
+    top: 20px;
+    color: red;
+    text-align: center;
+}
+
 /********************************
  *
  * W I Z A R D   D I A L O G S

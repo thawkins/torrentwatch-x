@@ -85,7 +85,8 @@ function parse_options() {
 			echo "$response";
 			exit;
 		case 'updateFavorite':
-			update_favorite();
+			$response = update_favorite();
+			if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
 			break;
 		case 'updateFeed':
 			update_feed();
@@ -129,7 +130,8 @@ function parse_options() {
 				$_GET['savein'] = 'Default';
 				$_GET['seedratio'] = $seedRatio;
 			}
-			update_favorite();
+			$response = update_favorite();
+			if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
 			break;
 		case 'dlTorrent':
 			// Loaded via ajax
