@@ -141,6 +141,8 @@ class lastRSS {
 	// -------------------------------------------------------------------
 	function Parse ($rss_url) {
 		// Open and load RSS file
+		$response = check_for_cookies($rss_url);
+        if($response) $rss_url = $response['url'];
 		$get = curl_init();
         $getOptions[CURLOPT_URL] = $rss_url;
         get_curl_defaults(&$getOptions);

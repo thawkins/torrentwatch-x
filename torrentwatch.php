@@ -432,8 +432,7 @@ function check_requirements() {
         return 1;
     }
 }
-    	
-    
+
 function check_files() {
     global $config_values;
 
@@ -469,7 +468,6 @@ function check_files() {
         echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">$error</div>";
     }
 }
-
 
 //
 //

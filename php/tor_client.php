@@ -171,6 +171,13 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio) {
   }
 }
 
+function check_for_cookies($url) {
+    if($cookies = stristr($url, ':COOKIE:')) {
+      $url = rtrim(substr($url, 0, -strlen($cookies)), '&');
+      return array('url' => $url, 'cookies' => strtr(substr($cookies, 8), '&', ';'));
+    } 
+}
+
 function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL) {
   global $config_values, $hit;
   $hit = 1;
@@ -183,7 +190,13 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
   }
   
   $get = curl_init();
+  $response = check_for_cookies($url);
+  if($response) {
+      $url = $response['url'];
+      $cookies = $response['cookies'];
+  }
   $getOptions[CURLOPT_URL] = $url;
+  $getOptions[CURLOPT_COOKIE] = $cookies;
   $getOptions[CURLOPT_HTTPHEADER] = array("User-Agent" => 'Python-urllib/1.17');
   get_curl_defaults(&$getOptions);
   curl_setopt_array($get, $getOptions);
