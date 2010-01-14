@@ -3,13 +3,14 @@ function guess_match($title, $normalize = FALSE) {
   // Main regexp
   $reg1 ='/^';
   // Series Title 
-  $reg1.='([^-\(]+)'; // string not including - or (
+  $reg1.='([^-\(\/]+)'; // string not including -, ( or /
   $reg1.='(?:.+)?'; // optinally followed by a title, length is determined by the episode match
   // Episode 
   $reg1.='\b(';  // must be a word boundry before the episode
   $reg1.='S\d+[. ]?E\d+'.'|';  // S12E1
   $reg1.='\d+x\d+' .'|';  // 1x23
   $reg1.='\d+[. ]?of[. ]?\d+'.'|';  // 03of18
+  $reg1.='Season[. ]\d+,[. ]Episode[. ]\d+'.'|'; // Season 4, episode 15
   $reg1.='[\d -.]{10}';   // 2008-03-23 or 07.23.2008 or .20082306. etc
   $reg1.=')/i';
 
