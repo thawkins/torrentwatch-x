@@ -174,7 +174,8 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio) {
 function check_for_cookies($url) {
     if($cookies = stristr($url, ':COOKIE:')) {
       $url = rtrim(substr($url, 0, -strlen($cookies)), '&');
-      return array('url' => $url, 'cookies' => strtr(substr($cookies, 8), '&', ';'));
+      $cookies = strtr(substr($cookies, 8), '&', ';');
+      return array('url' => $url, 'cookies' => $cookies);
     } 
 }
 
@@ -185,8 +186,8 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
 
   // Detect and append cookies from the feed url
   $url = $filename;
-  if($feed && $cookies = stristr($feed, ':COOKIE:') && (!(preg_match('/:COOKIE:/', $url)))) {
-    $url .= $cookies;
+  if($feed && preg_match('/:COOKIE:/', $feed) && (!(preg_match('/:COOKIE:/', $url)))) {
+    $url .= stristr($feed, ':COOKIE:');    
   }
   
   $get = curl_init();
