@@ -27,6 +27,7 @@ function setup_default_config() {
   _default('Client', "");
   _default('Verify Episode', "1");
   _default('Only Newer', "1");
+  _default('Default Feed All', "0");
   _default('Deep Directories', "0");
   _default('Combine Feeds', '0');
   _default('History', $basedir."/rss_cache/rss_dl.history");
@@ -189,11 +190,15 @@ function update_global_config() {
                  'Client'             => 'client',
                  'MatchStyle'         => 'matchstyle',
                  'Only Newer'         => 'onlynewer',
+                 'Default Feed All'   => 'favdefaultall',
                  'Extension'          => 'extension');
+                 
   $checkboxs = array('Combine Feeds' => 'combinefeeds',
                      'Verify Episode' => 'verifyepisodes',
                      'Save Torrents'  => 'savetorrents',
-                     'Only Newer'     => 'onlynewer',);
+                     'Only Newer'     => 'onlynewer',
+                     'Default Feed All' => 'favdefaultall');
+                     
   foreach($input as $key => $data)
     if(isset($_GET[$data]))
       $config_values['Settings'][$key] = $_GET[$data];
@@ -252,6 +257,7 @@ function add_favorite() {
   } else
     return("Bad form data, not added to favorites"); // Bad form data
 
+  if($config_values['Settings']['Default Feed All']) $_GET['feed'] = 'All';
   $list = array("name"      => "Name",
                 "filter"    => "Filter",
                 "not"       => "Not",

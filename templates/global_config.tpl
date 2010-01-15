@@ -131,6 +131,11 @@
                                 </option>
                             </select>
                         </div>
+                        <div>
+                            <input type="checkbox" name="favdefaultall" value="1" <?php echo $favdefaultall; ?>
+                                title="Set feed to all when adding favorite. (This doesn't affect existing favorites)"/>
+                            <label class="item checkbox">Set default feed to "All"</label>
+                        </div>
                     </div>
                     <div class="fav_settings right">
                         <div id="config_verifyepisodes" title="Try not to download duplicate episodes">
