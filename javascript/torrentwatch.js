@@ -428,7 +428,6 @@ $(function() {
     };
 
     $(document).ready(function() { 
-         
         setTimeout(function() {
             setInterval(function() {
                 getClientData();
@@ -528,7 +527,7 @@ $(function() {
 
     $.fn.toggleDialog = function() {
         this.each(function() {
-            $("input, select").change(function() {
+            $(".dialog_window input, .dialog_window select").change(function() {
               window.input_change = 1;
             });    
             if(window.input_change && this.text != 'Next') {
@@ -584,7 +583,7 @@ $(function() {
             }
             var last = current_favorite;
             current_favorite = this.hash;
-            $("input").keyup(function() {
+            $("#favorites input").keyup(function() {
                 if($(current_favorite + ' input:text[name=name]').val().length != 0 && 
                     $(current_favorite + ' input:text[name=filter]').val().length != 0) {
                     $(current_favorite + ' a#Update').removeClass('disabled').addClass('submitForm');                    
