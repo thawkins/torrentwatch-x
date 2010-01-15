@@ -242,7 +242,7 @@ function update_feed() {
 function add_favorite() {
   global $config_values;
   
-  if(!($_GET['idx']) || $_GET['idx'] == 'new' ) {
+  if(!isset($_GET['idx']) || $_GET['idx'] == 'new' ) {
       foreach($config_values['Favorites'] as $fav) {
       if($_GET['name'] == $fav['Name']) return("\"" . $_GET['name'] . "\" Allready exists in favorites");
       }
