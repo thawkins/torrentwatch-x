@@ -240,7 +240,7 @@ $(function() {
         var transmissionItem =
         '<li id="clientId_' + item.id + '" class="torrent match_transmission ' + item.hashString + ' ' + liClass +'">' +
         '<table width="100%" cellspacing="0"><tr><td class="buttons left match_transmission">' +
-        '<p title="Resume download" class="button torStart ' + hideStart + '">' +
+        '<p title="Resume" class="button torStart ' + hideStart + '">' +
         '<a href="#" onclick="$.stopStartTorrent(\'start\', \'' + item.hashString + '\');">' +
         '<img height=10 src="images/tor_start.png" /></a></p>' +
         '<p title="Pause download" class="button torStop ' + hideStop + '">' +
@@ -376,7 +376,11 @@ $(function() {
                 item.peersConnected + ' peers  -  Ratio: ' + Ratio;
                 liClass = 'alt';
             } else if (item.status == 16) {
-                clientData = "Paused";
+                if(item.seedRatioLimit == Ratio && Percentage == 100) {
+                    clientData = "All the life goals of this torrent have been reached. This torrent can be removed.";
+                } else {
+                    clientData = "Paused";
+                }
                 liClass = 'paused';
             }
             

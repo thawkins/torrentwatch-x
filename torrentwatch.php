@@ -181,7 +181,8 @@ function torInfo($torHash) {
 	switch($config_values['Settings']['Client']) {
 		case 'Transmission':
 			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
-		      		'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => $torHash), 'method' => 'torrent-get');
+		      		'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs',
+		      		'peersGettingFromUs', 'peersConnected', 'seedRatioLimit'), 'ids' => $torHash), 'method' => 'torrent-get');
                 $response = transmission_rpc($request);
                 $totalSize = $response['arguments']['torrents']['0']['totalSize'];
                 $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
@@ -205,6 +206,7 @@ function torInfo($torHash) {
                 $totalSize = human_readable($totalSize);
                 $clientId = $response['arguments']['torrents']['0']['id'];
                 $status = $response['arguments']['torrents']['0']['status'];
+                $seedRatioLimit = round($response['arguments']['torrents']['0']['seedRatioLimit'],2);
                 $peersSendingToUs = $response['arguments']['torrents']['0']['peersSendingToUs'];
                 $peersGettingFromUs = $response['arguments']['torrents']['0']['peersGettingFromUs'];
                 $peersConnected = $response['arguments']['torrents']['0']['peersConnected'];
@@ -218,7 +220,11 @@ function torInfo($torHash) {
                 } else if($status == 8) {
                     $stats = "Seeding to $peersGettingFromUs of $peersConnected peers  -  Ratio: $ratio";
                 } else if($status == 16) {
-                    $stats = "Paused";
+                    if($ratio == $seedRatioLimit && $percentage == 100) {
+                        $stats = "All the life goals of this torrent have been reached. This torrent can be removed.";
+                    } else {
+                        $stats = "Paused";
+                    }
                 }
                 return array( 
                     'stats' => $stats,
@@ -237,10 +243,14 @@ function getClientData($recent) {
 	switch($config_values['Settings']['Client']) {	
 		case 'Transmission':
 			if($recent) {
-			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected'), 'ids' => 'recently-active'), 'method' => 'torrent-get');
+			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
+			   'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
+			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit'),
+			   'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
-			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString', 'leftUntilDone', 'downloadDir',
-		          'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'peersSendingToUs', 'peersGettingFromUs', 'peersConnected')), 'method' => 'torrent-get');
+			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
+			   'leftUntilDone', 'downloadDir','totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
+			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit')), 'method' => 'torrent-get');
 			}
 			$response = transmission_rpc($request);
 			return json_encode($response);
