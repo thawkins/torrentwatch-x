@@ -211,7 +211,7 @@ function torInfo($torHash) {
                 $peersGettingFromUs = $response['arguments']['torrents']['0']['peersGettingFromUs'];
                 $peersConnected = $response['arguments']['torrents']['0']['peersConnected'];
                 if($status == 1) {
-                    $stats = "Waiting for peers";
+                    $stats = "Waiting to verify";
                 } else if($status == 2) {
                     $stats = "Verifying files ($percentage%)";
                 } else if($status == 4) {

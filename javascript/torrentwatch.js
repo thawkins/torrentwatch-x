@@ -359,7 +359,7 @@ $(function() {
                 clientData = item.errorString;
                 liClass = "paused";
             } else if (item.status == 1) {
-                clientData = 'Waiting for peers';
+                clientData = 'Waiting to verify';
                 liClass = 'waiting';
             } else if (item.status == 2) {
                 clientData = 'Verifying files (' + Percentage + '%)';
