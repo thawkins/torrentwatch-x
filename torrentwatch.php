@@ -182,14 +182,17 @@ function torInfo($torHash) {
 		case 'Transmission':
 			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
 		      		'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs',
-		      		'peersGettingFromUs', 'peersConnected', 'seedRatioLimit'), 'ids' => $torHash), 'method' => 'torrent-get');
+		      		'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'haveUnchecked'),
+		      		'ids' => $torHash), 'method' => 'torrent-get');
                 $response = transmission_rpc($request);
                 $totalSize = $response['arguments']['torrents']['0']['totalSize'];
                 $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
                 $Uploaded = $response['arguments']['torrents']['0']['uploadedEver'];
                 $Downloaded = $response['arguments']['torrents']['0']['downloadedEver'];
+                $UnValidated = $response['arguments']['torrents']['0']['haveUnchecked'];
                 if($totalSize) { 
                   $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
+                  $validProgress = round((($totalSize-$UnValidated)/$totalSize)*100,2);
                 }
                 if($percentage < 100) { $dlStatus = "downloading"; }
                 if(!($totalSize)) {
@@ -213,7 +216,7 @@ function torInfo($torHash) {
                 if($status == 1) {
                     $stats = "Waiting to verify";
                 } else if($status == 2) {
-                    $stats = "Verifying files ($percentage%)";
+                    $stats = "Verifying files ($validProgress%)";
                 } else if($status == 4) {
                     $stats = "Downloading from $peersSendingToUs of $peersConnected peers:
                       $sizeDone of $totalSize ($percentage%)  -  Ratio: $ratio";
@@ -245,12 +248,13 @@ function getClientData($recent) {
 			if($recent) {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
 			   'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
-			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit'),
+			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'haveUnchecked'),
 			   'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
 			   'leftUntilDone', 'downloadDir','totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
-			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit')), 'method' => 'torrent-get');
+			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'haveUnchecked')),
+			   'method' => 'torrent-get');
 			}
 			$response = transmission_rpc($request);
 			return json_encode($response);

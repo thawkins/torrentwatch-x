@@ -264,7 +264,6 @@ $(function() {
         '<a class="close" href="#" onclick="toggleTorMove(\'' + item.hashString + '\');">-</a>' +
         '</div></td></tr></table></li>';
 
-        //console.log(transmissionItem);
         return(transmissionItem);
     };
 
@@ -347,6 +346,7 @@ $(function() {
         function(i, item) {
             var Ratio = Math.roundWithPrecision(item.uploadedEver / item.downloadedEver, 2);
             var Percentage = Math.roundWithPrecision(((item.totalSize - item.leftUntilDone) / item.totalSize) * 100, 2);
+            var validProgress = Math.roundWithPrecision(((item.totalSize - item.haveUnchecked) / item.totalSize) * 100, 2);
 
             if (!(Ratio > 0)) {
                 Ratio = 0;
@@ -362,7 +362,7 @@ $(function() {
                 clientData = 'Waiting to verify';
                 liClass = 'waiting';
             } else if (item.status == 2) {
-                clientData = 'Verifying files (' + Percentage + '%)';
+                clientData = 'Verifying files (' + validProgress + '%)';
                 liClass = 'verifying';
             } else if (item.status == 4) {
                 clientData = 'Downloading from ' + item.peersSendingToUs + ' of ' +
