@@ -376,8 +376,8 @@ $(function() {
                 item.peersConnected + ' peers  -  Ratio: ' + Ratio;
                 liClass = 'alt';
             } else if (item.status == 16) {
-                if(item.seedRatioLimit == Ratio && Percentage == 100) {
-                    clientData = "All the life goals of this torrent have been reached. This torrent can be removed.";
+                if(Ratio >= item.seedRatioLimit && Percentage == 100) {
+                    clientData = "Downloaded and seed ratio met. This torrent can be removed.";
                 } else {
                     clientData = "Paused";
                 }
