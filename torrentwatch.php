@@ -220,8 +220,8 @@ function torInfo($torHash) {
                 } else if($status == 8) {
                     $stats = "Seeding to $peersGettingFromUs of $peersConnected peers  -  Ratio: $ratio";
                 } else if($status == 16) {
-                    if($ratio == $seedRatioLimit && $percentage == 100) {
-                        $stats = "All the life goals of this torrent have been reached. This torrent can be removed.";
+                    if($ratio >= $seedRatioLimit && $percentage == 100) {
+                        $stats = "Downloaded and seed ratio met. This torrent can be removed.";
                     } else {
                         $stats = "Paused";
                     }
