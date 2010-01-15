@@ -308,7 +308,7 @@ function display_global_config() {
 	$savetorrent=$transmission="";
 	$deepfull=$deeptitle=$deepoff=$verifyepisode="";
 	$matchregexp=$matchglob=$matchsimple="";
-	$onlynewer=$folderclient=$combinefeeds="";
+	$favdefaultall=$onlynewer=$folderclient=$combinefeeds="";
 
 	switch($config_values['Settings']['Client']) {
 		case 'Transmission':
@@ -337,6 +337,8 @@ function display_global_config() {
 		$verifyepisode = 'checked=1';
 	if($config_values['Settings']['Only Newer'] == 1)
 		$onlynewer = 'checked=1';
+	if($config_values['Settings']['Default Feed All'] == 1)
+		$favdefaultall = 'checked=1';
 
 	switch($config_values['Settings']['MatchStyle']) {
 		case 'glob': $matchglob="selected='selected'";break;
