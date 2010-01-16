@@ -668,17 +668,25 @@ $(function() {
     };
 
     $.delTorrent = function(torHash, trash) {
-        $.getJSON('torrentwatch.php', {
-            'delTorrent': torHash,
-            'trash': trash
-        },
-        function(json) {
-            if (json.result == "success") {
-                getClientData();
-            } else {
-                alert('Request failed');
-            }
-        });
+        if(trash == 'true') {
+            sure = confirm('This will remove the torrent along with its data.\nAre you sure?');
+        } else {
+            sure = 1;
+        }
+        
+        if(sure) {
+            $.getJSON('torrentwatch.php', {
+                'delTorrent': torHash,
+                'trash': trash
+            },
+            function(json) {
+                if (json.result == "success") {
+                    getClientData();
+                } else {
+                    alert('Request failed');
+                }
+            });
+        }
     };
 
     $.stopStartTorrent = function(stopStart, torHash) {
