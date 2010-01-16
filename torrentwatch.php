@@ -136,9 +136,9 @@ function parse_options() {
         case 'dlTorrent':
             // Loaded via ajax
             foreach($config_values['Favorites'] as $fav) {
-                $guess = guess_match($_GET['title']);
-                if($guess['key'] == $fav['Name']) {
-                      _debug("bla");
+                $guess = guess_match(html_entity_decode($_GET['title']));
+                $name = trim(strtr($guess['key'], "._", "  "));
+                if($name == $fav['Name']) {
                       $downloadDir = $fav['Save In'];
                 } 
             }
