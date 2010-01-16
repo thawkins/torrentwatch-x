@@ -135,11 +135,17 @@ function parse_options() {
 			break;
 		case 'dlTorrent':
 			// Loaded via ajax
-			$r = client_add_torrent(trim($_GET['link']),
-				$config_values['Settings']['Download Dir'],
-			    $_GET['title'], $_GET['feed']);
-
-                if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
+			foreach($config_values['Favorites'] as $fav) {
+                $guess = guess_match($_GET['title']);
+        		if($guess['key'] == $fav['Name']) {
+                      _debug("bla");
+                      $downloadDir = $fav['Save In'];
+                } 
+            }
+            if(!$downloadDir) $downloadDir = $config_values['Settings']['Download Dir'];
+            $r = client_add_torrent(trim($_GET['link']),
+				$downloadDir, $_GET['title'], $_GET['feed']);
+            if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
 			echo $torHash;
 			exit(0);
 			break;

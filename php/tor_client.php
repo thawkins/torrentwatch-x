@@ -206,7 +206,7 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
 
   if(!($tor)) {
   print '<pre>'.print_r($_GET, TRUE).'</pre>';
-    _debug("Couldn't open torrent: $filename\n" . print_r($be->headerLines, true),-1);
+    _debug("Couldn't open torrent: $filename \n",-1);
     return FALSE;
   }
   

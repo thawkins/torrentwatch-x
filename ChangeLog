@@ -71,7 +71,7 @@ IMPORTANT: If you are updating from a previous version. Please copy php/config.p
     -- Fixed Cookie handling. (feed syntax: http://<feed_url>:COOKIE:<cookie1>=<value2>&<cookie2>=<value2>&<cookie3>.....)
     -- Disabled magic_quotes_gpc.
 
-current:
+0.5.1:
     -- Added option to set feed to "All" when adding favorites.
     -- Added checking to prevent duplicates in favorites.
     -- Added option for editing feed URL's.
@@ -81,3 +81,9 @@ current:
     -- Better form handling.
     -- Fixed Transmission SessionID cache bug.
     -- Fixed a number of small bugs.
+
+current:
+    -- Added confirmation message when trashing torrent data.
+    -- If torrent is started manualy and exists in favorites the download dir will be the one set in favorites.
+    -- Fixed verifying progress message.
+    -- Fixed focus issue in "move torrent" input.
