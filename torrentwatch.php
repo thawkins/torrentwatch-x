@@ -27,137 +27,137 @@ if (get_magic_quotes_gpc()) {
 }
 
 if(!(file_exists('php/config.php'))) {
-	$config = getcwd() . '/php/config.php';
+    $config = getcwd() . '/php/config.php';
         echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please copy $config.dist to $config and edit it to match your environment. Then click your browsers refresh button.</div>";
-	return;
+    return;
 }
 
 require_once('rss_dl_utils.php');
 
 // This function parses commands sent from a PC browser
 function parse_options() {
-	global $html_out, $config_values;
-	$filler = "<br>";
+    global $html_out, $config_values;
+    $filler = "<br>";
 
-	array_keys($_GET);
-	$commands = array_keys($_GET);
-	if(empty($commands))
-		return FALSE;
+    array_keys($_GET);
+    $commands = array_keys($_GET);
+    if(empty($commands))
+        return FALSE;
 
-	if(preg_match("/^\//", $commands[0])) {
-		$commands[0] = preg_replace("/^\//", '', $commands[0]);
-	}
-	switch($commands[0]) {
-		case 'firstRun':
+    if(preg_match("/^\//", $commands[0])) {
+        $commands[0] = preg_replace("/^\//", '', $commands[0]);
+    }
+    switch($commands[0]) {
+        case 'firstRun':
             foreach($_GET['link'] as $link) {
-				add_feed($link);
-			}
-			update_global_config();
-			$config_values['Settings']['FirstRun'] = FALSE;
-			write_config_file();
-			break;
-		case 'getClientData':
-			if($_REQUEST['recent']) {
-				$response = getClientData(1);
-			} else {
-				$response = getClientData(0);
-			}
-			echo $response;
-			exit;
-		case 'getHash':
-			$response = torInfo($_REQUEST['getHash']);
-			echo json_encode($response);
-			exit;
-		case 'delTorrent':
-		        $response = delTorrent($_REQUEST['delTorrent'], $_REQUEST['trash']);
-			echo "$response";
-			exit;
-		case 'stopTorrent':
-		        $response = stopTorrent($_REQUEST['stopTorrent']);
-			echo "$response";
-			exit;
-		case 'startTorrent':
-		        $response = startTorrent($_REQUEST['startTorrent']);
-			echo "$response";
-			exit;
-		case 'moveTo':
-		        $response = moveTorrent($_REQUEST['moveTo'], $_REQUEST['torHash']);
-			echo "$response";
-			exit;
-		case 'updateFavorite':
-			$response = update_favorite();
-			if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
-			break;
-		case 'updateFeed':
-			update_feed();
-			break;
-		case 'clearCache':
-			clear_cache();
-			break;
-		case 'setGlobals':
-			update_global_config();
-			$config_values['Settings']['FirstRun'] = FALSE;
-			write_config_file();
-			break;
-		case 'matchTitle':
-		    $feedLink = $_GET['rss'];
-		    foreach($config_values['Feeds'] as $key => $feed) {
-		        if($feed['Link'] == "$feedLink") $idx = $key;
-		    }
-    		if($config_values['Feeds'][$idx]['seedRatio']) {
+                add_feed($link);
+            }
+            update_global_config();
+            $config_values['Settings']['FirstRun'] = FALSE;
+            write_config_file();
+            break;
+        case 'getClientData':
+            if($_REQUEST['recent']) {
+                $response = getClientData(1);
+            } else {
+                $response = getClientData(0);
+            }
+            echo $response;
+            exit;
+        case 'getHash':
+            $response = torInfo($_REQUEST['getHash']);
+            echo json_encode($response);
+            exit;
+        case 'delTorrent':
+                $response = delTorrent($_REQUEST['delTorrent'], $_REQUEST['trash']);
+            echo "$response";
+            exit;
+        case 'stopTorrent':
+                $response = stopTorrent($_REQUEST['stopTorrent']);
+            echo "$response";
+            exit;
+        case 'startTorrent':
+                $response = startTorrent($_REQUEST['startTorrent']);
+            echo "$response";
+            exit;
+        case 'moveTo':
+                $response = moveTorrent($_REQUEST['moveTo'], $_REQUEST['torHash']);
+            echo "$response";
+            exit;
+        case 'updateFavorite':
+            $response = update_favorite();
+            if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
+            break;
+        case 'updateFeed':
+            update_feed();
+            break;
+        case 'clearCache':
+            clear_cache();
+            break;
+        case 'setGlobals':
+            update_global_config();
+            $config_values['Settings']['FirstRun'] = FALSE;
+            write_config_file();
+            break;
+        case 'matchTitle':
+            $feedLink = $_GET['rss'];
+            foreach($config_values['Feeds'] as $key => $feed) {
+                if($feed['Link'] == "$feedLink") $idx = $key;
+            }
+            if($config_values['Feeds'][$idx]['seedRatio']) {
                 $seedRatio = $config_values['Feeds'][$idx]['seedRatio'];
             } else {
                 $seedRatio = $config_values['Settings']['Default Seed Ratio'];
             }
-		
-		    if(!($seedRatio)) $seedRatio = -1;
-			if(($tmp = guess_match(html_entity_decode($_GET['title'])))) {
-				$_GET['name'] = trim(strtr($tmp['key'], "._", "  "));
-				$_GET['filter'] = trim($tmp['key']);
-				if($config_values['Settings']['MatchStyle'] == "glob")
-					$_GET['filter'] .= '*';
-				$_GET['quality'] = $tmp['data'];
-				$_GET['feed'] = $_GET['rss'];
-				$_GET['button'] = 'Add';
-				$_GET['savein'] = 'Default';
-				$_GET['seedratio'] = $seedRatio;
-			} else {
-				$_GET['name'] = $_GET['title'];
-				$_GET['filter'] = $_GET['title'];
-				$_GET['quality'] = 'All';
-				$_GET['feed'] = $_GET['rss'];
-				$_GET['button'] = 'Add';
-				$_GET['savein'] = 'Default';
-				$_GET['seedratio'] = $seedRatio;
-			}
-			$response = update_favorite();
-			if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
-			break;
-		case 'dlTorrent':
-			// Loaded via ajax
-			foreach($config_values['Favorites'] as $fav) {
+        
+            if(!($seedRatio)) $seedRatio = -1;
+            if(($tmp = guess_match(html_entity_decode($_GET['title'])))) {
+                $_GET['name'] = trim(strtr($tmp['key'], "._", "  "));
+                $_GET['filter'] = trim($tmp['key']);
+                if($config_values['Settings']['MatchStyle'] == "glob")
+                    $_GET['filter'] .= '*';
+                $_GET['quality'] = $tmp['data'];
+                $_GET['feed'] = $_GET['rss'];
+                $_GET['button'] = 'Add';
+                $_GET['savein'] = 'Default';
+                $_GET['seedratio'] = $seedRatio;
+            } else {
+                $_GET['name'] = $_GET['title'];
+                $_GET['filter'] = $_GET['title'];
+                $_GET['quality'] = 'All';
+                $_GET['feed'] = $_GET['rss'];
+                $_GET['button'] = 'Add';
+                $_GET['savein'] = 'Default';
+                $_GET['seedratio'] = $seedRatio;
+            }
+            $response = update_favorite();
+            if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
+            break;
+        case 'dlTorrent':
+            // Loaded via ajax
+            foreach($config_values['Favorites'] as $fav) {
                 $guess = guess_match($_GET['title']);
-        		if($guess['key'] == $fav['Name']) {
+                if($guess['key'] == $fav['Name']) {
                       _debug("bla");
                       $downloadDir = $fav['Save In'];
                 } 
             }
             if(!$downloadDir) $downloadDir = $config_values['Settings']['Download Dir'];
             $r = client_add_torrent(trim($_GET['link']),
-				$downloadDir, $_GET['title'], $_GET['feed']);
+                $downloadDir, $_GET['title'], $_GET['feed']);
             if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
-			echo $torHash;
-			exit(0);
-			break;
-		case 'clearHistory':
-			// Loaded via ajax
-			if(file_exists($config_values['Settings']['History']))
-				unlink($config_values['Settings']['History']);
-			display_history();
-			close_html();
-			exit(0);
-			break;
-	    case 'get_tr_location':
+            echo $torHash;
+            exit(0);
+            break;
+        case 'clearHistory':
+            // Loaded via ajax
+            if(file_exists($config_values['Settings']['History']))
+                unlink($config_values['Settings']['History']);
+            display_history();
+            close_html();
+            exit(0);
+            break;
+        case 'get_tr_location':
             global $config_values;
             echo $config_values['Settings']['Transmission Host'] . ':' . $config_values['Settings']['Transmission Port'];
             exit;
@@ -165,31 +165,31 @@ function parse_options() {
             global $config_values;
             echo $config_values['Settings']['Client'];
             exit;
-		default:
-			$output = "<script type='text/javascript'>alert('Bad Paramaters passed to ".$_SERVER['PHP_SELF'].":  ".$_SERVER['REQUEST_URI']."');</script>";
-	}
+        default:
+            $output = "<script type='text/javascript'>alert('Bad Paramaters passed to ".$_SERVER['PHP_SELF'].":  ".$_SERVER['REQUEST_URI']."');</script>";
+    }
 
-	if(isset($exec))
-		exec($exec, $output);
-	if (isset($output)) {
-		if(is_array($output))
-			$output = implode($filler, $output);
-		$html_out .= str_replace("\n", "<br>", "<div class='execoutput'>$output</div>");
-		echo $html_out;
-		$html_out = "";
-	}
-	return;
+    if(isset($exec))
+        exec($exec, $output);
+    if (isset($output)) {
+        if(is_array($output))
+            $output = implode($filler, $output);
+        $html_out .= str_replace("\n", "<br>", "<div class='execoutput'>$output</div>");
+        echo $html_out;
+        $html_out = "";
+    }
+    return;
 }
 
 function torInfo($torHash) {
-	global $config_values;
+    global $config_values;
 
-	switch($config_values['Settings']['Client']) {
-		case 'Transmission':
-			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
-		      		'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs',
-		      		'peersGettingFromUs', 'peersConnected', 'recheckProgress'),
-		      		'ids' => $torHash), 'method' => 'torrent-get');
+    switch($config_values['Settings']['Client']) {
+        case 'Transmission':
+            $request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
+                    'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs',
+                    'peersGettingFromUs', 'peersConnected', 'recheckProgress'),
+                    'ids' => $torHash), 'method' => 'torrent-get');
                 $response = transmission_rpc($request);
                 $totalSize = $response['arguments']['torrents']['0']['totalSize'];
                 $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
@@ -241,160 +241,160 @@ function torInfo($torHash) {
                     'bytesDone' => $bytesDone
                 );
             }
-			exit;
-	}
+            exit;
+    }
 }
 
 function getClientData($recent) {
-	global $config_values;
+    global $config_values;
 
-	switch($config_values['Settings']['Client']) {	
-		case 'Transmission':
-			if($recent) {
-			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
-			   'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
-			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress'),
-			   'ids' => 'recently-active'), 'method' => 'torrent-get');
-			} else {
-			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
-			   'leftUntilDone', 'downloadDir','totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
-			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress')),
-			   'method' => 'torrent-get');
-			}
-			$response = transmission_rpc($request);
-			return json_encode($response);
-		break;
-	}
+    switch($config_values['Settings']['Client']) {  
+        case 'Transmission':
+            if($recent) {
+              $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
+               'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
+               'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress'),
+               'ids' => 'recently-active'), 'method' => 'torrent-get');
+            } else {
+              $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
+               'leftUntilDone', 'downloadDir','totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
+               'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress')),
+               'method' => 'torrent-get');
+            }
+            $response = transmission_rpc($request);
+            return json_encode($response);
+        break;
+    }
 }
 
 function delTorrent($torHash, $trash) {
-	global $config_values;
+    global $config_values;
 
-	switch($config_values['Settings']['Client']) {	
-		case 'Transmission':
-			$request = array('arguments' => array('delete-local-data' => $trash, 'ids' => $torHash), 'method' => 'torrent-remove');
-			$response = transmission_rpc($request);
-			return json_encode($response);
-		break;
-	}
+    switch($config_values['Settings']['Client']) {  
+        case 'Transmission':
+            $request = array('arguments' => array('delete-local-data' => $trash, 'ids' => $torHash), 'method' => 'torrent-remove');
+            $response = transmission_rpc($request);
+            return json_encode($response);
+        break;
+    }
 }
 
 function stopTorrent($torHash) {
-	global $config_values;
+    global $config_values;
 
-	switch($config_values['Settings']['Client']) {	
-		case 'Transmission':
-			$request = array('arguments' => array('ids' => $torHash), 'method' => 'torrent-stop');
-			$response = transmission_rpc($request);
-			return json_encode($response);
-		break;
-	}
+    switch($config_values['Settings']['Client']) {  
+        case 'Transmission':
+            $request = array('arguments' => array('ids' => $torHash), 'method' => 'torrent-stop');
+            $response = transmission_rpc($request);
+            return json_encode($response);
+        break;
+    }
 }
 
 function startTorrent($torHash) {
-	global $config_values;
+    global $config_values;
 
-	switch($config_values['Settings']['Client']) {	
-		case 'Transmission':
-			$request = array('arguments' => array('ids' => $torHash), 'method' => 'torrent-start');
-			$response = transmission_rpc($request);
-			return json_encode($response);
-		break;
-	}
+    switch($config_values['Settings']['Client']) {  
+        case 'Transmission':
+            $request = array('arguments' => array('ids' => $torHash), 'method' => 'torrent-start');
+            $response = transmission_rpc($request);
+            return json_encode($response);
+        break;
+    }
 }
 
 function moveTorrent($location, $torHash) {
-	global $config_values;
+    global $config_values;
 
-	switch($config_values['Settings']['Client']) {	
-		case 'Transmission':
-		    $torInfo = torInfo($torHash);
-		    if($torInfo['bytesDone'] > 0) {
-		        $move = true;
-	        } else {
-	            $move = false;
+    switch($config_values['Settings']['Client']) {  
+        case 'Transmission':
+            $torInfo = torInfo($torHash);
+            if($torInfo['bytesDone'] > 0) {
+                $move = true;
+            } else {
+                $move = false;
             }
-        	$request = array('arguments' => array('location' => $location, 'move' => $move, 'ids' => $torHash), 'method' => 'torrent-set-location');
-			$response = transmission_rpc($request);
-			return json_encode($response);
-		break;
-	}
+            $request = array('arguments' => array('location' => $location, 'move' => $move, 'ids' => $torHash), 'method' => 'torrent-set-location');
+            $response = transmission_rpc($request);
+            return json_encode($response);
+        break;
+    }
 }
 
 function display_global_config() {
-	global $config_values, $html_out;
+    global $config_values, $html_out;
 
-	$savetorrent=$transmission="";
-	$deepfull=$deeptitle=$deepoff=$verifyepisode="";
-	$matchregexp=$matchglob=$matchsimple="";
-	$favdefaultall=$onlynewer=$folderclient=$combinefeeds="";
+    $savetorrent=$transmission="";
+    $deepfull=$deeptitle=$deepoff=$verifyepisode="";
+    $matchregexp=$matchglob=$matchsimple="";
+    $favdefaultall=$onlynewer=$folderclient=$combinefeeds="";
 
-	switch($config_values['Settings']['Client']) {
-		case 'Transmission':
-			$transmission = 'selected="selected"';
-			break;
+    switch($config_values['Settings']['Client']) {
+        case 'Transmission':
+            $transmission = 'selected="selected"';
+            break;
                 case 'folder':
                         $folderclient = 'selected="selected"';
                         break;
-		default:
-			// Shouldn't happen
-			break;
-	}
-	if($config_values['Settings']['Combine Feeds'] == 1)
-	    $combinefeeds = 'checked=1';
+        default:
+            // Shouldn't happen
+            break;
+    }
+    if($config_values['Settings']['Combine Feeds'] == 1)
+        $combinefeeds = 'checked=1';
 
-	if($config_values['Settings']['Save Torrents'] == 1)
-		$savetorrent = 'checked=1';
+    if($config_values['Settings']['Save Torrents'] == 1)
+        $savetorrent = 'checked=1';
 
-	switch($config_values['Settings']['Deep Directories']) {
-		case 'Full': $deepfull = 'selected="selected"';break;
-		case 'Title': $deeptitle = 'selected="selected"'; break;
-		default:$deepoff = 'selected="selected"';break;
-	}
+    switch($config_values['Settings']['Deep Directories']) {
+        case 'Full': $deepfull = 'selected="selected"';break;
+        case 'Title': $deeptitle = 'selected="selected"'; break;
+        default:$deepoff = 'selected="selected"';break;
+    }
 
-	if($config_values['Settings']['Verify Episode'] == 1)
-		$verifyepisode = 'checked=1';
-	if($config_values['Settings']['Only Newer'] == 1)
-		$onlynewer = 'checked=1';
-	if($config_values['Settings']['Default Feed All'] == 1)
-		$favdefaultall = 'checked=1';
+    if($config_values['Settings']['Verify Episode'] == 1)
+        $verifyepisode = 'checked=1';
+    if($config_values['Settings']['Only Newer'] == 1)
+        $onlynewer = 'checked=1';
+    if($config_values['Settings']['Default Feed All'] == 1)
+        $favdefaultall = 'checked=1';
 
-	switch($config_values['Settings']['MatchStyle']) {
-		case 'glob': $matchglob="selected='selected'";break;
-		case 'simple': $matchsimple="selected='selected'";break;
-		case 'regexp': 
-		default: $matchregexp="selected='selected'";break;
-	}
+    switch($config_values['Settings']['MatchStyle']) {
+        case 'glob': $matchglob="selected='selected'";break;
+        case 'simple': $matchsimple="selected='selected'";break;
+        case 'regexp': 
+        default: $matchregexp="selected='selected'";break;
+    }
 
-	if(!($config_values['Settings']['FirstRun'])) {
-		// Include the templates and append the results to html_out
-		ob_start();
-		require('templates/global_config.tpl');
-		require('templates/feeds.tpl');
-		$html_out .= ob_get_contents();
-		ob_end_clean();
-	}
+    if(!($config_values['Settings']['FirstRun'])) {
+        // Include the templates and append the results to html_out
+        ob_start();
+        require('templates/global_config.tpl');
+        require('templates/feeds.tpl');
+        $html_out .= ob_get_contents();
+        ob_end_clean();
+    }
 }
 
 
 function display_favorites_info($item, $key) {
-	global $config_values, $html_out;
-	$feed_options = '<option value="all">All</option>';
-	if(isset($config_values['Feeds'])) {
-		foreach($config_values['Feeds'] as $feed) {
-			$feed_options .= '<option value="'.urlencode($feed['Link']).'"';
-			if($feed['Link'] == $item['Feed'])
-				$feed_options .= ' selected="selected"';
-			$feed_options .= '>'.$feed['Name'].'</option>';
-		}
-	}
+    global $config_values, $html_out;
+    $feed_options = '<option value="all">All</option>';
+    if(isset($config_values['Feeds'])) {
+        foreach($config_values['Feeds'] as $feed) {
+            $feed_options .= '<option value="'.urlencode($feed['Link']).'"';
+            if($feed['Link'] == $item['Feed'])
+                $feed_options .= ' selected="selected"';
+            $feed_options .= '>'.$feed['Name'].'</option>';
+        }
+    }
 
   // Dont handle with object buffer, is called inside display_favorites ob_start
   require('templates/favorites_info.tpl');
 }
 
 function display_favorites() {
-	global $config_values, $html_out;
+    global $config_values, $html_out;
 
   ob_start();
   require('templates/favorites.tpl');
@@ -403,10 +403,10 @@ function display_favorites() {
 }
 
 function display_history() {
-	global $html_out, $config_values;
+    global $html_out, $config_values;
 
-	if(file_exists($config_values['Settings']['History'])) {
-		$history = array_reverse(unserialize(file_get_contents($config_values['Settings']['History'])));
+    if(file_exists($config_values['Settings']['History'])) {
+        $history = array_reverse(unserialize(file_get_contents($config_values['Settings']['History'])));
   } else {
     $history = array();
   }
@@ -418,27 +418,27 @@ function display_history() {
 }
 
 function display_legend() {
-	global $html_out;
+    global $html_out;
 
-	ob_start();
-	require('templates/legend.tpl');
-	$html_out .= ob_get_contents();
-	ob_end_clean();
+    ob_start();
+    require('templates/legend.tpl');
+    $html_out .= ob_get_contents();
+    ob_end_clean();
 }
 
 function display_clearCache() {
-	global $html_out;
+    global $html_out;
 
-	ob_start();
-	require('templates/clear_cache.tpl');
-	$html_out .= ob_get_contents();
-	ob_end_clean();
+    ob_start();
+    require('templates/clear_cache.tpl');
+    $html_out .= ob_get_contents();
+    ob_end_clean();
 }
 
 function close_html() {
-	global $html_out, $debug_output, $main_timer;
-	echo $html_out;
-	$html_out = "";
+    global $html_out, $debug_output, $main_timer;
+    echo $html_out;
+    $html_out = "";
 }
 
 function check_requirements() {
@@ -460,14 +460,14 @@ function check_files() {
     $myuid = posix_getuid();
     $configDir = platform_getConfigDir() . '/';
     if(!is_writable($configDir)) {
-	echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please create the directory $configDir and make sure it's readable and writeable for the user running the webserver (uid: $myuid). </div>";
+    echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please create the directory $configDir and make sure it's readable and writeable for the user running the webserver (uid: $myuid). </div>";
     }
     $cwd = getcwd();
     if(!(get_base_dir() == $cwd)) {
         echo "<div id=\"checkFiles\" class=\"dialog_window\" style=\"display: block\">Please edit the config.php file and set the basedir to:<br /> \"$cwd\".<br />Then click your browsers refresh button.</div>";
-	return;
+    return;
     }
-	
+    
 
     if($config_values['Settings']['FirstRun']) return 0;
 
@@ -500,7 +500,7 @@ platform_initialize();
 
 setup_default_config();
 if(file_exists(platform_getConfigFile()))
-	read_config_file();
+    read_config_file();
 
 $config_values['Global']['HTMLOutput']= 1;
 $html_out = "";
@@ -522,8 +522,8 @@ ob_flush();flush();
 
 // Feeds
 if(isset($config_values['Feeds'])) {
-	load_feeds($config_values['Feeds']);
-	feeds_perform_matching($config_values['Feeds']);
+    load_feeds($config_values['Feeds']);
+    feeds_perform_matching($config_values['Feeds']);
 }
 
 close_html();
