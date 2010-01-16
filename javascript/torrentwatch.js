@@ -388,7 +388,7 @@ $(function() {
 	            clientItem = getClientItem(item, clientData, liClass);
                 
                 if ($('#transmission_list li#clientId_' + item.id).length === 0) {
-                        $('#transmission_list').append(clientItem);
+                        $('#transmission_list').prepend(clientItem);
                 }
                 
                 if(window.oldClientData[item.id] != clientData) {
@@ -425,11 +425,12 @@ $(function() {
             window.oldClientData[item.id] = clientData;
             window.oldStatus[item.id] = item.id + '_' + item.status;
         });
+        
         if(recent === 0 && torListHtml) {
             $('#transmission_list').append(torListHtml);
         } 
         
-        if($('.move_data').is(':hidden')) {
+        if(!$('.move_data').is(':visible')) {
             $('#transmission_list>li').tsort('span.dateAdded', { order: 'desc' });
         }
     };
