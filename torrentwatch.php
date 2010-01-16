@@ -182,17 +182,16 @@ function torInfo($torHash) {
 		case 'Transmission':
 			$request = array('arguments' => array('fields' => array('id', 'leftUntilDone', 'hashString',
 		      		'totalSize', 'uploadedEver', 'downloadedEver', 'status', 'peersSendingToUs',
-		      		'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'haveUnchecked'),
+		      		'peersGettingFromUs', 'peersConnected', 'recheckProgress'),
 		      		'ids' => $torHash), 'method' => 'torrent-get');
                 $response = transmission_rpc($request);
                 $totalSize = $response['arguments']['torrents']['0']['totalSize'];
                 $leftUntilDone = $response['arguments']['torrents']['0']['leftUntilDone'];
                 $Uploaded = $response['arguments']['torrents']['0']['uploadedEver'];
                 $Downloaded = $response['arguments']['torrents']['0']['downloadedEver'];
-                $UnValidated = $response['arguments']['torrents']['0']['haveUnchecked'];
+                $validProgress = 100 * $response['arguments']['torrents']['0']['recheckProgress'];
                 if($totalSize) { 
                   $percentage = round((($totalSize-$leftUntilDone)/$totalSize)*100,2);
-                  $validProgress = round((($totalSize-$UnValidated)/$totalSize)*100,2);
                 }
                 if($percentage < 100) { $dlStatus = "downloading"; }
                 if(!($totalSize)) {
@@ -248,12 +247,12 @@ function getClientData($recent) {
 			if($recent) {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
 			   'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
-			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'haveUnchecked'),
+			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress'),
 			   'ids' => 'recently-active'), 'method' => 'torrent-get');
 			} else {
 			  $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
 			   'leftUntilDone', 'downloadDir','totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
-			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'haveUnchecked')),
+			   'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress')),
 			   'method' => 'torrent-get');
 			}
 			$response = transmission_rpc($request);

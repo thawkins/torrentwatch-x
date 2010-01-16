@@ -346,7 +346,8 @@ $(function() {
         function(i, item) {
             var Ratio = Math.roundWithPrecision(item.uploadedEver / item.downloadedEver, 2);
             var Percentage = Math.roundWithPrecision(((item.totalSize - item.leftUntilDone) / item.totalSize) * 100, 2);
-            var validProgress = Math.roundWithPrecision(((item.totalSize - item.haveUnchecked) / item.totalSize) * 100, 2);
+            console.log(item.recheckProgress);
+            var validProgress = Math.roundWithPrecision((100 * item.recheckProgress), 2);
 
             if (!(Ratio > 0)) {
                 Ratio = 0;
