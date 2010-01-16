@@ -386,7 +386,7 @@ $(function() {
             
 	        if(recent == 1) {
 	            clientItem = getClientItem(item, clientData, liClass);
-	            
+                
                 if ($('#transmission_list li#clientId_' + item.id).length === 0) {
                         $('#transmission_list').append(clientItem);
                 }
@@ -416,7 +416,7 @@ $(function() {
                         .removeClass('match_downloading').addClass('match_cachehit');
                     }
                 }
-                
+	            
             } else {
                 torListHtml += getClientItem(item, clientData, liClass);
                 $('li.' + item.hashString).addClass('clientId_' + item.id);
@@ -428,13 +428,15 @@ $(function() {
         if(recent === 0 && torListHtml) {
             $('#transmission_list').append(torListHtml);
         } 
-        $('#transmission_list>li').tsort('span.dateAdded', { order: 'desc' });
+        
+        if($('.move_data').is(':hidden')) {
+            $('#transmission_list>li').tsort('span.dateAdded', { order: 'desc' });
+        }
     };
 
     $(document).ready(function() { 
         setTimeout(function() {
             setInterval(function() {
-                if($('.move_data').is(':visible')) return
                 getClientData();
             },6000);            
         },2000);
