@@ -380,15 +380,21 @@ function display_global_config() {
     }
 }
 
-
 function display_favorites_info($item, $key) {
     global $config_values, $html_out;
-    $feed_options = '<option value="all">All</option>';
+    $feed_options = '<option value="none">None</option>';
+    $feed_options .= '<option value="all"';
+    if (preg_match('/all/i', $item['Feed']) || $item['Name'] == "") {
+        $feed_options .= ' selected="selected">All</option>';
+    } else {
+        $feed_options .= '>All</option>';
+    }
     if(isset($config_values['Feeds'])) {
         foreach($config_values['Feeds'] as $feed) {
             $feed_options .= '<option value="'.urlencode($feed['Link']).'"';
-            if($feed['Link'] == $item['Feed'])
+            if($feed['Link'] == $item['Feed'] ) {
                 $feed_options .= ' selected="selected"';
+            } 
             $feed_options .= '>'.$feed['Name'].'</option>';
         }
     }

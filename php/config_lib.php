@@ -261,7 +261,7 @@ function add_hidden($name) {
           
         write_config_file();
     } else {
-        return("Unable to add $name to the hide list. Probably because lack of episode data.");
+        return("Unable to add $name to the hide list.");
     }
 }
 
