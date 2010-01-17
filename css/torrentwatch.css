@@ -1,11 +1,11 @@
 /*
-	Name: PCH Torrent RSS Config
-	Description: Stylistic update of the TorrentWatch (http://code.google.com/p/torrentwatch/) config interface.
-	Version: 1.0
-	Author: Keith Solomon
-	Author URI: http://reciprocity.be/
-	
-	License: GNU General Public License v2
+    Name: PCH Torrent RSS Config
+    Description: Stylistic update of the TorrentWatch (http://code.google.com/p/torrentwatch/) config interface.
+    Version: 1.0
+    Author: Keith Solomon
+    Author URI: http://reciprocity.be/
+    
+    License: GNU General Public License v2
 */
 
 /* Modifications by Joris Vandalon
@@ -16,7 +16,7 @@
  * Some debugging info
  * --------------------*/
 div.rss_debug {
-	display: none;
+    display: none;
 }
 
 /*-----------------
@@ -29,198 +29,198 @@ html {
 }
 
 body {
-	font: 85% "lucida grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	color: #323232 !important;
-	text-align: left;
-	overflow: hidden;
-	height: 100%;
-	}
+    font: 85% "lucida grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    color: #323232 !important;
+    text-align: left;
+    overflow: hidden;
+    height: 100%;
+    }
 
 input, select {
-	margin-left: 2em;
-	border: 1px solid #787878;
-	}
+    margin-left: 2em;
+    border: 1px solid #787878;
+    }
 
 input[type=text] {
-	border: 1px solid #787878;
-	margin-left: 2em;
-	}
+    border: 1px solid #787878;
+    margin-left: 2em;
+    }
 
 input[type=password] {
-	border: 1px solid #787878;
-	margin-left: 2em;
-	}
+    border: 1px solid #787878;
+    margin-left: 2em;
+    }
 
 input[type=hidden] {
-	display: none;
-	}
+    display: none;
+    }
 
 label {
-	display: inline;
-	font-size: 0.9em;
-	margin-left: 1em;
-	vertical-align: middle;
-	}
+    display: inline;
+    font-size: 0.9em;
+    margin-left: 1em;
+    vertical-align: middle;
+    }
 
 label.category {
-	display: block;
-	font-size: 1.0em;
-	margin: 1em 0 1em 1em;
-	font-weight: bold;
-	}
+    display: block;
+    font-size: 1.0em;
+    margin: 1em 0 1em 1em;
+    font-weight: bold;
+    }
 
 .hidden {
-	display: none;
-	}
+    display: none;
+    }
 /*-----------------
  *
  * T O P   M E N U
  *
  * ----------------*/
 ul.mainoptions {
-	background: transparent url('../images/chrome.png') repeat-x;
-	border-bottom: 1px solid #979797;
-	width: 100%;
-	height: 68px;
-	z-index: 2;
-	}
+    background: transparent url('../images/chrome.png') repeat-x;
+    border-bottom: 1px solid #979797;
+    width: 100%;
+    height: 68px;
+    z-index: 2;
+    }
 
 ul.mainoptions li {
-	float: left;
-	margin: 12px 0 0 0;
-	vertical-align: middle;
-	}
+    float: left;
+    margin: 12px 0 0 0;
+    vertical-align: middle;
+    }
 
 ul.mainoptions li#legend {
-	float: right;
-	}
+    float: right;
+    }
 
 ul.mainoptions li#webui {
-	float: right;
-	}
+    float: right;
+    }
 
 ul.mainoptions li a {
-	color: #030303;
-	font-size: 0.9em;
-	text-decoration: none;
-	padding: 33px 0.7em 0 0.7em;
-	display: block;
-	}
+    color: #030303;
+    font-size: 0.9em;
+    text-decoration: none;
+    padding: 33px 0.7em 0 0.7em;
+    display: block;
+    }
 
 ul.mainoptions li#favoritesMenu a {
-	background: url(../images/nuvola_bookmark.png) no-repeat center 0;
-	}
+    background: url(../images/nuvola_bookmark.png) no-repeat center 0;
+    }
 ul.mainoptions li#config a {
-	background: url(../images/nuvola_configure.png) no-repeat center 0;
-	}
+    background: url(../images/nuvola_configure.png) no-repeat center 0;
+    }
 
 ul.mainoptions li#view a {
-	background: url(../images/nuvola_history.png) no-repeat center 0;
-	}
+    background: url(../images/nuvola_history.png) no-repeat center 0;
+    }
 
 ul.mainoptions li#empty a {
-	background: url(../images/remove.png) no-repeat center 0;
-	}
+    background: url(../images/remove.png) no-repeat center 0;
+    }
 
 ul.mainoptions li#webui a {
-	background: url(../images/webui.png) no-repeat center 0;
-	}
+    background: url(../images/webui.png) no-repeat center 0;
+    }
 
 ul.mainoptions li#legend a {
-	background: url('../images/info.png') no-repeat center 0;
-	}
+    background: url('../images/info.png') no-repeat center 0;
+    }
 
 ul.mainoptions li.divider {
         width: 0;
         border-right: 1px dotted black;
         opacity: 0.2;
-	height: 2.3em;
-	margin: 1.3em 0 0 0;
-	}
+    height: 2.3em;
+    margin: 1.3em 0 0 0;
+    }
 
 /*-----------------
  *
- * F I L T E R	 B A R
+ * F I L T E R     B A R
  *
  * ---------------*/
 
 ul#filterbar_container {
-	position: fixed;
+    position: fixed;
     background: #ddd;
-	border-bottom: 1px solid #979797;
-	height: 22px;
-	right: 0;
-	left: 0;
-	z-index: 2;
-	}
+    border-bottom: 1px solid #979797;
+    height: 22px;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    }
 
 ul#filterbar_container li {
-	float: left;
-	margin: 0.3em 0.5em;
-	padding-left: 0.5em;
-	vertical-align: middle;
-	height: 1.1em;
-	font-size: 0.9em;
-	color: #4E4E4F;
-	}
+    float: left;
+    margin: 0.3em 0.5em;
+    padding-left: 0.5em;
+    vertical-align: middle;
+    height: 1.1em;
+    font-size: 0.9em;
+    color: #4E4E4F;
+    }
 
-	
+    
 ul#filterbar_container li a {
-	padding-right: 0.5em;
-	text-decoration: none;
-	color: #333;
-	}
+    padding-right: 0.5em;
+    text-decoration: none;
+    color: #333;
+    }
 
 
 ul#filterbar_container li:hover {
-	background: transparent url('../images/filter_hover_left.png') no-repeat top left;
-	height: 16px;
+    background: transparent url('../images/filter_hover_left.png') no-repeat top left;
+    height: 16px;
 }
 
 ul#filterbar_container li:hover a {
-	background: transparent url('../images/filter_hover_right.png') no-repeat top right;
-	display: inline-block;
-	height: 16px;
+    background: transparent url('../images/filter_hover_right.png') no-repeat top right;
+    display: inline-block;
+    height: 16px;
 }
 
 ul#filterbar_container li.selected {
-	background: transparent url('../images/filter_selected_left.png') no-repeat top left;
-	height: 16px;
+    background: transparent url('../images/filter_selected_left.png') no-repeat top left;
+    height: 16px;
 }
 
 ul#filterbar_container li.selected a {
-	background: transparent url('../images/filter_selected_right.png') no-repeat top right;
-	display: inline-block;
-	height: 16px;
+    background: transparent url('../images/filter_selected_right.png') no-repeat top right;
+    display: inline-block;
+    height: 16px;
 }
 
 ul#filterbar_container li#filter_bytext:hover,
 ul#filterbar_container li#filter_bytext {
-	background: none;
-	float: right;
-	margin: 0;
-	border: 0;
+    background: none;
+    float: right;
+    margin: 0;
+    border: 0;
 }
 
 input#filter_text_input {
-	height: 13px; 
-	width: 8em; 
-	border: 1px solid #5D80A1; 
-	padding: 1px 5px 2px 15px;
-	margin: 2px 5px;
-	border-radius: 10px;
-	background: #FFF url('../images/filter_icon.png') top left no-repeat;
-	-o-border-radius: 8px; 
-	-icab-border-radius: 8px;
-	-khtml-border-radius: 8px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px; 
-	outline-style: none;
-	}
+    height: 13px; 
+    width: 8em; 
+    border: 1px solid #5D80A1; 
+    padding: 1px 5px 2px 15px;
+    margin: 2px 5px;
+    border-radius: 10px;
+    background: #FFF url('../images/filter_icon.png') top left no-repeat;
+    -o-border-radius: 8px; 
+    -icab-border-radius: 8px;
+    -khtml-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px; 
+    outline-style: none;
+    }
 
 input#filter_text_input.blur {
-	border-color: #CCC;
-	}
+    border-color: #CCC;
+    }
 
 /*------------
  *
@@ -229,12 +229,12 @@ input#filter_text_input.blur {
  *------------*/
 
 ul.show_legend {
-	border: 1px solid gray;
+    border: 1px solid gray;
 }
 
 ul.show_legend li {
-	padding: 5px 5px 5px 5px;
-	font-size: 12px;
+    padding: 5px 5px 5px 5px;
+    font-size: 12px;
 }
 
 /*-------------------------
@@ -244,94 +244,94 @@ ul.show_legend li {
  * ------------------------*/
 
 div#torrentlist_container {
-	display: none;
-	position: absolute;
-	overflow: auto;
-	width: 100%;
-	top: 92px;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	}
+    display: none;
+    position: absolute;
+    overflow: auto;
+    width: 100%;
+    top: 92px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    }
 
 div#torrentlist_container div.header,
 div.transmission div.header {
-	border-bottom: 1px solid #ccc;
-	font-size: 1.4em;
-	height: 1.2em;
-	text-align: center;
-	background: #CCFFCC;
-	}
+    border-bottom: 1px solid #ccc;
+    font-size: 1.4em;
+    height: 1.2em;
+    text-align: center;
+    background: #CCFFCC;
+    }
 
 ul.torrentlist li.torrent {
-	border-bottom: 1px solid #ccc;
-	font-size: 0.9em;
-	}
+    border-bottom: 1px solid #ccc;
+    font-size: 0.9em;
+    }
 
 li.torrent.hidden_bytext {
-	display: none;
-	}
+    display: none;
+    }
 
 ul.torrentlist li.torrent.alt {
-	background-color: #EDF3FE;
-	}
+    background-color: #EDF3FE;
+    }
 
 ul.torrentlist li.torrent.paused {
-	background-color: #FBBFBF;
+    background-color: #FBBFBF;
 }
 
 ul.torrentlist li.torrent.downloading {
-	background-color: #f2e2ff;
+    background-color: #f2e2ff;
 }
 
 ul.torrentlist li.torrent.verifying {
-	background-color: #FFFFCC;
+    background-color: #FFFFCC;
 }
 
 ul.torrentlist li.torrent.waiting {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
 }
 
 ul.torrentlist p {
-	padding: 1px;
+    padding: 1px;
 }
 
 ul.torrentlist td.buttons {
-	text-align: center;
-	vertical-align: top;
-	padding-top: 3px;
-	width: 15px;
-	height: 15px;
+    text-align: center;
+    vertical-align: top;
+    padding-top: 3px;
+    width: 15px;
+    height: 15px;
 }
 
 div#show_legend li.legend.match_nomatch,
 ul.torrentlist td.buttons.match_nomatch {
-	background-color: #fbbfbf;
+    background-color: #fbbfbf;
 }
 
 div#show_legend li.legend.match_old_download,
 ul.torrentlist td.buttons.match_old_download {
-	background-color: #CDCDCD;
+    background-color: #CDCDCD;
 }
 
 div#show_legend li.legend.match_duplicate,
 ul.torrentlist td.buttons.match_duplicate {
-	background-color: #FFFFCC;
+    background-color: #FFFFCC;
 }
 
 div#show_legend li.legend.match_match,
 ul.torrentlist td.buttons.match_match {
-	background-color: #FFCC66;
+    background-color: #FFCC66;
 }
 
 div#show_legend li.legend.match_old,
 ul.torrentlist td.buttons.match_old {
-	background-color: #CCCCFF;
+    background-color: #CCCCFF;
 }
 
 div#show_legend li.legend.match_test,
 ul.torrentlist td.buttons.match_test {
-	background-color: #FFCCFF;
+    background-color: #FFCCFF;
 }
 
 div#show_legend li.legend.match_cachehit,
@@ -339,30 +339,30 @@ ul.torrentlist td.buttons.match_cachehit,
 ul.torrentlist td.buttons.match_downloaded,
 ul.torrentlist td.buttons.match_downloading,
 ul.torrentlist td.buttons.match_transmission {
-	background-color: #CCFFCC;
+    background-color: #CCFFCC;
 }
 
 ul.torrentlist td.buttons.left {
-	padding-left: 4px;
+    padding-left: 4px;
 }
 
 ul.torrentlist td.buttons.right {
-	padding-right: 5px;
+    padding-right: 5px;
 }
 
 ul.torrentlist td.torrent_name {
-	padding: 5px 5px 5px 5px;
+    padding: 5px 2px 5px 3px;
 }
 
 ul.torrentlist div.torInfo {
-	color: green;
-	font-size: 9px;
-	margin-top: 2px;
+    color: green;
+    font-size: 9px;
+    margin-top: 2px;
 }
 
 
 span.torrent_name {
-	margin-right: 10px;
+    margin-right: 5px;
 }
 
 td.torrent_name {
@@ -372,19 +372,24 @@ td.torrent_name {
 td.feed_info {
     text-align: right;
     vertical-align: middle;
-	padding: 1px 2px 1px 0;
+    padding: 1px 2px 1px 0;
 }
+
 span.dateAdded,
 p.torrent_pubDate {
     padding-bottom: 1px;
     font-size: 10px;
-}	
+}    
 
 p.feed_name {
     padding-top: 1px;
     font-size: 9px;
     color: #777777;
 }
+
+span.hide_item img {
+    border: 1px solid #b0b0b0;
+}    
 
 /*--------------------------
  *
@@ -393,122 +398,122 @@ p.feed_name {
  * ---------------------*/
 
 div.dialog_window {
-	display: none;
-	position: fixed; 
-	margin-left: auto;
-	margin-right: auto;
-	left: 50%;
-	z-index: 2;
-	background-color: #B0C4DE;
-	background-color: #DDD;
-	margin: -0.2em auto 0 auto;
-	filter: alpha(opacity=90);
-	-moz-opacity: .95;
-	opacity: .95;
-	border: 2px solid #B5B5B5;
-	top: 100px;
-	width: 450px;
-	margin-left: -205px;
-	padding: 5px;
-	}
+    display: none;
+    position: fixed; 
+    margin-left: auto;
+    margin-right: auto;
+    left: 50%;
+    z-index: 2;
+    background-color: #B0C4DE;
+    background-color: #DDD;
+    margin: -0.2em auto 0 auto;
+    filter: alpha(opacity=90);
+    -moz-opacity: .95;
+    opacity: .95;
+    border: 2px solid #B5B5B5;
+    top: 100px;
+    width: 450px;
+    margin-left: -205px;
+    padding: 5px;
+    }
 
 div.move_data {
-	position: inherit;
-	padding: 5px 10px 0px 0px;
+    position: inherit;
+    padding: 5px 10px 0px 0px;
 }
 
 div.move_data input {
-	float: none;
-	font-size: 0.8em;
-	width: 200px;
-	margin: 0 0 0 0;
-	padding: 0 2px 1px 2px;
+    float: none;
+    font-size: 0.8em;
+    width: 200px;
+    margin: 0 0 0 0;
+    padding: 0 2px 1px 2px;
 }
 
 div.move_data a {
-	float: none;
-	border: 1px solid gray;
-	text-align: center;
-	text-decoration: none;
-	background-color: #EEE;
-	font-size: 0.8em;
-	color: #323232;
-	margin: 0 0 0 5px;
-	padding: 0 5px 1px 5px;
+    float: none;
+    border: 1px solid gray;
+    text-align: center;
+    text-decoration: none;
+    background-color: #EEE;
+    font-size: 0.8em;
+    color: #323232;
+    margin: 0 0 0 5px;
+    padding: 0 5px 1px 5px;
 }
 
 div.move_data a.close {
-	width: 40px;
+    width: 40px;
 }
 
 div.move_data a.button.close {
-	width: 10px;
+    width: 10px;
 }
 
 div.move_data label {
-	margin: 0 0 0 2px;
+    margin: 0 0 0 2px;
 }
-	
+    
 div#configuration  {
-	top: 10px;
-	width: 700px;
-	margin-left: -350px;
+    top: 10px;
+    width: 700px;
+    margin-left: -350px;
 }
 
 h2.dialog_heading {
-	font-size: 1.3em;
-	text-align: center;
-	}
+    font-size: 1.3em;
+    text-align: center;
+    }
 
 div.buttonContainer {
-	width: 100%;
-	margin-top: 2px;
-	float: right;
-	}
+    width: 100%;
+    margin-top: 2px;
+    float: right;
+    }
 
 a.button,
 input[type=submit] {
-	float: right;
-	margin: .5em 1em 0 0;
-	padding: .5em;
-	background-color: #EEE;
-	border: 1px solid #787878;
-	font-size: 0.8em;
-	color: #323232;
-	clear: left;
-	cursor: pointer;
-	}
+    float: right;
+    margin: .5em 1em 0 0;
+    padding: .5em;
+    background-color: #EEE;
+    border: 1px solid #787878;
+    font-size: 0.8em;
+    color: #323232;
+    clear: left;
+    cursor: pointer;
+    }
 
 a.button {
-	width: 50px;
-	text-align: center;
-	text-decoration: none;
-	}
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    }
 
 a.disabled {
     color: #CCCCCC;
 }
 input[type=submit] {
-	width: 62px;
-	height: 28px;
-	}
+    width: 62px;
+    height: 28px;
+    }
 
 div.legend input {
-	clear: left;
-	}
-	
+    clear: left;
+    }
+    
 div#clientError {
     top: 5px;
     text-align: center;
     width: 340px;
     margin-left: -170px;
-	
+    
 }
 
 div#clientError h2 {
-	font-weight: bold;
-	color: red;
-	margin-bottom: 4px;
+    font-weight: bold;
+    color: red;
+    margin-bottom: 4px;
 }
 
 div#checkFiles {
@@ -517,7 +522,7 @@ div#checkFiles {
     text-align: center;
     width: 600px;
     margin-left: -310px;
-	
+    
 }
 
 div#fav_error {
@@ -532,24 +537,24 @@ div#fav_error {
  *
  *******************************/
 div.welcome {
-	margin: -0.2em auto 0 -300px;
-	width: 600px;
-	border: 3px solid gray;
-	}
+    margin: -0.2em auto 0 -300px;
+    width: 600px;
+    border: 3px solid gray;
+    }
 
 div.welcome input {
-	clear: left;
-	}
+    clear: left;
+    }
 
 div#welcome1 label,
 div#welcome5 label {
-	margin-top: 0.2em;
-	display: block;
-	}
-	
+    margin-top: 0.2em;
+    display: block;
+    }
+    
 div.form_radio {
-	padding-left: 10px;
-	}
+    padding-left: 10px;
+    }
 
 div.form_input {
     margin: 10px 0 10px 20px;
@@ -572,21 +577,21 @@ div#welcome5 input.form_email[type=text] {
  *
  ***************************/
 #progressbar {
-	background: #DBDBDB url('../images/ajaxload.gif') no-repeat center bottom;
-	display: block;
-	height: 30px;
-	top: 150px;
-	overflow: hidden;
-	z-index: 5;
-	width: 300px;
-	margin: -0.2em auto 0 -150px;
-	}
+    background: #DBDBDB url('../images/ajaxload.gif') no-repeat center bottom;
+    display: block;
+    height: 30px;
+    top: 150px;
+    overflow: hidden;
+    z-index: 5;
+    width: 300px;
+    margin: -0.2em auto 0 -150px;
+    }
 
 #progressbar span {
-	text-align: center;
-	font-size: 1.2em;
-	padding-left: 125px;
-	}
+    text-align: center;
+    font-size: 1.2em;
+    padding-left: 125px;
+    }
 
 /*****************************
  *
@@ -622,8 +627,8 @@ div.dialog_window#configuration div.left input[type=text],
 div.dialog_window#configuration div.left input[type=password] {
     position: absolute;
     left: 120px;
-	width: 225px;
-	padding-left: 3px;
+    width: 225px;
+    padding-left: 3px;
 }
 
 div.dialog_window#configuration div.right input.text,
@@ -632,44 +637,44 @@ div.dialog_window#configuration div.right input[type=text],
 div.dialog_window#configuration div.right input[type=password] {
     position: absolute;
     right: 15px;
-	width: 225px;
-	padding-left: 3px;
+    width: 225px;
+    padding-left: 3px;
 }
 
 div.dialog_window#configuration div.left select {
     position: absolute;
-	left: 120px;
+    left: 120px;
     width: 227px;
 }
 
 div.dialog_window#configuration div.right select {
     position: absolute;
-	right: 15px;
+    right: 15px;
     width: 227px;
 }
 
 div.dialog_window#configuration input[type=checkbox] {
-	margin: 2px 2px 0 13px;
-	border: 1px solid gray;
-	}
+    margin: 2px 2px 0 13px;
+    border: 1px solid gray;
+    }
 
 div.config_form {
-	border: 1px solid gray;
-	padding: 0 0 5px 0;
-	margin: 5px 0 0 0 ;
-	height: 415px;
+    border: 1px solid gray;
+    padding: 0 0 5px 0;
+    margin: 5px 0 0 0 ;
+    height: 415px;
 }
 
 form#config_form div {
-	min-height: 22px;
-	}
+    min-height: 22px;
+    }
 
 div.dialog_window#feeds {
-	border: 2px solid gray;
+    border: 2px solid gray;
 }
 
 div.feeditem {
-	height: 35px;
+    height: 35px;
 }
 
 
@@ -685,19 +690,19 @@ div#feeds div.buttonContainer {
 
 div.feeditem label.item {
     position: relative;
-	white-space: nowrap;
-	overflow: hidden;
-	width: auto;
-	top: 5px;
-	padding: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: auto;
+    top: 5px;
+    padding: 5px;
 }
 
 div.feeditem label.item  a:link,
 div.feeditem label.item  a:visited,
 div.feeditem label.item  a:hover,
 div.feeditem label.item  a:active {
-	color: black;
-	}
+    color: black;
+    }
 
 div#feeds div#feedNameUrl {
     margin-left: 0;
@@ -708,9 +713,9 @@ div#feeds div#feedNameUrl {
 div.feeditem input[type=text] {
     position: relative;
     top: 6px;
-	width: 260px;
-	margin: 3px 0;
-	padding: 3px;
+    width: 260px;
+    margin: 3px 0;
+    padding: 3px;
 }
 
 div.feeditem input.feed_url[type=text],
@@ -746,79 +751,79 @@ div#feeds div.buttonContainer {
  *`
  **********************************/
 div.dialog_window#favorites {
-	width: 590px;
-	margin-left: -287px;
-	height: 250px;
+    width: 590px;
+    margin-left: -287px;
+    height: 250px;
 }
 
 div.favorite {
-	height: 248px;
-	width: 180px;
-	float: left;
-	clear: left;
-	border: 1px solid gray;
-	padding: 0px 0 0px 5px;
+    height: 248px;
+    width: 180px;
+    float: left;
+    clear: left;
+    border: 1px solid gray;
+    padding: 0px 0 0px 5px;
 }
 
 ul.favorite {
-	font-size: 120%;
-	overflow: auto;
+    font-size: 120%;
+    overflow: auto;
 }
 
 div.favinfo {
-	height: 248px;
-	float: right; 
-	clear: right;
-	border: 1px solid gray;
-	padding: 0px 0 0px 5px;
-	width: 380px;
+    height: 248px;
+    float: right; 
+    clear: right;
+    border: 1px solid gray;
+    padding: 0px 0 0px 5px;
+    width: 380px;
 }
 
 ul.favorite li {
-	overflow: hidden;
-	cursor: pointer;
-	}
+    overflow: hidden;
+    cursor: pointer;
+    }
 
 ul.favorite li a {
-	vertical-align: top;
-	font-size: 0.8em;
-	text-decoration: none;
-	color: #000000;
-	overflow: hidden;
-	}
+    vertical-align: top;
+    font-size: 0.8em;
+    text-decoration: none;
+    color: #000000;
+    overflow: hidden;
+    }
 
 ul.favorite li:hover {
-	background-color: #3879D7;
-	}
+    background-color: #3879D7;
+    }
 
 form.favinfo {
-	height: 248px;
-	display: none;
-	padding: 5px 0;
-	margin: 5px 0;
-	width: 380px;
-	float: right;
-	}
+    height: 248px;
+    display: none;
+    padding: 5px 0;
+    margin: 5px 0;
+    width: 380px;
+    float: right;
+    }
 form.favinfo div {
-	height: 24px;
-	}
+    height: 24px;
+    }
 
 form.favinfo #mode,
 form.favinfo input#idx {
-	display: none;
-	}
+    display: none;
+    }
 
 form.favinfo select {
     position: absolute;
-	right: 45px;
-	width: 242px;
+    right: 45px;
+    width: 242px;
 }
 
 form.favinfo input.text,
 form.favinfo input[type=text] {
-	position: absolute;
-	right: 45px;
-	width: 240px;
+    position: absolute;
+    right: 45px;
+    width: 240px;
 }
 
 form.favinfo div.favorite_seed_and_episode {
@@ -876,38 +881,38 @@ div.favinfo div.buttonContainer {
  *
  *****************************/
 div#history {
-	height: 250px;
-	}
+    height: 250px;
+    }
 
 ul#historyItems {
-	top: 0;
-	bottom: 35px;
-	left: 0;
-	right: 0;
-	height: 222px;
-	overflow: auto;
-	border-bottom: 1px solid #979797;
-	padding: 2px 0 0 10px;
-	}
+    top: 0;
+    bottom: 35px;
+    left: 0;
+    right: 0;
+    height: 222px;
+    overflow: auto;
+    border-bottom: 1px solid #979797;
+    padding: 2px 0 0 10px;
+    }
 
 div#history ul li{
-	white-space: nowrap;
-	overflow: hidden;
-	font-size: 0.9em
-	}
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 0.9em
+    }
 
 
 div#history a {
-	bottom: 0.2em;
-	}
+    bottom: 0.2em;
+    }
 
 div#history a#clearhistory {
-	right: 0;
-	}
+    right: 0;
+    }
 
 div#history a.toggleDialog {
-	right: 6.5em;
-	}
+    right: 6.5em;
+    }
 
 /*-----------------
  *
@@ -919,24 +924,24 @@ div#history a.toggleDialog {
 .clear { clear: both; }
 
 div.dialog_window#history {
-	width: 583px;
-	margin-left: -288px;
+    width: 583px;
+    margin-left: -288px;
 }
 
 div.timer {
-	font-size: 8pt;
-	text-align: right;
-	margin-right: 5px;
-	bottom: 0;
-	right: 0;
+    font-size: 8pt;
+    text-align: right;
+    margin-right: 5px;
+    bottom: 0;
+    right: 0;
 }
 
 
 .favorite li {
-	background: url(../images/favorites.png) no-repeat left center;
-	height: 20px;
-	margin-bottom: 5px;
-	padding-left: 24px;
-	overflow: hidden;
+    background: url(../images/favorites.png) no-repeat left center;
+    height: 20px;
+    margin-bottom: 5px;
+    padding-left: 24px;
+    overflow: hidden;
 }
 
