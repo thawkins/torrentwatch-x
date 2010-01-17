@@ -83,7 +83,7 @@ IMPORTANT: If you are updating from a previous version. Please copy php/config.p
     -- Fixed a number of small bugs.
 
 current:
-    -- Added confirmation message when trashing torrent data.
-    -- If torrent is started manualy and exists in favorites the download dir will be the one set in favorites.
+    -- Added confirmation dialog when trashing torrent data.
+    -- If torrent is started manually and exists in favorites the download dir will be the one set in favorites.
     -- Fixed verifying progress message.
     -- Fixed focus issue in "move torrent" input.
