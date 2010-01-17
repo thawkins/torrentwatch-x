@@ -268,8 +268,8 @@ $(function() {
     };
 
     showClientError = function(error) {
-    	$('div#clientError p').html('Torrent client returned no or bad data:<br />' + error);
-    	$('div#clientError').show();
+        $('div#clientError p').html('Torrent client returned no or bad data:<br />' + error);
+        $('div#clientError').show();
     }
 
     getClientData = function() {
@@ -283,15 +283,15 @@ $(function() {
                 'recent': recent
             },
                 function(json) {
-    		    var check = json.match(/\S+/);
-    	        if(check == 'null') {
-        		    showClientError('Got no data from ' + window.client);
-        		    return;
-    	        }
+                var check = json.match(/\S+/);
+                if(check == 'null') {
+                    showClientError('Got no data from ' + window.client);
+                    return;
+                }
 
                 try { json = JSON.parse(json); }
                 catch(err) { 
-    		    showClientError(json);
+                showClientError(json);
                     return;
                 }
                 
@@ -384,8 +384,8 @@ $(function() {
                 liClass = 'paused';
             }
             
-	        if(recent == 1) {
-	            clientItem = getClientItem(item, clientData, liClass);
+            if(recent == 1) {
+                clientItem = getClientItem(item, clientData, liClass);
                 
                 if ($('#transmission_list li#clientId_' + item.id).length === 0) {
                         $('#transmission_list').prepend(clientItem);
@@ -416,7 +416,7 @@ $(function() {
                         .removeClass('match_downloading').addClass('match_cachehit');
                     }
                 }
-	            
+                
             } else {
                 torListHtml += getClientItem(item, clientData, liClass);
                 $('li.' + item.hashString).addClass('clientId_' + item.id);
@@ -729,5 +729,9 @@ $(function() {
         $('div.feeditem .feed_name').toggle();
         $('div.feeditem .feed_url').toggle();
         $('#feedNameUrl .item').toggle();        
+    }
+    
+    $.hideItem = function(title) {
+        $.get('torrentwatch.php?hide=' + title, '', $.loadDynamicData, 'html');
     }
 })(jQuery);

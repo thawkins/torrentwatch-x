@@ -133,6 +133,10 @@ function parse_options() {
             $response = update_favorite();
             if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
             break;
+        case 'hide':
+            $response = add_hidden($_GET['hide']);
+            if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
+            break;
         case 'dlTorrent':
             // Loaded via ajax
             foreach($config_values['Favorites'] as $fav) {

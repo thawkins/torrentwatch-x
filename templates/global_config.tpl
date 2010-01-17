@@ -162,7 +162,9 @@
                 <div class="buttonContainer">
                     <a class="submitForm button" id="Save" href="#" name="Save">Save</a> 
                     <a class='toggleDialog button' href='#'>Close</a> 
-                    <a class='toggleDialog button' href='#feeds'>Feeds</a> <a class='toggleDialog button' href='#welcome1'>Wizard</a>
+                    <a class='toggleDialog button' href='#feeds'>Feeds</a>
+                    <a class='toggleDialog button' href='#hidelist'>Hide List</a>
+                    <a class='toggleDialog button' href='#welcome1'>Wizard</a>
                 </div>
             </form>
         </div>

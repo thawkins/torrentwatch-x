@@ -59,7 +59,7 @@
             if($torrent)
                     $this->content = $torrent;
             else
-	            $this->content = @file_get_contents($filepath);
+                $this->content = @file_get_contents($filepath);
 
             if (!$this->content) {
                 $this->throwException('File does not exist!');
@@ -80,7 +80,7 @@
          **************************************************************************/
         function __destruct() {
             unset($this->content);
-						unset($this->result);
+                        unset($this->result);
         }
 
 

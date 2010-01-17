@@ -12,6 +12,10 @@ if($torInfo) {
   $clientId = $torInfo['clientId'];
   $infoDiv = "<div id='tor_$id' class='torInfo tor_$torHash'>$stats</div>";
   if($torInfo['status'] == 4) $matched = "downloading";
+} else {
+    $hideSpan = "<span class=\"hide_item\"><a href=\"#\" 
+    title=\"Hide this show from the list\" onclick='$.hideItem(\"$utitle\")'>
+    <img src=\"images/hide.png\" /></a></span>";
 }
 
 if($matched == "downloading" || $matched == "downloaded" || $matched == "cachehit" || $matched == "match") { 
@@ -64,12 +68,13 @@ print <<< EOH
 
 
 </td><td class="torrent_name">
+$hideSpan
 <span class='torrent_name'>$title</span>
+
 $infoDiv
 </td><td class='feed_info'>
 <p class='torrent_pubDate'>$pubDate</p>
 $feedItem
-
 </td></tr></table></li>
 
 EOH;

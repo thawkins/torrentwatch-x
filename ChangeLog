@@ -82,8 +82,10 @@ IMPORTANT: If you are updating from a previous version. Please copy php/config.p
     -- Fixed Transmission SessionID cache bug.
     -- Fixed a number of small bugs.
 
-current:
+0.5.2:
     -- Added confirmation dialog when trashing torrent data.
     -- If torrent is started manually and exists in favorites the download dir will be the one set in favorites.
     -- Fixed verifying progress message.
     -- Fixed focus issue in "move torrent" input.
+
+current:

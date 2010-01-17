@@ -34,10 +34,10 @@ function episode_filter($item, $filter) {
   list($itemS, $itemE) = explode('x', $item['episode']);
 
   if(preg_match('/^S\d*/i', $filter)) {
-	$filter = preg_replace('/S/i', '', $filter);
-  	if(preg_match('/^\d*E\d*/i', $filter)) {
-        	$filter = preg_replace('/E/i', 'x', $filter);
-	}
+    $filter = preg_replace('/S/i', '', $filter);
+      if(preg_match('/^\d*E\d*/i', $filter)) {
+            $filter = preg_replace('/E/i', 'x', $filter);
+    }
   }
   // Split the filter(ex. 3x4-4x15 into 3,3 4,15).  @ to suppress error when no seccond item
   list($start, $stop) = explode('-',  $filter, 2);
@@ -51,7 +51,7 @@ function episode_filter($item, $filter) {
 
  // Perform episode filter
   if(empty($filter)) {
-    return true; // no filter, accept all	
+    return true; // no filter, accept all    
   }
 
   // the following reg accepts the 1x1-2x27, 1-2x27, 1-3 or just 1
@@ -122,14 +122,14 @@ function check_for_torrent(&$item, $key, $opts) {
       if(_isset($config_values['Settings'], 'Only Newer') == 1) {
         if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)) {
           if($item['Season'] > $regs[1]) {
-    	    _debug($item['Season'] .' > '.$regs[1] . "; ", 1);
+            _debug($item['Season'] .' > '.$regs[1] . "; ", 1);
             $matched = "old";
             return FALSE;
           } else if($item['Season'] == $regs[1] && $item['Episode'] >= $regs[2] && (!(preg_match('/proper|repack/i', $rs['title'])))) {
-    	    _debug($item['Episode'] .' >= '.$regs[2] . "; ", 1);
+            _debug($item['Episode'] .' >= '.$regs[2] . "; ", 1);
             $matched = "old";
             return FALSE;
-	  }
+      }
         }
       }
       _debug('Match found for '.$rs['title']."\n");

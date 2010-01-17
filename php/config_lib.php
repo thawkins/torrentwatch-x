@@ -104,7 +104,9 @@ function read_config_file() {
   // Create the base arrays if not already
      
   if(!isset($config_values['Favorites']))
-    $config_values['Favorites'] = array();
+    $config_values['Favorites'] = array();  
+  if(!isset($config_values['Hidden']))
+    $config_values['Hidden'] = array();
   if(!isset($config_values['Feeds']))
     $config_values['Feeds'] = array();
   return true;
@@ -179,10 +181,10 @@ function update_global_config() {
   $input = array('Email Address'      => 'emailAddress',
                  'Transmission Login' => 'truser',
                  'Transmission Password' => 'trpass',
-		         'Transmission Host'  => 'trhost',
-        		 'Transmission Port'  => 'trport',
-        		 'Transmission URI'   => 'truri',
-        		 'Download Dir'       => 'downdir',
+                 'Transmission Host'  => 'trhost',
+                 'Transmission Port'  => 'trport',
+                 'Transmission URI'   => 'truri',
+                 'Download Dir'       => 'downdir',
                  'Watch Dir'          => 'watchdir',
                  'Deep Directories'   => 'deepdir',
                  'Default Seed Ratio' => 'defaultratio',
@@ -239,12 +241,36 @@ function update_feed() {
   write_config_file();
 }
 
+function add_hidden($name) {
+    global $config_values;
+    $guess = guess_match($name);
+    if($guess) {
+        $name = trim(strtr($guess['key'], "._", "  "));
+    
+        foreach($config_values['Favorites'] as $fav) {
+            if($name == $fav['Name']) return("$name exists in favorites. Not adding to hide list.");
+        }
+          
+        if(isset($name)) {
+            $config_values['Hidden'][]['Name'] = $name;
+            $idx = end(array_keys($config_values['Hidden']));
+            $config_values['Hidden'][$idx]['Name'] = urldecode($name);
+        } else {
+            return("Bad form data, not added to favorites"); // Bad form data
+        }
+          
+        write_config_file();
+    } else {
+        return("Unable to add $name to the hide list. Probably because lack of episode data.");
+    }
+}
+
 function add_favorite() {
   global $config_values;
   
   if(!isset($_GET['idx']) || $_GET['idx'] == 'new' ) {
       foreach($config_values['Favorites'] as $fav) {
-      if($_GET['name'] == $fav['Name']) return("\"" . $_GET['name'] . "\" Allready exists in favorites");
+          if($_GET['name'] == $fav['Name']) return("\"" . $_GET['name'] . "\" Allready exists in favorites");
       }
   }
   
