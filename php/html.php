@@ -23,6 +23,9 @@ function show_torrent_html($item, $feed, $feedName, $alt, $torHash, $matched, $i
   global $html_out, $matched, $test_run, $config_values;
   
   $guess = guess_match($item['title']);
+  if($config_values['Settings']['Require Episode Info']) {
+      if(!$guess) return;
+  }
   $name = trim(strtr($guess['key'], "._", "  "));
   foreach($config_values['Hidden'] as $hidden) {
       if($hidden['Name'] == $name) {

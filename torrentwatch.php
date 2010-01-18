@@ -115,7 +115,7 @@ function parse_options() {
                 $_GET['name'] = trim(strtr($tmp['key'], "._", "  "));
                 $_GET['filter'] = trim($tmp['key']);
                 if($config_values['Settings']['MatchStyle'] == "glob")
-                    $_GET['filter'] .= '*';
+                $_GET['filter'] .= '*';
                 $_GET['quality'] = $tmp['data'];
                 $_GET['feed'] = $_GET['rss'];
                 $_GET['button'] = 'Add';
@@ -331,7 +331,7 @@ function display_global_config() {
     $savetorrent=$transmission="";
     $deepfull=$deeptitle=$deepoff=$verifyepisode="";
     $matchregexp=$matchglob=$matchsimple="";
-    $favdefaultall=$onlynewer=$folderclient=$combinefeeds="";
+    $favdefaultall=$onlynewer=$folderclient=$combinefeeds=$require_epi_info="";
 
     switch($config_values['Settings']['Client']) {
         case 'Transmission':
@@ -346,7 +346,8 @@ function display_global_config() {
     }
     if($config_values['Settings']['Combine Feeds'] == 1)
         $combinefeeds = 'checked=1';
-
+    if($config_values['Settings']['Require Episode Info'] == 1)
+        $require_epi_info = 'checked=1';
     if($config_values['Settings']['Save Torrents'] == 1)
         $savetorrent = 'checked=1';
 
