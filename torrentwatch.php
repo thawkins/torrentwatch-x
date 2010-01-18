@@ -152,7 +152,7 @@ function parse_options() {
                       $downloadDir = $fav['Save In'];
                 } 
             }
-            if(!$downloadDir) $downloadDir = $config_values['Settings']['Download Dir'];
+            if(!$downloadDir || $downloadDir == "Default" ) $downloadDir = $config_values['Settings']['Download Dir'];
             $r = client_add_torrent(trim($_GET['link']),
                 $downloadDir, $_GET['title'], $_GET['feed']);
             if($r) { $torHash = get_torHash(add_cache($_GET['title'])); }
