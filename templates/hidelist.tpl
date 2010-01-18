@@ -2,11 +2,12 @@
         <form action="torrentwatch.php?delHidden=1" id="hidelist_form" name="hidelist_form">
             <ul class="hidelist">
             <?php if($config_values['Hidden']): ?>
+            <?php ksort($config_values['Hidden'], SORT_STRING); ?>
             <?php foreach($config_values['Hidden'] as $key => $item): ?>
                 <li>
                     <label class="item checkbox">
                     <input type="checkbox" name="unhide[]" value="<?=$key?>"/>
-                    <?php echo $item['Name']; ?></label>
+                    <?php echo $key; ?></label>
                 </li>
             <?php endforeach; ?>
             <?php else: ?>
