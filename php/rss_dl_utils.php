@@ -124,7 +124,7 @@ function add_history($title) {
   global $config_values;
   if(file_exists($config_values['Settings']['History']))
     $history = unserialize(file_get_contents($config_values['Settings']['History']));
-  $history[] = array('Title' => $title, 'Date' => date("m.d.y g:i a"));
+  $history[] = array('Title' => $title, 'Date' => date("m.d.y G:i"));
   file_put_contents($config_values['Settings']['History'], serialize($history));
 }
 
