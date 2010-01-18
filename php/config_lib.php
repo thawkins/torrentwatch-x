@@ -268,6 +268,18 @@ function add_hidden($name) {
     }
 }
 
+function del_hidden($list) {
+  global $config_values;
+  foreach($list as $item) {
+      if(isset($config_values['Hidden'][$item])) {
+        unset($config_values['Hidden'][$item]);
+      }
+  }
+  
+  write_config_file(); 
+}
+
+
 function add_favorite() {
   global $config_values;
   
@@ -318,8 +330,10 @@ function updateFavoriteEpisode(&$fav, $title) {
   
   if(!$guess = guess_match($title, TRUE))
     return;
+    
   if(!preg_match('/(\d+)x(\d+)/i', $guess['episode'], $regs))
     return;
+    
   $curEpisode = preg_replace('/(\d+)x/i', "", $guess['episode']);
   $curSeason = preg_replace('/x(\d+)/i', "", $guess['episode']);
   $expectedEpisode = sprintf('%02d', $fav['Episode'] + 1);

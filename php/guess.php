@@ -40,8 +40,9 @@ function guess_match($title, $normalize = FALSE) {
       $data_guess = str_replace("'", "&#39;", trim($qregs[1]));
     else
       $data_guess = '';
-  } else
+  } else {
     return False;
+  }
   if($normalize == TRUE) {
     // Convert . and _ to spaces, and trim result
     $from = "._";
@@ -52,7 +53,7 @@ function guess_match($title, $normalize = FALSE) {
     // Standardize episode output to SSxEE, strip leading 0
     // This is (b|c|d) from earlier.  If it is style e there will be no replacement, only strip leading 0
     $episode_guess = ltrim(preg_replace('/(S(\d+) ?E(\d+)|(\d+)x(\d+)|(\d+) ?of ?(\d+))/i', '\2\4\6x\3\5\7', $episode_guess), '0');
-  }
+  }  
   return array("key" => $key_guess, "data" => $data_guess, "episode" => $episode_guess);
 }
 

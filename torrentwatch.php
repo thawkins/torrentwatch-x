@@ -140,6 +140,9 @@ function parse_options() {
             $response = add_hidden($_GET['hide']);
             if($response) echo "<div id=\"fav_error\" class=\"dialog_window\" style=\"display: block\">$response</div>";
             break;
+        case 'delHidden':
+            del_hidden($_GET['unhide']);
+            break;
         case 'dlTorrent':
             // Loaded via ajax
             foreach($config_values['Favorites'] as $fav) {
@@ -416,19 +419,28 @@ function display_favorites() {
   ob_end_clean();
 }
 
+function display_hidelist() {
+    global $config_values, $html_out;
+
+  ob_start();
+  require('templates/hidelist.tpl');
+  $html_out .= ob_get_contents();
+  ob_end_clean();
+}
+
 function display_history() {
     global $html_out, $config_values;
 
     if(file_exists($config_values['Settings']['History'])) {
         $history = array_reverse(unserialize(file_get_contents($config_values['Settings']['History'])));
-  } else {
-    $history = array();
-  }
+    } else {
+        $history = array();
+    }
 
-  ob_start();
-  require('templates/history.tpl');
-  $html_out .= ob_get_contents();
-  ob_end_clean();
+    ob_start();
+    require('templates/history.tpl');
+    $html_out .= ob_get_contents();
+    ob_end_clean();
 }
 
 function display_legend() {
@@ -526,6 +538,7 @@ display_global_config();
 if(check_requirements()) return;
 check_files();
 display_favorites();
+display_hidelist();
 display_history();
 display_clearCache();
 display_legend();
