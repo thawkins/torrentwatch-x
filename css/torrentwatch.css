@@ -902,7 +902,7 @@ ul.hidelist li:hover {
 }
 
 ul.hidelist input[type=checkbox] {
-    margin: 0;
+    margin: 0 5px 0 0;
 }
 
 /******************************

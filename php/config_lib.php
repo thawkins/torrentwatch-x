@@ -248,16 +248,14 @@ function add_hidden($name) {
     global $config_values;
     $guess = guess_match($name);
     if($guess) {
-        $name = trim(strtr($guess['key'], "._", "  "));
+        $name = ucwords(trim(strtr($guess['key'], "._", "  ")));
     
         foreach($config_values['Favorites'] as $fav) {
-            if($name == $fav['Name']) return("$name exists in favorites. Not adding to hide list.");
+            if($name == ucwords($fav['Name'])) return("$name exists in favorites. Not adding to hide list.");
         }
           
         if(isset($name)) {
-            $config_values['Hidden'][]['Name'] = $name;
-            $idx = end(array_keys($config_values['Hidden']));
-            $config_values['Hidden'][$idx]['Name'] = urldecode($name);
+            $config_values['Hidden'][urldecode($name)] = 1;
         } else {
             return("Bad form data, not added to favorites"); // Bad form data
         }

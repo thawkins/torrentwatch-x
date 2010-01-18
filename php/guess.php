@@ -8,6 +8,7 @@ function guess_match($title, $normalize = FALSE) {
   // Episode 
   $reg1.='\b(';  // must be a word boundry before the episode
   $reg1.='S\d+[. ]?E\d+'.'|';  // S12E1
+  $reg1.='E\d+'.'|'; // E137
   $reg1.='\d+x\d+' .'|';  // 1x23
   $reg1.='\d+[. ]?of[. ]?\d+'.'|';  // 03of18
   $reg1.='Season[. ]\d+,[. ]Episode[. ]\d+'.'|'; // Season 4, episode 15
