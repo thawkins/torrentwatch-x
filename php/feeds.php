@@ -97,7 +97,7 @@ function check_for_torrent(&$item, $key, $opts) {
   $title = strtolower($rs['title']);
   switch(_isset($config_values['Settings'], 'MatchStyle')) {
     case 'simple':  
-      $hit = (($item['Filter'] != '' && strpos($title, strtolower($item['Filter'])) === 0) &&
+      $hit = (($item['Filter'] != '' && strpos(strtr($title, " .", "__") , strtr(strtolower($item['Filter']), " .", "__")) === 0) &&
        ($item['Not'] == '' OR my_strpos($title, strtolower($item['Not'])) === FALSE) &&
        ($item['Quality'] == 'All' OR $item['Quality'] == '' OR my_strpos($title, strtolower($item['Quality'])) !== FALSE));
       break;

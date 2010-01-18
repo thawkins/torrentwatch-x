@@ -113,9 +113,12 @@ function parse_options() {
             if(!($seedRatio)) $seedRatio = -1;
             if(($tmp = guess_match(html_entity_decode($_GET['title'])))) {
                 $_GET['name'] = trim(strtr($tmp['key'], "._", "  "));
-                $_GET['filter'] = trim($tmp['key']);
-                if($config_values['Settings']['MatchStyle'] == "glob")
-                $_GET['filter'] .= '*';
+                if($config_values['Settings']['MatchStyle'] == "glob") {
+                    $_GET['filter'] = trim(strtr($tmp['key'], " ._", "???"));
+                    $_GET['filter'] .= '*';
+                } else {
+                    $_GET['filter'] = trim($tmp['key']);
+                }
                 $_GET['quality'] = $tmp['data'];
                 $_GET['feed'] = $_GET['rss'];
                 $_GET['button'] = 'Add';
