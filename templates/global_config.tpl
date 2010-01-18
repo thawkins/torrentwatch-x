@@ -31,9 +31,14 @@
                     </div>
                     <div class="int_settings right">
                         <div id="config_combinefeeds">
-                            <input type="checkbox" name="combinefeeds" value="1" <?php echo $combinefeeds; ?>/>
+                            <input type="checkbox" name="combinefeeds" <?php echo $combinefeeds; ?>/>
                             <label class="item checkbox"
                             title="Combine all feeds into 1 list">Combine Feeds</label>
+                        </div>
+                        <div id="config_require_epi_info">
+                            <input type="checkbox" name="require_epi_info" <?php echo $require_epi_info; ?>/>
+                            <label class="item checkbox"
+                            title="Combine all feeds into 1 list">Hide shows without decent episode info.</label>
                         </div>
                     </div>
                     <div class="category">
