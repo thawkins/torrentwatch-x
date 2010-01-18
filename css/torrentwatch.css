@@ -229,7 +229,7 @@ input#filter_text_input.blur {
  *------------*/
 
 ul.show_legend {
-    border: 1px solid gray;
+    border: 1px solid grey;
 }
 
 ul.show_legend li {
@@ -432,7 +432,7 @@ div.move_data input {
 
 div.move_data a {
     float: none;
-    border: 1px solid gray;
+    border: 1px solid grey;
     text-align: center;
     text-decoration: none;
     background-color: #EEE;
@@ -539,7 +539,7 @@ div#fav_error {
 div.welcome {
     margin: -0.2em auto 0 -300px;
     width: 600px;
-    border: 3px solid gray;
+    border: 3px solid grey;
     }
 
 div.welcome input {
@@ -608,7 +608,7 @@ div.dialog_window#configuration div.right {
     margin-top: 10px;
     float: left;
     width: 322px;
-    border-left: 1px solid gray;
+    border-left: 1px solid grey;
     border-style:dotted;
 }
 
@@ -617,7 +617,7 @@ div.dialog_window#configuration div.category {
     height: 32px;
     float: left;
     text-align: center;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid grey;
     border-style:dotted;
 }
 
@@ -655,11 +655,11 @@ div.dialog_window#configuration div.right select {
 
 div.dialog_window#configuration input[type=checkbox] {
     margin: 2px 2px 0 13px;
-    border: 1px solid gray;
+    border: 1px solid grey;
     }
 
 div.config_form {
-    border: 1px solid gray;
+    border: 1px solid grey;
     padding: 0 0 5px 0;
     margin: 5px 0 0 0 ;
     height: 435px;
@@ -670,7 +670,7 @@ form#config_form div {
     }
 
 div.dialog_window#feeds {
-    border: 2px solid gray;
+    border: 2px solid grey;
 }
 
 div.feeditem {
@@ -679,13 +679,13 @@ div.feeditem {
 
 
 div.feeditem.add {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid grey;
     margin-bottom: 10px;
 }
 
 div#feeds div.buttonContainer {
     margin-top: 10px;
-    border-top: 1px solid gray;
+    border-top: 1px solid grey;
 }
 
 div.feeditem label.item {
@@ -753,16 +753,16 @@ div#feeds div.buttonContainer {
 div.dialog_window#favorites {
     width: 590px;
     margin-left: -287px;
-    height: 250px;
+    height: 247px;
 }
 
 div.favorite {
-    height: 248px;
+    height: 245px;
     width: 180px;
     float: left;
     clear: left;
-    border: 1px solid gray;
-    padding: 0px 0 0px 5px;
+    border: 1px solid grey;
+    padding: 0 0 0 5px;
 }
 
 ul.favorite {
@@ -771,10 +771,10 @@ ul.favorite {
 }
 
 div.favinfo {
-    height: 248px;
+    height: 245px;
     float: right; 
     clear: right;
-    border: 1px solid gray;
+    border: 1px solid grey;
     padding: 0px 0 0px 5px;
     width: 380px;
 }
@@ -875,6 +875,36 @@ div.favinfo div.buttonContainer {
     right: 5px;
     width: 250px;
 }
+
+/********************************
+ *
+ * H I D E L I S T   D I A L O G
+ *
+ ********************************/
+
+div#hidelist {
+    margin-left: -150px;
+    width: 300px;
+}
+
+ul.hidelist {
+    border: 1px solid grey;
+    max-height: 300px;
+    overflow: auto;
+}
+
+ul.hidelist li {
+     overflow: hidden;
+}
+
+ul.hidelist li:hover {
+     background-color: #3879D7;
+}
+
+ul.hidelist input[type=checkbox] {
+    margin: 0;
+}
+
 /******************************
  *
  * H I S T O R Y   D I A L O G
