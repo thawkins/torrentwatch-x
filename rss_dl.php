@@ -96,7 +96,16 @@ function parse_args() {
     if(_isset($config_values['Settings'], 'Run Torrentwatch', FALSE) and !$test_run and $config_values['Settings']['Watch Dir']) {
         global $hit;
         $hit = 0;
-        check_for_torrents($config_values['Settings']['Watch Dir'], $config_values['Settings']['Download Dir']);
+        foreach($config_values['Favorites'] as $fav) {
+            $guess = guess_match(html_entity_decode($_GET['title']));
+            $name = trim(strtr($guess['key'], "._", "  "));
+            if($name == $fav['Name']) {
+                  $downloadDir = $fav['Save In'];
+            } 
+        }
+        if(!$downloadDir || $downloadDir == "Default" ) $downloadDir = $config_values['Settings']['Download Dir'];
+
+        check_for_torrents($config_values['Settings']['Watch Dir'], $downloadDir);
         if(!$hit)
             _debug("No New Torrents to add from watch folder\n", 0);
     } else {

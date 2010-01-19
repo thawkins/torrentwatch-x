@@ -255,7 +255,7 @@ function add_hidden($name) {
         }
           
         if(isset($name)) {
-            $config_values['Hidden'][urldecode($name)] = 1;
+            $config_values['Hidden'][$name] = 'hidden';
         } else {
             return("Bad form data, not added to favorites"); // Bad form data
         }
