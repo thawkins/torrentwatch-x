@@ -65,7 +65,7 @@ function check_cache_episode($title) {
   if(preg_match('/proper|repack/i', $title)) {
     return 1;
   }
-  $guess = guess_match($title);
+  $guess = guess_match($title, TRUE);
   if($guess == False) {
     _debug("Unable to guess for $title\n");
     return 1;
@@ -74,9 +74,9 @@ function check_cache_episode($title) {
     while(false !== ($file = readdir($handle))) {
       if(!(substr($file, 0,7) == "rss_dl_"))
         continue;
-      if(!(substr($file, 7, strlen($guess['key'])) == $guess['key']))
+      if(!(preg_replace('/[. ]/', '_', substr($file, 7, strlen($guess['key']))) == preg_replace('/[. ]/', '_', $guess['key'])))
         continue;
-      $cacheguess = guess_match(substr($file, 7));
+      $cacheguess = guess_match(substr($file, 7), TRUE);
       if($cacheguess != false && $guess['episode'] == $cacheguess['episode']) {
         _debug("Full Episode Match, ignoring\n",2);
         $matched = "duplicate";
@@ -96,7 +96,6 @@ function check_cache_episode($title) {
 function check_cache($title)
 {
   global $config_values, $matched;
-
   if (isset($config_values['Settings']['Cache Dir'])) {
     $cache_file = $config_values['Settings']['Cache Dir'].'/rss_dl_'.filename_encode($title);
     if (!file_exists($cache_file)) {
