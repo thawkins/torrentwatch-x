@@ -77,6 +77,7 @@ function check_cache_episode($title) {
       if(!(preg_replace('/[. ]/', '_', substr($file, 7, strlen($guess['key']))) == preg_replace('/[. ]/', '_', $guess['key'])))
         continue;
       $cacheguess = guess_match(substr($file, 7), TRUE);
+      _debug("bla: $title: " . $guess['episode'] . " - " . substr($file, 7) . ": " . $cacheguess['episode'] . "\n");
       if($cacheguess != false && $guess['episode'] == $cacheguess['episode']) {
         _debug("Full Episode Match, ignoring\n",2);
         $matched = "duplicate";

@@ -54,7 +54,7 @@ function guess_match($title, $normalize = FALSE) {
     $episode_guess = trim(strtr($episode_guess, $from, $to));
     // Standardize episode output to SSxEE, strip leading 0
     // This is (b|c|d) from earlier.  If it is style e there will be no replacement, only strip leading 0
-    $episode_guess = preg_replace('/0+(\d+)x0+(\d+)/', '\1x\2', preg_replace('/(S(\d+) ?E(\d+)|(\d+)x(\d+)|(\d+) ?of ?(\d+))/i', '\2\4\6x\3\5\7', $episode_guess));
+    $episode_guess = preg_replace('/0*(\d+)x0*(\d+)/', '\1x\2', preg_replace('/(S(\d+) ?E(\d+)|(\d+)x(\d+)|(\d+) ?of ?(\d+))/i', '\2\4\6x\3\5\7', $episode_guess));
   }  
   return array("key" => $key_guess, "data" => $data_guess, "episode" => $episode_guess);
 }
