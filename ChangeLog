@@ -89,3 +89,10 @@ IMPORTANT: If you are updating from a previous version. Please copy php/config.p
     -- Fixed focus issue in "move torrent" input.
 
 current:
+    -- Better Episode guessing.
+    -- Added message if hide list is empty.
+    -- Added 'TVCap' quality option (Thanks job).
+    -- Fixed bug that made it imposible to change the feed of a favorite if 'Set default to All' was set.
+    -- Fixed bug that caused matching to go wrong in some cases.
+    -- Fixed bug: removing feeds makes favourites -appear- to revert to 'all feeds' but they don't. (Thanks Habbie)
+    -- Fixed download dir bug when items where read from the watch folder.
