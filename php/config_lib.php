@@ -27,7 +27,7 @@ function setup_default_config() {
   _default('Client', "");
   _default('Verify Episode', "1");
   _default('Only Newer', "1");
-  _default('Default Feed All', "0");
+  _default('Default Feed All', "1");
   _default('Deep Directories', "0");
   _default('Combine Feeds', '0');
   _default('Require Episode Info', '0');
@@ -46,8 +46,8 @@ if(!(function_exists(get_base_dir))) {
 }
     
 function get_curl_defaults(&$curlopt) {
-    $curlopt[CURLOPT_CONNECTTIMEOUT] = 5;
-    $curlopt[CURLOPT_TIMEOUT] = 10;
+    $curlopt[CURLOPT_CONNECTTIMEOUT] = 10;
+    $curlopt[CURLOPT_TIMEOUT] = 20;
     $curlopt[CURLOPT_RETURNTRANSFER] = true;
 }
 
@@ -296,7 +296,6 @@ function add_favorite() {
   } else
     return("Bad form data, not added to favorites"); // Bad form data
 
-  if($config_values['Settings']['Default Feed All']) $_GET['feed'] = 'All';
   $list = array("name"      => "Name",
                 "filter"    => "Filter",
                 "not"       => "Not",

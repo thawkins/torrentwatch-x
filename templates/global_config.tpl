@@ -31,14 +31,14 @@
                     </div>
                     <div class="int_settings right">
                         <div id="config_combinefeeds">
-                            <input type="checkbox" name="combinefeeds" <?php echo $combinefeeds; ?>/>
-                            <label class="item checkbox"
-                            title="Combine all feeds into 1 list">Combine Feeds</label>
+                            <label class="item checkbox" title="Combine all feeds into 1 list">
+                                <input type="checkbox" name="combinefeeds" value="1" <?php echo $combinefeeds; ?>/>
+                            Combine Feeds</label>
                         </div>
                         <div id="config_require_epi_info">
-                            <input type="checkbox" name="require_epi_info" <?php echo $require_epi_info; ?>/>
-                            <label class="item checkbox"
-                            title="Combine all feeds into 1 list">Hide shows without decent episode info.</label>
+                            <label class="item checkbox" title="Combine all feeds into 1 list">
+                                <input type="checkbox" name="require_epi_info" value="1" <?php echo $require_epi_info; ?>/>
+                            Hide shows without decent episode info.</label>
                         </div>
                     </div>
                     <div class="category">
@@ -114,8 +114,9 @@
                              value="<?php echo $config_values['Settings']['Watch Dir']; ?>"/>
                         </div>
                         <div id="config_savetorrent">
-                            <input type="checkbox" name="savetorrents" value="1" <?php echo $savetorrent; ?>/> 
-                            <label class="item checkbox" title="Save torrent to download directory">Save torrent files</label>
+                            <label class="item checkbox" title="Save torrent to download directory">
+                                <input type="checkbox" name="savetorrents" value="1" <?php echo $savetorrent; ?>/> 
+                            Save torrent files</label>
                         </div>
                     </div>
                     <div class="category">
@@ -137,19 +138,22 @@
                             </select>
                         </div>
                         <div>
-                            <input type="checkbox" name="favdefaultall" value="1" <?php echo $favdefaultall; ?>
+                            <label class="item checkbox">
+                                <input type="checkbox" name="favdefaultall" value="1" <?php echo $favdefaultall; ?>
                                 title="Set feed to all when adding favorite. (This doesn't affect existing favorites)"/>
-                            <label class="item checkbox">Set default feed to "All"</label>
+                            Set default feed to "All"</label>
                         </div>
                     </div>
                     <div class="fav_settings right">
                         <div id="config_verifyepisodes" title="Try not to download duplicate episodes">
-                            <input type="checkbox" name="verifyepisodes" value="1" <?php echo $verifyepisode; ?>/>
-                            <label class="item checkbox">Verify Episodes</label>
+                            <label class="item checkbox">
+                                <input type="checkbox" name="verifyepisodes" value="1" <?php echo $verifyepisode; ?>/>
+                            Verify Episodes</label>
                         </div>
                         <div>
-                            <input type="checkbox" name="onlynewer" value="1" <?php echo $onlynewer; ?>/> 
-                            <label class="item checkbox">Newer Episodes Only</label>
+                            <label class="item checkbox">
+                                <input type="checkbox" name="onlynewer" value="1" <?php echo $onlynewer; ?>/> 
+                            Newer Episodes Only</label>
                         </div>
                     </div>
                     <div class="category">
