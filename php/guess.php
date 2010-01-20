@@ -1,7 +1,7 @@
 <?php
 function guess_match($title, $normalize = FALSE) { 
     // Episode
-    $epi ='/(S\d+[. ]?E\d+(?:-E\d+)?'.'|';  // S12E1 or S12E1-E2
+    $epi ='/(S\d+[_. ]?EP? ?\d+(?:-EP? ?\d+)?'.'|';  // S12E1 or S12E1-E2
     $epi.='\d{1,2}x\d+(?:-\d+)?' .'|';  // 1x23 or 1x23-24
     $epi.='\d+[. ]?of[. ]?\d+'.'|';  // 03of18
     $epi.='Season[. ]?\d+,?[. ]?Episode[. ]?\d+'.'|'; // Season 4, episode 15
@@ -48,7 +48,7 @@ function guess_match($title, $normalize = FALSE) {
     // Standardize episode output to SSxEE, strip leading 0
     // This is (b|c|d) from earlier.  If it is style e there will be no replacement, only strip leading 0
     $episode_guess = preg_replace('/0*(\d+)x0*(\d+)/', '\1x\2', 
-        preg_replace('/(S(\d+)[. ]?E(\d+)|(\d+)x(\d+)|(\d+)[. ?]of[. ]?(\d+))|season[. ]?(\d+),?[. ]?episode[. ]?(\d+)/i',
+        preg_replace('/(S(\d+)[. ]?EP? ?(\d+)(?:-EP? ?\d+)?|(\d+)x(\d+)|(\d+)[. ?]of[. ]?(\d+))|season[. ]?(\d+),?[. ]?episode[. ]?(\d+)/i',
             '\2\4\6\8x\3\5\7\9', $episode_guess));
             
   }  
