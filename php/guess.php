@@ -1,12 +1,19 @@
 <?php
 function guess_match($title, $normalize = FALSE) { 
+    $title = preg_replace('/( ?\/ ?)/', ' ', $title); #Sanatize title.
+    
     // Episode
-    $epi ='/(S\d+[_. ]?EP? ?\d+(?:-EP? ?\d+)?'.'|';  // S12E1 or S12E1-E2
+    $epi ='/^[_. ]|';  //Start with _ , . or space
+    $epi.='(S\d+[_. ]?EP? ?\d+(?:-EP? ?\d+)?'.'|';  // S12E1 or S12EP1-EP2 
     $epi.='\d{1,2}x\d+(?:-\d+)?' .'|';  // 1x23 or 1x23-24
-    $epi.='\d+[. ]?of[. ]?\d+'.'|';  // 03of18
-    $epi.='Season[. ]?\d+,?[. ]?Episode[. ]?\d+'.'|'; // Season 4, episode 15
-    $epi.='[. ]E\d+'.'|'; // E137
-    $epi.='[\d -.]{10})/i';   // 2008-03-23 or 07.23.2008 or .20082306. etc
+    $epi.='\d+[_. ]?of[_. ]?\d+'.'|';  // 03of18
+    $epi.='Season[_. ]?\d+,?[_. ]?Episode[_. ]?\d+'.'|'; // Season 4, episode 15
+    $epi.='[_. ]\d{3,4}[_. ]'.'|'; // 306 or 1204
+    $epi.='[_. ]Part[_. ]?\d+[_. ]'.'|';
+    $epi.='[_. ]EP?(?:PS[_. ]?)?\d+(?:-\d+)?'.'|'; // E137 or EP137 or EPS1-23
+    $epi.='[_. ]\d{1,2}[-.]\d{1,2}[-.]\d{2,4}[_. ]'.'|'; // 23-8-2007 or 07.23.2008 or 07-23-09
+    $epi.='[_. ]\d{4}[-.]\d{1,2}[-.]\d{1,2}[_. ]'.'|'; // 2007-8-23 or 2008.23.7
+    $epi.='[_. ]\d{8}[_. ])/i';   // 20082306 etc
 
     // Quality
     $quality ='/(DVB'  .'|';
@@ -15,6 +22,10 @@ function guess_match($title, $normalize = FALSE) {
     $quality.='DVDR'   .'|';
     $quality.='DVDRip' .'|';
     $quality.='DVDScr' .'|';
+    $quality.='WS'     .'|';
+    $quality.='XviDVD' .'|';
+    $quality.='DSR'    .'|';
+    $quality.='VHSRiP' .'|';
     $quality.='HR.HDTV'.'|';
     $quality.='HDTV'   .'|';
     $quality.='HR.PDTV'.'|';
@@ -28,16 +39,23 @@ function guess_match($title, $normalize = FALSE) {
     $quality.='1080i'  .'|';
     $quality.='1080p)/i';
 
-     if(preg_match($epi, $title, $match)) {
-      $episode_guess = $match[0];
-      $key_guess = preg_replace('/[-\(\/]/', '', preg_replace("/(^.+)$episode_guess(.*$)/", '\1', $title));
-      if(preg_match($quality, $title, $qregs))
-        $data_guess = str_replace("'", "&#39;", trim($qregs[1]));
-      else
-        $data_guess = '';
+    if(preg_match($epi, $title, $match)) {
+        $episode_guess = $match[0];
+        $key_guess = preg_replace("/([^-\(\.]+)[\. ]?(?: - .+)?" . $episode_guess. "(.*$)/", '\1', $title);
+    
+    } elseif(preg_match($quality, $title, $match)) {
+        $episode_guess = $match[0];
+        $key_guess = preg_replace("/([^-\(\.]+)[\. ]?(?: - .+)?" . $episode_guess. "(.*$)/", '\1', $title);
     } else {
       return False;
     }
+    
+    if(preg_match($quality, $title, $qregs)) {
+        $data_guess = str_replace("'", "&#39;", trim($qregs[1]));
+    } else {
+        $data_guess = '';
+    }
+    
     if($normalize == TRUE) {
     // Convert . and _ to spaces, and trim result
     $from = "._";
@@ -47,9 +65,12 @@ function guess_match($title, $normalize = FALSE) {
     $episode_guess = trim(strtr($episode_guess, $from, $to));
     // Standardize episode output to SSxEE, strip leading 0
     // This is (b|c|d) from earlier.  If it is style e there will be no replacement, only strip leading 0
-    $episode_guess = preg_replace('/0*(\d+)x0*(\d+)/', '\1x\2', 
-        preg_replace('/(S(\d+)[. ]?EP? ?(\d+)(?:-EP? ?\d+)?|(\d+)x(\d+)|(\d+)[. ?]of[. ]?(\d+))|season[. ]?(\d+),?[. ]?episode[. ]?(\d+)/i',
-            '\2\4\6\8x\3\5\7\9', $episode_guess));
+    $episode_guess = preg_replace('/\b((?:S(\d+))?[_. ]?EP? ?(\d+)(?:-EP? ?\d+)?\b|\b(\d+)x(\d+)|(\d+)[. ?]of[_. ]?(\d+))\b|\bseason[_. ]?(\d+),?[_. ]?episode[_. ]?(\d+)\b|\b(\d)(\d\d)\b|\bEps[_. ]?(\d+)-\d+\b|\bPart[_. ]?(\d+)\b/i',
+        '\2\4\6\8\10x\3\5\7\9\11\12\13', $episode_guess);
+    if(preg_match('/^x\d+/', $episode_guess)) {
+        $episode_guess = preg_replace('/(^x)(\d+)/', '1x\2', $episode_guess);
+    }
+    $episode_guess = preg_replace('/0*(\d+)x0*(\d+)/', '\1x\2', $episode_guess);
             
   }  
   return array("key" => $key_guess, "data" => $data_guess, "episode" => $episode_guess);
