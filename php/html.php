@@ -25,7 +25,9 @@ function show_torrent_html($item, $feed, $feedName, $alt, $torHash, $matched, $i
   if($config_values['Settings']['Require Episode Info']) {
       if(!$guess) return;
   }
-  if($config_values['Hidden'][ucwords(trim(strtr($guess['key'], "._", "  ")))]) return;
+  if(!$config_values['Settings']['Disable Hide List']) {
+      if($config_values['Hidden'][ucwords(trim(strtr($guess['key'], "._", "  ")))]) return;
+  }
   
   if(($matched == "cachehit" || $matched == "downloaded" || $matched == "match")
      && $config_values['Settings']['Client'] != 'folder') {

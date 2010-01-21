@@ -337,7 +337,7 @@ function display_global_config() {
 
     $savetorrent=$transmission="";
     $deepfull=$deeptitle=$deepoff=$verifyepisode="";
-    $matchregexp=$matchglob=$matchsimple="";
+    $matchregexp=$matchglob=$matchsimple=$dishidelist="";
     $favdefaultall=$onlynewer=$folderclient=$combinefeeds=$require_epi_info="";
 
     switch($config_values['Settings']['Client']) {
@@ -355,6 +355,8 @@ function display_global_config() {
         $combinefeeds = 'checked=1';
     if($config_values['Settings']['Require Episode Info'] == 1)
         $require_epi_info = 'checked=1';
+    if($config_values['Settings']['Disable Hide List'] == 1)
+        $dishidelist = 'checked=1';    
     if($config_values['Settings']['Save Torrents'] == 1)
         $savetorrent = 'checked=1';
 

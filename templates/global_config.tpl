@@ -28,6 +28,11 @@
                                 </option>
                             </select>
                         </div>
+                        <div id="config_require_epi_info">
+                            <label class="item checkbox" title="Combine all feeds into 1 list">
+                                <input type="checkbox" name="require_epi_info" value="1" <?php echo $require_epi_info; ?>/>
+                            Hide shows without decent episode info</label>
+                        </div>
                     </div>
                     <div class="int_settings right">
                         <div id="config_combinefeeds">
@@ -35,10 +40,10 @@
                                 <input type="checkbox" name="combinefeeds" value="1" <?php echo $combinefeeds; ?>/>
                             Combine Feeds</label>
                         </div>
-                        <div id="config_require_epi_info">
-                            <label class="item checkbox" title="Combine all feeds into 1 list">
-                                <input type="checkbox" name="require_epi_info" value="1" <?php echo $require_epi_info; ?>/>
-                            Hide shows without decent episode info.</label>
+                        <div id="config_disable_hidelist">
+                            <label class="item checkbox" title="Disable the hide list.">
+                                <input type="checkbox" name="dishidelist" value="1" <?php echo $dishidelist; ?>/>
+                            Disable hide list</label>
                         </div>
                     </div>
                     <div class="category">
