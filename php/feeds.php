@@ -116,11 +116,12 @@ function check_for_torrent(&$item, $key, $opts) {
   if($hit)
     $guess = guess_match($title, TRUE);
    
-  if($hit && episode_filter($guess, $item['Episodes'])) {
+  if($hit) {
     $matched = 'match';
     if(check_cache($rs['title'])) {
       if(_isset($config_values['Settings'], 'Only Newer') == 1) {
-        if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)) {
+        if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)
+           && episode_filter($guess, $item['Episodes'])) {
           if($item['Season'] > $regs[1]) {
             _debug($item['Season'] .' > '.$regs[1] . "; ", 1);
             $matched = "old";
@@ -212,6 +213,7 @@ function rss_perform_matching($rs, $idx, $feedName) {
   }
   $alt = 'alt';
   foreach($rs['items'] as $item) {
+    if($filter = get_item_filter()) $item['title'] = preg_replace($filter, '', $item['title']);
     $percentage = '';
     $torHash = '';
     $matched = "nomatch";
@@ -266,6 +268,7 @@ function atom_perform_matching($atom, $idx, $feedName) {
   $alt='alt';
   
   foreach($atom['feed']['entry'] as $item) {
+    if($filter = get_item_filter()) $item['title'] = preg_replace($filter, '', $item['title']);
     $matched = "nomatch";
     array_walk($config_values['Favorites'], 'check_for_torrent', 
                array('Obj' =>$item, 'URL' => $atom['URL']));
