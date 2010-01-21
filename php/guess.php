@@ -2,18 +2,18 @@
 function guess_match($title, $normalize = FALSE) { 
     
     // Episode
-    $epi ='/[_. ]';  //Start with _ , . or space
-    $epi.='(S\d+[_. ]?EP? ?\d+(?:-EP? ?\d+)?'.'|';  // S12E1 or S12EP1-EP2 
-    $epi.='S\d+[_. ]'.'|';
+    $epi ='/[_.\s]';  //Start with _ , . or space
+    $epi.='(S\d+[_.\s]?EP? ?\d+(?:-EP? ?\d+)?'.'|';  // S12E1 or S12EP1-EP2 
+    $epi.='S\d+[_.\s]'.'|';
     $epi.='\d{1,2}x\d+(?:-\d+)?' .'|';  // 1x23 or 1x23-24
-    $epi.='\d+[_. ]?of[_. ]?\d+'.'|';  // 03of18
-    $epi.='Season[_. ]?\d+,?[_. ]?Episode[_. ]?\d+'.'|'; // Season 4, episode 15
-    $epi.='0?\d{3}[_. ]'.'|'; // 306
-    $epi.='Part[_. ]?\d+[_. ][^r][^a][^r]'.'|';
-    $epi.='EP?(?:PS[_. ]?)?\d+(?:-\d+)?'.'|'; // E137 or EP137 or EPS1-23
-    $epi.='\d{1,2}[-.]\d{1,2}[-.]\d{2,4}[_. ]'.'|'; // 23-8-2007 or 07.23.2008 or 07-23-09
-    $epi.='\d{4}[-.]\d{1,2}[-.]\d{1,2}[_. ]'.'|'; // 2007-8-23 or 2008.23.7
-    $epi.='\d{8}[_. ])/i';   // 20082306 etc
+    $epi.='\d+[_.\s]?of[_.\s]?\d+'.'|';  // 03of18
+    $epi.='Season[_.\s]?\d+,?[_.\s]?Episode[_.\s]?\d+'.'|'; // Season 4, episode 15
+    $epi.='0?\d{3}[_.\s]'.'|'; // 306
+    $epi.='Part[_.\s]?\d+[_.\s][^r][^a][^r]'.'|';
+    $epi.='EP?(?:PS[_.\s]?)?\d+(?:-\d+)?'.'|'; // E137 or EP137 or EPS1-23
+    $epi.='\d{1,2}[-.]\d{1,2}[-.]\d{2,4}[_.\s]'.'|'; // 23-8-2007 or 07.23.2008 or 07-23-09
+    $epi.='\d{4}[-.]\d{1,2}[-.]\d{1,2}[_.\s]'.'|'; // 2007-8-23 or 2008.23.7
+    $epi.='\d{8}[_.\s])/i';   // 20082306 etc
 
     // Quality
     $quality ='/\b(DVB'.'|';
@@ -40,7 +40,7 @@ function guess_match($title, $normalize = FALSE) {
     $quality.='1080p)\b/i';
 
     // Audi
-    $audio = '/(AC3[_. ])/i';
+    $audio = '/(AC3[_.\s])/i';
     
     //Sanatize title
     $title = preg_replace('/( ?\/ ?)/', ' ', $title);
@@ -72,7 +72,7 @@ function guess_match($title, $normalize = FALSE) {
     $episode_guess = trim(strtr($episode_guess, $from, $to));
     // Standardize episode output to SSxEE, strip leading 0
     // This is (b|c|d) from earlier.  If it is style e there will be no replacement, only strip leading 0
-    $episode_guess = preg_replace('/\b((?:S(\d+))?[_. ]?EP? ?(\d+)(?:-EP? ?\d+)?\b|\b(\d+)x(\d+)|(\d+)[. ?]of[_. ]?(\d+))\b|\bseason[_. ]?(\d+),?[_. ]?episode[_. ]?(\d+)\b|\b0?(\d)(\d\d)\b|\bEps[_. ]?(\d+)-\d+\b|\bPart[_. ]?(\d+)\b/i',
+    $episode_guess = preg_replace('/\b((?:S(\d+))?[_.\s]?EP? ?(\d+)(?:-EP? ?\d+)?\b|\b(\d+)x(\d+)|(\d+)[. ?]of[_.\s]?(\d+))\b|\bseason[_.\s]?(\d+),?[_.\s]?episode[_.\s]?(\d+)\b|\b0?(\d)(\d\d)\b|\bEps[_.\s]?(\d+)-\d+\b|\bPart[_.\s]?(\d+)\b/i',
         '\2\4\6\8\10x\3\5\7\9\11\12\13', $episode_guess);
     if(preg_match('/^x\d+/', $episode_guess)) {
         $episode_guess = preg_replace('/(^x)(\d+)/', '1x\2', $episode_guess);

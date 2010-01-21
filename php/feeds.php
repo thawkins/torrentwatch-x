@@ -73,16 +73,25 @@ function episode_filter($item, $filter) {
   if(!($stopEpisode))
     $stopEpisode = $startEpisode-1;
 
+
   $startEpisodeLen=strlen($startEpisode);
   if($startEpisodeLen == 1) { $startEpisode = "0$startEpisode" ;}; 
   $stopEpisodeLen=strlen($stopEpisode);
   if($stopEpisodeLen == 1) { $stopEpisode = "0$stopEpisode" ;}; 
+  
+  if(!preg_match('/^\d\d$/', $startSeason)) $startSeason = 0 . $startSeason;
+  if(!preg_match('/^\d\d$/', $startEpisode)) $startEpisode = 0 . $startEpisode;
+  if(!preg_match('/^\d\d$/', $stopSeason)) $stopSeason = 0 . $stopSeason;
+  if(!preg_match('/^\d\d$/', $stopEpisode)) $stopEpisode = 0 . $stopEpisode;
+  if(!preg_match('/^\d\d$/', $itemS)) $itemS = 0 . $itemS;
+  if(!preg_match('/^\d\d$/', $itemE)) $itemE = 0 . $itemE;
+  
 
   // Season filter mis-match
   if(!("$itemS$itemE" >= "$startSeason$startEpisode" && "$itemS$itemE" <= "$stopSeason$stopEpisode")) {
     return False;
   }
-
+  _debug("$itemS$itemE $startSeason$startEpisode - $itemS$itemE $stopSeason$stopEpisode\n");
   return True;
 }
 
@@ -116,12 +125,11 @@ function check_for_torrent(&$item, $key, $opts) {
   if($hit)
     $guess = guess_match($title, TRUE);
    
-  if($hit) {
+  if($hit && episode_filter($guess, $item['Episodes']) == true) {
     $matched = 'match';
     if(check_cache($rs['title'])) {
       if(_isset($config_values['Settings'], 'Only Newer') == 1) {
-        if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)
-           && episode_filter($guess, $item['Episodes'])) {
+        if(!empty($guess['episode']) && preg_match('/(\d+)x(\d+)/i',$guess['episode'],$regs)) {
           if($item['Season'] > $regs[1]) {
             _debug($item['Season'] .' > '.$regs[1] . "; ", 1);
             $matched = "old";
