@@ -51,6 +51,10 @@ function get_curl_defaults(&$curlopt) {
     $curlopt[CURLOPT_RETURNTRANSFER] = true;
 }
 
+function get_item_filter() {
+    return '/[\[\]{}<>:;,]/';
+}
+
 // This function is from
 // http://www.codewalkers.com/c/a/Miscellaneous/Configuration-File-Processing-with-PHP/2/
 // It has been modified to support multidimensional arrays in the form of
