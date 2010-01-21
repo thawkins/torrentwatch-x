@@ -31,6 +31,7 @@ function setup_default_config() {
   _default('Deep Directories', "0");
   _default('Combine Feeds', '0');
   _default('Require Episode Info', '0');
+  _default('Disable Hide List', '0');
   _default('History', $basedir."/rss_cache/rss_dl.history");
   _default('MatchStyle',"simple");
   _default('FirstRun',"1");
@@ -195,6 +196,7 @@ function update_global_config() {
                  'Default Seed Ratio' => 'defaultratio',
                  'Combine Feeds'      => 'combinefeeds',
                  'Require Episode Info' => 'require_epi_info',
+                 'Disable Hide List' => 'dishidelist',
                  'Client'             => 'client',
                  'MatchStyle'         => 'matchstyle',
                  'Only Newer'         => 'onlynewer',
@@ -203,6 +205,7 @@ function update_global_config() {
                  
   $checkboxs = array('Combine Feeds' => 'combinefeeds',
                      'Require Episode Info' => 'require_epi_info',
+                     'Disable Hide List' => 'dishidelist',
                      'Verify Episode' => 'verifyepisodes',
                      'Save Torrents'  => 'savetorrents',
                      'Only Newer'     => 'onlynewer',
