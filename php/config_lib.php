@@ -38,6 +38,7 @@ function setup_default_config() {
   _default('Extension',"torrent");
   _default('verbosity','0');
   _default('Default Seed Ratio', '-1');
+  _default('Script', '');
 }
 
 if(!(function_exists(get_base_dir))) {
@@ -201,7 +202,8 @@ function update_global_config() {
                  'MatchStyle'         => 'matchstyle',
                  'Only Newer'         => 'onlynewer',
                  'Default Feed All'   => 'favdefaultall',
-                 'Extension'          => 'extension');
+                 'Extension'          => 'extension',
+                 'Script'             => 'script');
                  
   $checkboxs = array('Combine Feeds' => 'combinefeeds',
                      'Require Episode Info' => 'require_epi_info',
@@ -341,8 +343,7 @@ function updateFavoriteEpisode(&$fav, $title) {
   $curEpisode = preg_replace('/(\d+)x/i', "", $guess['episode']);
   $curSeason = preg_replace('/x(\d+)/i', "", $guess['episode']);
   $expectedEpisode = sprintf('%02d', $fav['Episode'] + 1);
-  $emailAddress = $config_values['Settings']['Email Address'];
-  if($fav['Episode'] && $curEpisode > $expectedEpisode && $emailAddress) {
+  if($fav['Episode'] && $curEpisode > $expectedEpisode) {
       $show = $guess['key'];
       $episode = $guess['episode'];
       $expected = $curSeason . "x" . $expectedEpisode;
@@ -350,21 +351,17 @@ function updateFavoriteEpisode(&$fav, $title) {
       $oldSeason = $fav['Season'];
       $newEpisode = $curEpisode + 1;
       $newSeason = $curSeason + 1;
-      $mail = <<<END
-Hi,
 
-This is an automated warning from TorrentWatch-X.
+      $msg = "Matched \"$show $episode\" but expected \"$expected\".\n";
+      $msg.= "This usualy means that a double episode is downloaded before this one.\n";
+      $msg.= "But it could mean that you missed an episode or that \"$episode\" is a special episode.\n";
+      $msg.= "If this is the case you need to reset the \"Last Downloaded Episode\" setting to \"$oldSeason x $oldEpisode\" in the Favorites menu.\n";
+      $msg.= "If you don't, the next match wil be \"Season: $curSeason Episode: $newEpisode\" or \"Season $newSeason Episode: 1\".\n";
 
-Matched "$show $episode" but expected "$expected".
-This usualy means that a double episode is downloaded before this one.
-But it could mean that you missed an episode or that "$episode" is a special episode.
-If this is the case you need to reset the "Last Downloaded Episode" setting to "$oldSeason x $oldEpisode" in the Favorites menu.
-If you don't, the next match wil be "Season: $curSeason Episode: $newEpisode" or "Season $newSeason Episode: 1".
-
-END;
-
-  $subject = "TorrentWatch-X: got $show $episode, expected $expected";
-  mail($emailAddress, $subject, $mail, 'From: TorrentWatch-X' );
+      $subject = "TorrentWatch-X: got $show $episode, expected $expected";
+      sentmail($msg, $subject);
+      $msg = escapeshellarg($msg);
+      run_script('error', $title, $msg);
   }
   if(!isset($fav['Season'],$fav['Episode']) || $regs[1] > $fav['Season']) {
     $fav['Season'] = $regs[1];

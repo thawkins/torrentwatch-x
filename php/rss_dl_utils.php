@@ -1,4 +1,5 @@
 <?php
+require_once("tools.php");
 require_once("atomparser.php");
 require_once("cache.php");
 require_once("class.bdecode.php"); 
@@ -10,6 +11,7 @@ require_once("progressbar.php");
 require_once("tor_client.php");
 require_once("platform.php");
 require_once("guess.php");
+
 
 global $config_values;
 $config_values['Global'] = array();

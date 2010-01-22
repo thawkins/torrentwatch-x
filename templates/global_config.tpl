@@ -171,6 +171,19 @@
                             title="Enter an email address here to send warnings and errors to."
                             value="<?php echo $config_values['Settings']['Email Address']; ?>"/>
                         </div>
+                        <div>
+                            <label class="item checkbox">
+                                <input type="checkbox" name="mailonhit" value="1" <?php echo $mailonhit; ?>/> 
+                            Send mail when favorite torrent is started</label>
+                        </div>
+                    </div>
+                    <div class="fav_settings right">
+                        <div id="script">
+                            <label class="item">Script:</label>
+                            <input type="text" name ="script" class="text" 
+                            title="Script to run on certain events. (check out the wiki (https://code.google.com/p/torrentwatch-x/wiki/Script) for more info)."
+                            value="<?php echo $config_values['Settings']['Script']; ?>"/>
+                        </div>
                     </div>
                 </div>
                 <div class="buttonContainer">
