@@ -250,6 +250,11 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
     _debug("Started: $tor_name in $dest\n",0);
     if(isset($fav)) {
       run_script('favstart', $tor_name);
+      if($config_values['Settings']['Email Notifications'] == 1) {
+          $subject = "TorrentWatch-X: Started downloading $tor_name";
+          $msg = "TorrentWatch started downloading $tor_name";
+          sendmail($msg, $subject);
+      }    
       updateFavoriteEpisode($fav, $tor_name);
       _debug("Updated Favorites");
     } else {
@@ -264,8 +269,7 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
     $msg.= "$return\n";
 
     $subject = "TorrentWatch-X: Error while trying to start $tor_name.";
-    sentmail($msg, $subject);
-    $msg = escapeshellarg($msg);
+    sendmail($msg, $subject);
     run_script('error', $title, $msg);
   }
   return ($return === 0);
