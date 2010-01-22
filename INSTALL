@@ -4,7 +4,7 @@ Dependencies
 - A webserver with php support
 - php5 with json enabled
 - php-curl
-- Transmission (Tested with 1.7x)
+- Transmission (Tested with 1.7x and 1.80)
   - Versions reported not to work: 1.34, 1.51
 - Working MTA if you wan't to get warnings and errors by mail.
 

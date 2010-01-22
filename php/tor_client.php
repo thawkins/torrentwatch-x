@@ -171,14 +171,6 @@ function transmission_add_torrent($tor, $dest, $title, $seedRatio) {
   }
 }
 
-function check_for_cookies($url) {
-    if($cookies = stristr($url, ':COOKIE:')) {
-      $url = rtrim(substr($url, 0, -strlen($cookies)), '&');
-      $cookies = strtr(substr($cookies, 8), '&', ';');
-      return array('url' => $url, 'cookies' => $cookies);
-    } 
-}
-
 function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL) {
   global $config_values, $hit;
   $hit = 1;
@@ -256,31 +248,25 @@ function client_add_torrent($filename, $dest, $title, $feed = NULL, &$fav = NULL
   if($return === 0) {
     add_history($tor_name);
     _debug("Started: $tor_name in $dest\n",0);
-    if(isset($fav))
+    if(isset($fav)) {
+      run_script('favstart', $tor_name);
       updateFavoriteEpisode($fav, $tor_name);
       _debug("Updated Favorites");
+    } else {
+        run_script('nonfavstart', $tor_name);
+    }
     if($config_values['Settings']['Save Torrents'])
       file_put_contents("$dest/$tor_name.torrent", $tor);
   } else {
     _debug("Failed Starting: $tor_name  Error: $return\n",-1);
 
-    $emailAddress = $config_values['Settings']['Email Address'];
-    if($emailAddress) {
-        $mail = <<<END
-Hi,
+    $msg = "TorrentWatch-X tried to start \"$tor_name\". But this failed with the following error:\n\n";
+    $msg.= "$return\n";
 
-This is an automated warning from TorrentWatch-X.
-
-TorrentWatch-X tried to start "$tor_name". But this failed with the following error:
-
-"$return"
-
-END;
-
-        $subject = "TorrentWatch-X: Error while trying to start $tor_name.";
-        mail($emailAddress, $subject, $mail, 'From: TorrentWatch-X' );
-    }
-    
+    $subject = "TorrentWatch-X: Error while trying to start $tor_name.";
+    sentmail($msg, $subject);
+    $msg = escapeshellarg($msg);
+    run_script('error', $title, $msg);
   }
   return ($return === 0);
 }
