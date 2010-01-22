@@ -39,6 +39,7 @@ function setup_default_config() {
   _default('verbosity','0');
   _default('Default Seed Ratio', '-1');
   _default('Script', '');
+  _default('Email Notifications', '');
 }
 
 if(!(function_exists(get_base_dir))) {
@@ -186,6 +187,7 @@ function write_config_file() {
 function update_global_config() {
   global $config_values;
   $input = array('Email Address'      => 'emailAddress',
+                 'Email Notifications' => 'mailonhit',
                  'Transmission Login' => 'truser',
                  'Transmission Password' => 'trpass',
                  'Transmission Host'  => 'trhost',
@@ -211,7 +213,8 @@ function update_global_config() {
                      'Verify Episode' => 'verifyepisodes',
                      'Save Torrents'  => 'savetorrents',
                      'Only Newer'     => 'onlynewer',
-                     'Default Feed All' => 'favdefaultall');
+                     'Default Feed All' => 'favdefaultall',
+                     'Email Notifications' => 'mailonhit');
                      
   foreach($input as $key => $data)
     if(isset($_GET[$data]))
@@ -359,7 +362,7 @@ function updateFavoriteEpisode(&$fav, $title) {
       $msg.= "If you don't, the next match wil be \"Season: $curSeason Episode: $newEpisode\" or \"Season $newSeason Episode: 1\".\n";
 
       $subject = "TorrentWatch-X: got $show $episode, expected $expected";
-      sentmail($msg, $subject);
+      sendmail($msg, $subject);
       $msg = escapeshellarg($msg);
       run_script('error', $title, $msg);
   }

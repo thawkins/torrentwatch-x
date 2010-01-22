@@ -1,5 +1,5 @@
 <?php
-function sentmail($msg, $subject) {
+function sendmail($msg, $subject) {
     global $config_values;
     
     $emailAddress = $config_values['Settings']['Email Address'];
@@ -19,8 +19,16 @@ END;
 
 function run_script($param, $torrent, $error = "") {
     global $config_values;
+    $torrent = escapeshellarg($torrent);
+    $error = escapeshellarg($error);
     $script = $config_values['Settings']['Script'];
-    if(isset($script)) {
+    if($script) {
+        if(!is_file($script)) {
+            $msg = "The configured script is not a single file. Parameters are not allowed because of security reasons.";
+            $subject = "TorrentWatch-X: security error";
+            sendmail($msg, $subject);
+            return;
+        }
         _debug("Running $script $param $torrent $error \n", -1);
         exec("$script $param $torrent $error 2>&1", $response, $return);
         if($return && $config_values['Settings']['Email Address']) {
@@ -34,7 +42,7 @@ function run_script($param, $torrent, $error = "") {
             
             _debug("$msg\n");
             $subject = "TorrentWatch-X: $script returned error.";
-            sentmail($msg, $subject);
+            sendmail($msg, $subject);
         }
     }
 }

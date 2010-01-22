@@ -197,7 +197,7 @@ function display_global_config() {
 
     $savetorrent=$transmission="";
     $deepfull=$deeptitle=$deepoff=$verifyepisode="";
-    $matchregexp=$matchglob=$matchsimple=$dishidelist="";
+    $matchregexp=$matchglob=$matchsimple=$dishidelist=$mailonhit="";
     $favdefaultall=$onlynewer=$folderclient=$combinefeeds=$require_epi_info="";
 
     switch($config_values['Settings']['Client']) {
@@ -219,6 +219,8 @@ function display_global_config() {
         $dishidelist = 'checked=1';    
     if($config_values['Settings']['Save Torrents'] == 1)
         $savetorrent = 'checked=1';
+    if($config_values['Settings']['Email Notifications'] == 1)
+        $mailonhit ='checked=1';
 
     switch($config_values['Settings']['Deep Directories']) {
         case 'Full': $deepfull = 'selected="selected"';break;
