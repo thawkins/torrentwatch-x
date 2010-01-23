@@ -180,8 +180,8 @@
                     <div class="fav_settings right">
                         <div id="script">
                             <label class="item">Script:</label>
-                            <input type="text" name ="script" class="text" 
-                            title="Script to run on certain events. (check out the wiki (https://code.google.com/p/torrentwatch-x/wiki/Script) for more info)."
+                            <input type="text" class="text" readonly="readonly"
+                            title="Configured script to run on certain events. (Read doc/script.txt for more info)."
                             value="<?php echo $config_values['Settings']['Script']; ?>"/>
                         </div>
                     </div>
