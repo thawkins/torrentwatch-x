@@ -48,7 +48,6 @@ function guess_match($title, $normalize = FALSE) {
     $title = preg_replace($audio, '', $title);
     if(preg_match('/\b(720p|1080p)\b/i', $title)) {
         $title = preg_replace('/( -)?[_. ]HDTV/', '', $title);
-        _debug("\n\n$title\n\n");
     }
     
     if(preg_match($epi, $title, $match)) {
