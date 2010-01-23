@@ -12,7 +12,7 @@ if($torInfo) {
   $clientId = $torInfo['clientId'];
   $infoDiv = "<div id='tor_$id' class='torInfo tor_$torHash'>$stats</div>";
   if($torInfo['status'] == 4) $matched = "downloading";
-} else {
+} else if(!$config_values['Settings']['Disable Hide List']) {
     $hideSpan = "<span class=\"hide_item\"><a href=\"#\" 
     title=\"Hide this show from the list\" onclick='$.hideItem(\"$utitle\")'>
     <img src=\"images/hide.png\" /></a></span>";
