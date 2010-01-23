@@ -54,8 +54,10 @@ function get_curl_defaults(&$curlopt) {
     $curlopt[CURLOPT_RETURNTRANSFER] = true;
 }
 
-function get_item_filter() {
-    return '/[\[\]{}<>:;,]/';
+if(!(function_exists(get_item_filter))) {
+    function get_item_filter() {
+        return '/[\[\]{}<>:;,]/';
+    }
 }
 
 // This function is from

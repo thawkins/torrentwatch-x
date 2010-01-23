@@ -222,6 +222,9 @@ function rss_perform_matching($rs, $idx, $feedName) {
   $alt = 'alt';
   foreach($rs['items'] as $item) {
     if($filter = get_item_filter()) $item['title'] = preg_replace($filter, '', $item['title']);
+    if(preg_match('/\b(720p|1080p)\b/i', $item['title'])) {
+        $item['title'] = preg_replace('/( -)?[_. ]HDTV/', '', $item['title']);
+    }
     $percentage = '';
     $torHash = '';
     $matched = "nomatch";
@@ -277,6 +280,9 @@ function atom_perform_matching($atom, $idx, $feedName) {
   
   foreach($atom['feed']['entry'] as $item) {
     if($filter = get_item_filter()) $item['title'] = preg_replace($filter, '', $item['title']);
+    if(preg_match('/\b(720p|1080p)\b/i', $item['title'])) {
+        $item['title'] = preg_replace('/( -)?[_. ]HDTV/', '', $item['title']);
+    }
     $matched = "nomatch";
     array_walk($config_values['Favorites'], 'check_for_torrent', 
                array('Obj' =>$item, 'URL' => $atom['URL']));
