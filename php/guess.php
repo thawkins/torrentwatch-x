@@ -43,9 +43,13 @@ function guess_match($title, $normalize = FALSE) {
     $audio = '/(AC3[_.\s])/i';
     
     //Sanatize title
-    $title = preg_replace('/( ?\/ ?)/', ' ', $title);
     if($filter = get_item_filter()) $title = preg_replace($filter, '', $title);
+    $title = preg_replace('/( ?\/ ?)/', ' ', $title);
     $title = preg_replace($audio, '', $title);
+    if(preg_match('/\b(720p|1080p)\b/i', $title)) {
+        $title = preg_replace('/( -)?[_. ]HDTV/', '', $title);
+        _debug("\n\n$title\n\n");
+    }
     
     if(preg_match($epi, $title, $match)) {
         $episode_guess = $match[0];
