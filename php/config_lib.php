@@ -206,8 +206,7 @@ function update_global_config() {
                  'MatchStyle'         => 'matchstyle',
                  'Only Newer'         => 'onlynewer',
                  'Default Feed All'   => 'favdefaultall',
-                 'Extension'          => 'extension',
-                 'Script'             => 'script');
+                 'Extension'          => 'extension');
                  
   $checkboxs = array('Combine Feeds' => 'combinefeeds',
                      'Require Episode Info' => 'require_epi_info',
