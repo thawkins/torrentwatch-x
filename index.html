@@ -1,0 +1,162 @@
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+      <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>TorrentWatch-X</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="Stylesheet" type="text/css" href="css/reset.css" />
+  <link rel="Stylesheet" type="text/css" href="css/torrentwatch.css" />
+  <link rel="stylesheet" type="text/css" href="css/greybox.css" media="all" />
+  <!--[if IE]>
+    <link rel="Stylesheet" type="text/css" href="css/ie.css"></link>
+  <![endif]-->
+  <script type="text/javascript" src="javascript/jquery-1.4.min.js"></script>
+  <script type="text/javascript" src="javascript/jquery.cookie.js"></script>
+  <script type="text/javascript" src="javascript/jquery.tinysort.js"></script>
+  <script type="text/javascript" src="javascript/jquery.form.js"></script>
+  <script type="text/javascript" src="javascript/json2.js"></script>
+  <script type="text/javascript" src="javascript/greybox.js"></script>
+  <script type="text/javascript" src="javascript/torrentwatch.js"></script>
+    <script type="text/javascript">
+      var GB_ANIMATION = true;
+      $(document).ready(function(){
+        $("a.greybox").click(function(){
+          var t = this.title || $(this).text() || this.href;
+          GB_show(t,this.href,600,960);
+          return false;
+        });
+      });
+    </script>
+</head>
+<body>
+<ul class="mainoptions" id="mainoptions">
+  <li id="config"><a class="toggleDialog" href="#configuration">Configure</a></li>
+  <li id="favoritesMenu"><a class="toggleDialog" href="#favorites">Favorites</a></li>
+  <li class="divider">&nbsp;</li>
+  <li id="view"><a class="toggleDialog" href="#history">View History</a></li>
+  <li id="empty"><a class="toggleDialog" href="#clear_cache">Empty Cache</a></li>
+  <li id='webui'><a href='#' class="greybox">Client UI</a></li>
+  <li id="legend"><a class='toggleDialog' href='#show_legend'>Legend</a></li>
+  <li id="report"><a class='toggleDialog' href='#report_bug'>Report Bug</a></li>
+</ul>
+<ul id="filterbar_container">
+  <li id="filter_all"><a href="#">All</a></li>
+  <li id="filter_matching"><a href="#">Matching</a></li>
+  <li id="filter_downloading"><a href="#">Downloading</a></li>
+  <li id="filter_downloaded"><a href="#">Downloaded</a></li>
+  <li id="filter_transmission"><a id="torClient" href="#">Client</a></li>
+  <li id="filter_bytext"><input type="text" id="filter_text_input"/></li>
+  <li id="rates"></li>
+</ul>
+<div class="progressbar dialog_window" id="progressbar">
+ <span>Loading . . .</span>
+</div>
+<form id="welcome_form" action="torrentwatch.php">
+  <div id="welcome1" class="dialog_window welcome">
+  <input type="hidden" name="firstRun" value="1"/>
+  <input type="hidden" name="button" value="Add"/>
+    <h2 class="dialog_heading">Welcome to TorrentWatch-X</h2>
+      <br/>
+      <label class="item">TorrentWatch-X is a browser based program designed to bring TV shows from the internet to your living room.</label>
+      <label class="item">TorrentWatch-X accesses feeds from the internet to tell it about newly avaiable shows.</label>
+      <label class="item">You will need to answer a few simple questions to get started.</label>
+    <a class="toggleDialog button" href="#welcome2">Next</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+
+  <div id="welcome2" class="dialog_window welcome">
+    <h2 class="dialog_heading">Choose a Client</h2>
+    <label class="category">Only 2 options for now.</label>
+    <br/>
+    <div class="form_radio">
+      <label class="item">
+          <input type="radio" name="client" value="Transmission" checked/>
+      Transmission</label>
+    </div>
+    <div class="form_radio">
+      <label class="item">
+          <input type="radio" name="client" value="folder"/>
+      Save torrent in folder</label>
+    </div>
+    <div class="form_input" title="Default directory to start items in">
+        <label class="item textinput" >Default Download Directory:</label><br />
+        <input type="text" class="form_downdir" name="downdir" value="/mnt/Media/Downloads" />
+    </div>
+    
+
+    <a class="toggleDialog button" href="#welcome3">Next</a>
+    <a class="toggleDialog button" href="#welcome1">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+
+  <div id="welcome3" class="dialog_window welcome">
+    <h2 class="dialog_heading">Choose a Feed</h2>
+      <br/>
+      <label class="item">TorrentWatch-X requires a feed from the internet that will point it to the TV Episodes.<br/>&nbsp;&nbsp; Choose a feed from the list or add your own feed from the net.</label>
+    <br/><br/>
+    <div class="form_radio">
+      <label class="item">
+          <input type="checkbox" name="link[]" value="http://ezrss.it/feed/" checked />
+          The EzTV feed from ezRSS.it</label>
+    </div>
+    <div class="form_radio">
+      <label class="item">
+          <input type="checkbox" name="link[]" value="http://rss.bt-chat.com/?group=2&cat=9" checked />
+           TVShows from bt-chat.com (group: VTV)</label>
+    </div>
+    <div class="form_radio">
+      <label class="item">
+          <input type="checkbox" name="link[]" value="http://rss.bt-chat.com/?group=3&cat=9" />
+          TVShows from bt-chat.com (group: EZTV)</label>
+    </div>
+    <a class="toggleDialog button" href="#welcome4">Next</a>
+    <a class="toggleDialog button" href="#welcome2">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+  <div id="welcome4" class="dialog_window welcome">
+    <h2 class="dialog_heading">Favorites Settings</h2>
+    <br/>
+    <label class="item">Torrent Watch has a few different settings that effect which matches will be downloaded, and<br/>&nbsp;&nbsp; which will be passed over.</label>
+    <label class="category">
+      <input type="checkbox" name="onlynewer" value="1" checked = "checked" />
+      Newer Episodes Only
+    </label>
+    <label class="item">Only download newer episodes.  So if previously S3E10 has been downloaded for a particular<br/>&nbsp;&nbsp; favorite, when S2E03 shows up in the feed it will be skipped</label>
+    <label class="category">
+      <input type="checkbox" name="verifyepisodes" value="1" checked = "checked" />
+      Verify Episodes
+    </label>
+      <label class="item">Only download each episode once.  So if previously S01E13 had been downloaded, a second copy<br/>&nbsp;&nbsp; of S01E13 showing up in a feed will not be downloaded.  Items tagged Proper or Repack are an<br/>&nbsp;&nbsp; exception to this setting.</label>
+    <label class="category">
+      <input type="checkbox" name="savetorrents" value="1" />
+      Save torrent files
+    </label>
+    <label class="item">Save the related .torrent file in the download directory</label>
+    <br/>
+
+    <a class="toggleDialog button" href="#welcome5">Next</a>
+    <a class="toggleDialog button" href="#welcome3">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+
+  <div id="welcome5" class="dialog_window welcome">
+    <h2 class="dialog_heading">Initial Configuration is Complete!</h2>
+    <br/>
+    <label class="item">If you want to get warnings or errors by mail, please enter an e-mail address:</label>
+    <input type="text" name ="emailAddress" class="text form_email" title="Enter an email address here to send warnings and errors to." />
+    <br/>
+    <label class="item">To get started click Apply below and you will be presented with the episodes in your chosen feed.</label>
+    <label class="item">Right click on any show on the list and add it to your favorites.<br/>Once a show is in your favorites it will automatically download every week</label><br />
+
+    <a class="submitForm button" id="Apply" href="#">Apply</a>
+    <a class="toggleDialog button" href="#welcome4">Back</a>
+    <a class="toggleDialog button" href="#">Close</a>
+  </div>
+</form>
+  <div id="clientError" class="dialog_window">
+      <h2> Client Error! </h2>
+      <p></p>
+  </div>
+</body></html>
