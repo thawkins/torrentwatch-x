@@ -60,8 +60,7 @@ function parse_options() {
 
     array_keys($_GET);
     $commands = array_keys($_GET);
-    if(empty($commands))
-        return FALSE;
+    if(empty($commands)) return FALSE;
 
     if(preg_match("/^\//", $commands[0])) {
         $commands[0] = preg_replace("/^\//", '', $commands[0]);
@@ -86,10 +85,6 @@ function parse_options() {
         case 'getClientActiveTorrents':
 	    echo getClientActiveTorrents();
 	    exit;
-        case 'getHash':
-            $response = torInfo($_REQUEST['getHash']);
-            echo json_encode($response);
-            exit;
         case 'delTorrent':
             $response = delTorrent($_REQUEST['delTorrent'], $_REQUEST['trash']);
             echo "$response";
@@ -635,6 +630,13 @@ function get_tr_location() {
     return $host;
 }
 
+function get_client() {
+    global $config_values;
+    echo "<div id='clientId' class='hidden'>";
+    echo $config_values['Settings']['Client'];
+    echo "</div>";
+}
+
 //
 //
 // MAIN Function
@@ -642,7 +644,6 @@ function get_tr_location() {
 //
 $main_timer = timer_init();
 platform_initialize();
-
 setup_default_config();
 if(file_exists(platform_getConfigFile()))
     read_config_file();
@@ -658,7 +659,6 @@ check_files();
 
 echo $html_out;
 $html_out = "";
-// ob_flush();
 flush();
 
 // Feeds
@@ -666,7 +666,7 @@ if(isset($config_values['Feeds'])) {
     load_feeds($config_values['Feeds']);
     feeds_perform_matching($config_values['Feeds']);
 }
-
+get_client();
 close_html();
 unlink_temp_files();
 exit(0);

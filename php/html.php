@@ -15,8 +15,7 @@ function finish_rss_list_html() {
 function show_transmission_div() {
   global $html_out;
   $html_out .= '<div id="transmission_data" class="transmission">';
-  $html_out .= '<div class="header">Transmission<img id="headerImg" src="images/ajax-loader-small.gif"></div>';
-  $html_out .= '<div id="waiting"><img src="images/ajax-loader.gif"></div>';
+  $html_out .= '<div class="header">Transmission</div>';
   $html_out .= '<ul id="transmission_list" class="torrentlist">';
 }
 
@@ -30,7 +29,9 @@ function show_torrent_html($item, $feed, $feedName, $alt, $torHash, $matched, $i
  
   if(($matched == "cachehit" || $matched == "downloaded" || $matched == "match")
      && $config_values['Settings']['Client'] != 'folder') {
-    $torInfo = torInfo($torHash); 
+    $torInfo['dlStatus'] = 'to_check';
+    $torInfo['stats'] = '';
+    $torInfo['clientID'] = $torHash;
     if(isset($torInfo['dlStatus'])) { $matched = $torInfo['dlStatus']; }
   }
   // add word-breaking flags after each period
@@ -81,7 +82,12 @@ function show_feed_html($idx) {
 
 function show_down_feed($idx) {
     global $html_out, $config_values;
-    $html_out .= "<div class=\"errorHeader\">".$config_values['Feeds'][$idx]['Name']." is not available.</div>\n";
+    if(!$config_values['Feeds'][$idx]['Name']) {
+	$title = $config_values['Feeds'][$idx]['Link'];
+    } else {
+	$title = $config_values['Feeds'][$idx]['Name'];
+    }
+    $html_out .= "<div class=\"errorHeader\">$title is not available.</div>\n";
 }
 
 // Closing the div which contains all the feed items

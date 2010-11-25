@@ -140,12 +140,12 @@ function getClientData($recent) {
         case 'Transmission':
             if($recent) {
               $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
-               'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
+               'leftUntilDone', 'downloadDir', 'totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'eta',
                'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress', 'rateDownload', 'rateUpload'),
                'ids' => 'recently-active'), 'method' => 'torrent-get');
             } else {
               $request = array('arguments' => array('fields' => array('id', 'name', 'status', 'errorString', 'hashString',
-               'leftUntilDone', 'downloadDir','totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status',
+               'leftUntilDone', 'downloadDir','totalSize', 'uploadedEver', 'downloadedEver', 'addedDate', 'status', 'eta',
                'peersSendingToUs', 'peersGettingFromUs', 'peersConnected', 'seedRatioLimit', 'recheckProgress', 'rateDownload', 'rateUpload')),
                'method' => 'torrent-get');
             }

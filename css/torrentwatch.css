@@ -88,6 +88,7 @@ div#topmenu {
     height: 58px;
     text-align: right;
     border: 1px solid #aaa;
+    border-top: 0;
     background: #ddd;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EEEEEE,endColorstr=#BBBBBB);
     background:	-webkit-gradient(linear, left top, left bottom, from(#eee), to(#bbb));
@@ -171,8 +172,11 @@ ul.mainoptions li#legend a .icon {
 ul.mainoptions li#report a .icon {
     background: url(../images/report-bug.png) no-repeat left center;
 }
-ul.mainoptions li#webui a .icon{
+ul.mainoptions li#webui a .icon {
     background-image: url(../images/webui.png);
+}
+ul.mainoptions li#webui a .altIcon {
+    background-image: url(../images/ajax-loader-small.gif);
 }
 
 /*-----------------
@@ -291,6 +295,10 @@ ul#filterbar_container li a {
 
 ul#filterbar_container li.selected a {
     color: #111;
+}
+
+ul#filterbar_container li a.error {
+    color: red;
 }
 
 ul#filterbar_container span#activeTorrents {
@@ -456,7 +464,7 @@ div#torrentlist_container {
     position: absolute;
     overflow: auto;
     width: 100%;
-    top: 60px;
+    top: 59px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -566,6 +574,11 @@ ul.torrentlist td.buttons.match_nomatch {
     background-color: #D6ABAB;
 }
 
+div#show_legend li.legend.match_to_check,
+ul.torrentlist td.buttons.match_to_check {
+    background-color: #D6C5C5;
+}
+
 div#show_legend li.legend.match_season,
 ul.torrentlist td.buttons.match_season {
     background-color: #99CCBB;
@@ -573,7 +586,7 @@ ul.torrentlist td.buttons.match_season {
 
 div#show_legend li.legend.match_old_download,
 ul.torrentlist td.buttons.match_old_download {
-    background-color: #CDCDCD;
+    background-color: #CCC;
 }
 
 div#show_legend li.legend.match_match,
@@ -627,7 +640,21 @@ div#transmission_data td.torrent_name span {
 }
 
 ul.torrentlist div.torInfo {
+    display: inline-block;
     color: green;
+    font-size: 9px;
+    margin: 2px 0 2px 0;
+}
+
+ul.torrentlist div.torEta {
+    float: right;
+    color: green;
+    font-size: 9px;
+    margin: 2px 0 2px 0;
+}
+
+ul.torrentlist div.torInfoErr {
+    color: red;
     font-size: 9px;
     margin: 2px 0 2px 0;
 }
@@ -933,12 +960,19 @@ div.legend input {
 }
     
 div#clientError {
-    top: 55px;
+    top: 0px;
     text-align: center;
     width: 450px;
-    margin-left: -225px;
-    border: 1px solid red;
+    margin-left: 25px;
+    color: red;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EEEEEE,endColorstr=#BBBBBB);
+    background:	-webkit-gradient(linear, left top, left bottom, from(#eee), to(#bbb));
+    background:	-moz-linear-gradient(top, #eee, #bbb);
     z-index: 100; 
+}
+
+div#clientError p {
+    margin-top: 4px;
 }
 
 div#clientError h2 {
@@ -948,9 +982,9 @@ div#clientError h2 {
 }
 
 div#errorDialog {
-    top: 54px;
-    border: 1px solid red;
+    top: 60px;
     color: red;
+    background-color: #bbb;
     text-align: center;
     width: 650px;
     margin-left: -310px;
@@ -968,13 +1002,16 @@ div#successDialog {
 }
 
 div#newVersion {
-    top: 55px;
-    color: green;
-    border: 1px solid green;
+    top: 0px;
     text-align: center;
+    padding-top: 5px;
     width: 450px;
-    margin-left: -225px;
-    z-index: 1; 
+    margin-left: 25px;
+    color: green;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EEEEEE,endColorstr=#BBBBBB);
+    background:	-webkit-gradient(linear, left top, left bottom, from(#eee), to(#bbb));
+    background:	-moz-linear-gradient(top, #eee, #bbb);
+    z-index: 100; 
 }
 
 div#newVersion a {
@@ -982,9 +1019,9 @@ div#newVersion a {
 }
 
 div#fav_error {
-    top: 55px;
+    top: 60px;
     color: red;
-    border: 1px solid red;
+    background-color: #bbb;
     text-align: center;
     z-index: 1; 
 }
