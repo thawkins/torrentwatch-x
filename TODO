@@ -1,0 +1,24 @@
+0.8
+- New look for rss list.
+- Remove torrents which are done. (paused and met ratio requirements) *Allan*
+- Run script on download-finish. *Allan*
+- Option to add file/url directly. *Allan*
+- Make torrent settings per show/feed/global
+- tvDB support. *Allan*
+- In-app update option.
+- Command-line tools.
+
+0.9
+- Delete old episodes from transmission which are replaces by REPACK or PROPER episodes.
+- More modulair code
+- sqlite for caching + migration script.
+- Install/Setup script.
+- Movie support 
+- torrent rewriting
+- nzb support
+
+1.0
+- OSX Installer (fluid?).
+- Windows Installer.
+- utorrent support
+
