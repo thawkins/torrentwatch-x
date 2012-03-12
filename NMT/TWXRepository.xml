@@ -1,0 +1,87 @@
+<Repository>
+    <DistributedRepositories/>
+    <Applications>
+    <Application>
+      <Name>Torrentwatchx</Name>
+      <Version>0.8.6</Version>
+      <DownloadURL>http://torrentwatch-x.googlecode.com/files/TorrentWatchX-NMT-0.8.6.zip</DownloadURL>
+      <Author>Wiebel</Author>
+      <Maintainer>Wiebel</Maintainer>
+      <Description>TorrentWatch-X is a web based tool to automate downloads of tv shows via torrents and rss. Based on the torrentwatch project (now known as NMTDVR). It's recommended that lighttpd is also installed for performance gain.
+      </Description>
+      <Homepage>http://code.google.com/p/torrentwatch-x/</Homepage>
+      <InstallScript>Apps/AppInit/appinit.cgi?install&amp;Torrentwatchx.tar</InstallScript>
+      <WebInterfaceURL>http://[NMT_IP]:9999/Torrentwatchx_web/index.html</WebInterfaceURL>
+      <GayaInterfaceURL />
+      <Screenshots>
+	<URL>http://freecode.com/screenshots/54/95/5495f777cce0bb8caec400b8f359f36b_medium.png?1311967438</URL>
+	<URL>http://freecode.com/screenshots/11/2f/112f055e8ccdd72eb4a98ef4f62dec48_medium.png?1290374111</URL>
+	<URL>http://freecode.com/screenshots/1f/16/1f160a709929e0848cc31b82a19927e2_medium.png?1290374144</URL>
+	<URL>http://freecode.com/screenshots/00/5f/005f32e1ec0424567b6c39469ee814b0_medium.png?1290374160</URL>
+      </Screenshots>
+      <UsageInstructions />
+      <Forum />
+      <Changelog>
+	0.8.6
+
+	* Fixed issue that caused the config-cache to corrupt. Causing errors Like: cache_dir: ""  does not exist / have the wrong rights.
+	* Moved web files to 'web' directory. I've included a cleanup.sh script to remove old files after updating. Make sure you backup config.php and move it to 'web/php' (or create a new one).
+	* Replaced first run wizzard with default config.
+	* Fixed a number of smaller bugs.
+
+	0.8.4:
+
+	* Fixed issue where twx-poller won't run when busybox is not installed on NMT. This caused auto-starting not to work.
+	* Fixed issue that caused the config cache not to be cleared when config was changed.
+	* Better mobile support.
+	* Updated to jquery 1.7
+	* Updated to PHPMailer 5.2.0
+	* Moved to direct smtp mailing instead of using mail binary
+	* Small css updates.
+
+	0.8.2:
+
+        * Moved from cron to a poller script on NMT. This because some NMT apps empty cron on install.
+        * Added locking on config so config won't be erased if disk is full.
+        * Added configfile caching for performance boost.
+        * Fixed compat with transmission 2.4x
+        * Better support for android and IOS devices.
+	* Fixed issue where hiding a batch of shows would only hide half.
+	* Fixed issue where adding a batch of shows as favorites would only add half.
+   
+	0.8.1: 
+
+	* Updated css and javascript for mobile device support.
+	* Upgraded to jquery 1.6.2
+	* Fixed issue where install on NMT fails. (this actualy means tarring on linux, not bsd...)
+
+	0.8.0:
+
+	* Disabled ssl checking so https feeds with non-official certs work as well.
+	* Added "Show Only" option that filters items with no episode info.
+	* Updated look of the item list.
+	* Added mobile support (Android, IOS).
+      </Changelog>
+    </Application>
+    <Application>
+      <Name>Torrentwatchx Test</Name>
+      <Version>0.8.7</Version>
+      <DownloadURL>http://torrentwatch.wiebel.nl/releases/TorrentWatchX-NMT-tip.zip</DownloadURL>
+      <Author>Wiebel</Author>
+      <Maintainer>Wiebel</Maintainer>
+      <Description>Tests build of TW-X (don't install unless instructed to do so :))</Description>
+      <Homepage>http://code.google.com/p/torrentwatch-x/</Homepage>
+      <InstallScript>Apps/AppInit/appinit.cgi?install&amp;Torrentwatchx.tar</InstallScript>
+      <WebInterfaceURL>http://[NMT_IP]:9999/Torrentwatchx_web/index.html</WebInterfaceURL>
+      <GayaInterfaceURL />
+      <Screenshots />
+      <UsageInstructions />
+      <Forum />
+      <Changelog />
+    </Application>
+    </Applications>
+    <Themes/>
+    <Indexes/>
+    <WaitImageSets/>
+    <Webservices/>
+</Repository>

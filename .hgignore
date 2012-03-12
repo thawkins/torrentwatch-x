@@ -1,0 +1,14 @@
+syntax: glob
+rss_cache
+web/php/config.php
+web/robots.txt
+.AppleDouble
+._*
+unittest
+releases
+web/releases
+testers
+8
+.htpasswd
+mk_archive.sh
+web/NMT
